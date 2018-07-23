@@ -6,6 +6,10 @@ $_DEBUG = [
 	'phpinfo' => null,
 ];
 
+/* 全局对象 */
+$PHP = null;
+
+/* 前置调试 */
 if (isset($_GET['debug'])) {
 	// 错误报告
     ini_set('display_errors', 1);
@@ -56,7 +60,7 @@ $loader = require APP_PATH . '/../vendor/autoload.php';
 # $loader->addPsr4('Acme\\Test\\', __DIR__);
 new Astro\Php();
 
-
+/* 后置调试 */
 // 结束调试问题
 if (!empty($_DEBUG['code'])) {
 	$_DEBUG['end'] = $_DEBUG['end'] ? : (is_array($_DEBUG['code']) ? '' : $_DEBUG['code']);
