@@ -6,8 +6,14 @@ $_DEBUG = [
 	'phpinfo' => null,
 ];
 
+$_CONTROLLER = [
+	'destruct' => null,
+];
+
+
 /* 全局对象 */
 $PHP = null;
+
 
 /* 前置调试 */
 if (isset($_GET['debug'])) {
@@ -54,11 +60,11 @@ if (isset($_GET['phpinfo']) || (isset($_SERVER['PATH_INFO']) && '/phpinfo' == $_
  *
  */
 # require_once __DIR__ . '/../app/bootstrap.php';
-
 define('APP_PATH', __DIR__);
 $loader = require APP_PATH . '/../vendor/autoload.php';
 # $loader->addPsr4('Acme\\Test\\', __DIR__);
 new Astro\Php();
+
 
 /* 后置调试 */
 // 结束调试问题
