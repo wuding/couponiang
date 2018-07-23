@@ -6,7 +6,7 @@
 	},
 	"autoload": {
 	    "psr-4": {
-		    "Astro\\": "src/Astr/",
+		    "Astro\\": "src/Astro/",
 			"CpnRed\\": "src/CpnRed/",
 			"app\\": "app/"
 		}
