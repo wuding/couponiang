@@ -7,7 +7,7 @@ $_DEBUG = [
 ];
 
 $_CONTROLLER = [
-	'destruct' => null,
+	'destruct' => 1, //只影响自动运行
 ];
 
 
@@ -64,7 +64,9 @@ define('APP_PATH', __DIR__);
 $loader = require APP_PATH . '/../vendor/autoload.php';
 # $loader->addPsr4('Acme\\Test\\', __DIR__);
 new Astro\Php();
+# $test = Astro\Php::getInstance();
 
+# print_r($GLOBALS);
 
 /* 后置调试 */
 // 结束调试问题

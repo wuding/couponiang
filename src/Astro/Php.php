@@ -3,6 +3,7 @@ namespace Astro;
 
 class Php
 {
+	public static $instance;
 	public $routeCollector = null;
 	public $dispatcher = null;
 	public $controller = null;
@@ -19,6 +20,14 @@ class Php
 		$this->uri = $uri = rawurldecode($uri);
 		
 		# print_r([__METHOD__, __LINE__, __FILE__]);
+	}
+	
+	public static function getInstance()
+	{
+		if (null != self::$instance) {
+			return self::$instance;
+		}
+		return self::$instance = new Php();
 	}
 	
 	/*************** 路由 ***************/
@@ -49,8 +58,8 @@ class Php
 		}
 		
 		$routeRules = [
-			[['GET', 'POST', 'PUT'], '/[index]', '/index/index'],
-			['GET', '/search', '/search']
+			[['GET', 'POST', 'PUT'], '/[index]', '/index/index'], //
+			['GET', '/search', '_module/_controller']
 		];
 		foreach ($routeRules as $rule) {
 			$r->addRoute($rule[0], $rule[1], $rule[2]);
@@ -58,21 +67,26 @@ class Php
 	}
 	
 	/************** 调度器 ***************/
-	public function dispatcher()
+	public function dispatcher($routeInfo = [], $requestInfo = [], $controllerVars = [])
 	{
-		if (null != $this->dispatcher) {
+		if (null !== $this->dispatcher) {
 			return $this->dispatcher;
 		}
-		return $this->dispatcher = new Dispatcher($this->routeInfo, ['method' => $this->httpMethod, 'uri' => $this->uri]);
+		return $this->dispatcher = new Dispatcher($routeInfo, $requestInfo, $controllerVars);
 	}
 	
 	/************** 控制器 ***************/
-	public function controller()
+	public function controller($routeInfo = [], $requestInfo = [], $controllerVars = [], $last = true)
 	{
-		if (null != $this->controller) {
+		$routeInfo = $routeInfo ? : $this->routeInfo;
+		$requestInfo = $requestInfo ? : ['method' => $this->httpMethod, 'uri' => $this->uri];
+		
+		if ($last && null !== $this->controller) {
 			return $this->controller;
 		}
-		return $this->controller = $this->dispatcher()->getController();
+		$dispatcher = $this->dispatcher();
+		$uniqueId = $dispatcher->init($routeInfo, $requestInfo, $controllerVars);
+		return $this->controller = $dispatcher->getController();
 	}
 	
 	/************** 内置函数 ***************/
@@ -84,11 +98,23 @@ class Php
 		return $default;
 	}
 	
+	public static function getUniqueId($routeInfo = [], $requestInfo = [], $controllerVars = [])
+	{
+		$req = md5(json_encode($requestInfo));
+		$var = md5(json_encode($controllerVars));
+		return $unique = Php::getArrayVar($routeInfo, 0, '') . '_' . Php::getArrayVar($routeInfo, 1, '') . '_' . $req . '_' . $var;
+	}
+	
 	public function __destruct()
 	{
 		$routeInfo = $this->routeInfo();
-		$this->controller()->_destruct();
-		# print_r([$routeInfo, __METHOD__, __LINE__, __FILE__]);
+		$controller = $this->controller();
+		if (!$controller->exec && 2 == $controller->destruct) {
+			$controller->_destruct(null, null, 0);
+		}
+		# 
+		# $this->dispatcher()->getController([1, 'test/a/url', []])->_destruct();
+		# print_r([$routeInfo, $controller, __METHOD__, __LINE__, __FILE__]);
 		
 	}
 }

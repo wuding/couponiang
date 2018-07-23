@@ -1,5 +1,11 @@
 {
     "name": "wuding/couponiang",
+	"repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/wuding/couponiang"
+        }
+    ],
 	"require": {
 	    "php": ">=5.4.0",
 		"nikic/fast-route": "^1.3.0"
@@ -9,6 +15,7 @@
 		    "Astro\\": "src/Astro/",
 			"CpnRed\\": "src/CpnRed/",
 			"app\\": "app/"
-		}
+		},
+		"files": ["src/Astro/functions.php"]
 	}
 }

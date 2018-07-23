@@ -6,44 +6,67 @@ class Dispatcher
 	// 参数
 	public $routeInfo = [];
 	public $requestInfo = [];
+	public $controllerVars = [];
 	
 	// 对象
 	public $controller = null;
+	public $controllers = [];
 	
 	// 变量
 	public $moduleInfo = [];
 	
-	public function __construct($routeInfo = [], $requestInfo = [])
+	public function __construct($routeInfo = [], $requestInfo = [], $controllerVars = [])
+	{
+		$this->init($routeInfo, $requestInfo, $controllerVars);
+	}
+	
+	/**
+	 * 初始化参数
+	 */
+	public function init($routeInfo = [], $requestInfo = [], $controllerVars = [])
 	{
 		$this->routeInfo = $routeInfo;
 		$this->requestInfo = $requestInfo;
+		$this->controllerVars = $controllerVars;
+		return $this->uniqueId = Php::getUniqueId($routeInfo, $requestInfo, $controllerVars);
 	}
 	
 	/**
 	 * 获取控制器对象
 	 *
 	 */
-	public function getController($routeInfo = [], $requestInfo = [])
+	public function getController($routeInfo = [], $requestInfo = [], $controllerVars = [])
 	{
-		if (null == $this->controller) {
-			return $this->dispatchController($routeInfo, $requestInfo);
+		$routeInfo = $routeInfo ? : $this->routeInfo;
+		$requestInfo = $requestInfo ? : $this->requestInfo;
+		$controllerVars = $controllerVars ? : $this->controllerVars;
+		
+		$this->controllerUniqueId = Php::getUniqueId($routeInfo, $requestInfo, $controllerVars);
+		if (isset($this->controllers[$this->controllerUniqueId])) {
+			return $this->controllers[$this->controllerUniqueId];
 		}
-		return $this->controller;
+		return $this->dispatchController($routeInfo, $requestInfo);
 	}
 	
 	/**
 	 * 调出控制器对象
 	 *
 	 */
-	public function dispatchController($routeInfo = [], $requestInfo = [])
+	public function dispatchController($routeInfo = [], $requestInfo = [], $controllerVars = [])
 	{
+		$routeInfo = $routeInfo ? : $this->routeInfo;
+		$requestInfo = $requestInfo ? : $this->requestInfo;
+		$controllerVars = $controllerVars ? : $this->controllerVars;
+		
+		$this->controllerUniqueId = Php::getUniqueId($routeInfo, $requestInfo, $controllerVars);
+		
 		$class = $this->getControllerClassName($routeInfo, $requestInfo);
 		if (!class_exists($class)) {
 			$this->moduleInfo[$class]['exist'] = -1;
 			$routeInfo = [0];
 			$class = $this->getControllerClassName($routeInfo, $requestInfo);
 		}
-		return $this->controller = new $class;
+		return $this->controller = $this->controllers[$this->controllerUniqueId] = new $class($this->actionName, $requestInfo['method'], $controllerVars);
 	}
 	
 	/**
