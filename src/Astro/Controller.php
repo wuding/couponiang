@@ -86,6 +86,9 @@ class Controller
 	public function _destruct($return = null, $exit = null, $destruct = null)
 	{
 		# print_r([$return, $exit, $destruct, __METHOD__, __LINE__, __FILE__]);
+		$php = $GLOBALS['PHP'];
+		$template = $php->template();
+		# print_r($php);
 		$method = $this->httpMethod;
 		$action = $this->action;
 		$maps = $this->actionMethods;
@@ -124,13 +127,22 @@ class Controller
 			return $var;
 		}
 		
-		// 退出
-		if (null === $exit) {
-			@$exit = $this->exit;
-		}
+		
 		
 		// 输出
-		print_r([$exit, $var, __METHOD__, __LINE__, __FILE__]);# 
+		# print_r([$exit, $var, __METHOD__, __LINE__, __FILE__]);# 
+		$theme = 'aero';
+		$folder = '';
+		$controller = $php->dispatcher->controllerName ? : 'index';
+		$path = '/index';
+		$script = $theme . '/' . $folder . $controller . $path;
+		/* 渲染页面 */
+		echo $html = $php->template->render($script, $var);
+		
+		// 退出
+		if (null === $exit) {
+			$exit = $this->exit; #@
+		}
 		if (null !== $exit) {
 			exit($exit);
 		}

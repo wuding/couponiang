@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Controller, Astro\Controller | API Documentation fot Astro 1.0 | Astro PHP Framework</title>
+</head>
+
+<body>
+	<h1>Class Astro\Controller</h1>
+	<table>
+		<tr>
+			<th>Source Code</th>
+			<td>
+				<a href="https://github.com/wuding/astrophp/blob/master/src/Astro/Controller.php">
+					https://github.com/wuding/astrophp/blob/master/src/Astro/Controller.php
+				</a>
+			</td>
+		</tr>
+	</table>
+	
+	<h2>Public Properties</h2>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<th>Property</th>
+			<th>Type</th>
+			<th>Value</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td><a href="#">$httpMethod</a> $requestMethod</td>
+			<td>string</td>
+			<td>null</td>
+			<td>HTTP 请求方法</td>
+		</tr>
+		<tr>
+			<td><a href="#">$actionName</a> $requestAction</td>
+			<td>string</td>
+			<td>null</td>
+			<td>请求的动作名称</td>
+		</tr>
+		<tr>
+			<td><a href="#">$actionMethod</a></td>
+			<td>string</td>
+			<td>null</td>
+			<td>HTTP 请求方法的动作名称</td>
+		</tr>
+		<tr>
+			<td><a href="#">$methods</a></td>
+			<td>array</td>
+			<td>[]</td>
+			<td>所有的方法名称</td>
+		</tr>
+		<tr>
+			<td><a href="#">$action</a></td>
+			<td>string</td>
+			<td>index</td>
+			<td>缺省的方法名称</td>
+		</tr>
+		<tr>
+			<td><a href="#">$actionMethods</a></td>
+			<td>array</td>
+			<td>[]</td>
+			<td>配置的动作方法</td>
+		</tr>		
+		<tr>
+			<td><a href="#">$actionRun</a></td>
+			<td>string</td>
+			<td>null</td>
+			<td>最终执行的动作名</td>
+		</tr>
+		<tr>
+			<td><a href="#">$exec</a></td>
+			<td>number</td>
+			<td>0</td>
+			<td>执行次数</td>
+		</tr>
+	</table>
+	
+	<h2>Public Methods</h2>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<th>Method</th>
+			<th>Return</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td><a href="#__construct()">__construct()</a></td>
+			<td></td>
+			<td>传入动作名、HTTP方法和控制器变量</td>
+		</tr>
+		<tr>
+			<td><a href="">__destruct()</a></td>
+			<td></td>
+			<td>自动运行动作函数</td>
+		</tr>
+		<tr>
+			<td><a href="#getConfig()">_notfound()</a></td>
+			<td>array</td>
+			<td>默认404动作方法</td>
+		</tr>
+		<tr>
+			<td><a href="astro-php.html">_forward()</a></td>
+			<td>array|string</td>
+			<td>转接到另一个模块控制器动作</td>
+		</tr>
+		<tr>
+			<td><a href="">_destruct()</a> _run</td>
+			<td>array|string</td>
+			<td>运行动作方法，然后返回数据或输出结果</td>
+		</tr>
+	</table>
+	
+	<h2>Method Details</h2>
+	<h3 id="__construct()">__construct($action = [], $method = [], $vars = [])</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$action</td>
+			<td>string</td>
+			<td>动作名</td>
+		</tr>
+		<tr>
+			<td>$method</td>
+			<td>string</td>
+			<td>HTTP 请求方法</td>
+		</tr>
+		<tr>
+			<td>$vars</td>
+			<td>array</td>
+			<td>控制器变量</td>
+		</tr>
+	</table>
+	
+	<h3 id="init()">_notfound()</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	
+	<h3 id="getController()">_forward($routeInfo = [], $requestInfo = [], $options = [], $destruct = 2)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$routeInfo</td>
+			<td>array</td>
+			<td>路由信息</td>
+		</tr>
+		<tr>
+			<td>$requestInfo</td>
+			<td>array</td>
+			<td>请求信息</td>
+		</tr>
+		<tr>
+			<td>$options</td>
+			<td>array</td>
+			<td>选项</td>
+		</tr>
+		<tr>
+			<td>$destruct -> $exec</td>
+			<td>number</td>
+			<td>是否执行动作</td>
+		</tr>
+	</table>
+	
+	<h3 id="dispatchController()">_destruct($return = null, $exit = null, $destruct = null)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$return</td>
+			<td>number</td>
+			<td>是否返回数据</td>
+		</tr>
+		<tr>
+			<td>$exit</td>
+			<td>number</td>
+			<td>是否退出</td>
+		</tr>
+		<tr>
+			<td>$destruct -> $exec</td>
+			<td>number</td>
+			<td>是否执行动作</td>
+		</tr>
+	</table>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Php, Astro\Php | API Documentation fot Mr.Wu 1.0 | Mr.Wu PHP Framework</title>
+</head>
+
+<body>
+	<h1>Class Astro\Php</h1>
+	<table>
+		<tr>
+			<th>Source Code</th>
+			<td>
+				<a href="https://github.com/wuding/astrophp/blob/master/src/Astro/Php.php">
+					https://github.com/wuding/astrophp/blob/master/src/Astro/Php.php
+				</a>
+			</td>
+		</tr>
+	</table>
+	
+	<h2>Public Properties</h2>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<th>Property</th>
+			<th>Type</th>
+			<th>Value</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td><a href="#">$instance</a></td>
+			<td>object</td>
+			<td>null</td>
+			<td>实例</td>
+		</tr>
+		<tr>
+			<td><a href="#">$httpMethod</a></td>
+			<td>string</td>
+			<td>null</td>
+			<td>HTPP 请求方法</td>
+		</tr>
+		<tr>
+			<td><a href="#">$uri</a></td>
+			<td>string</td>
+			<td>null</td>
+			<td>请求 URI</td>
+		</tr>
+		<tr>
+			<td><a href="#">$configFile</a></td>
+			<td>string</td>
+			<td>null</td>
+			<td>配置文件路径</td>
+		</tr>
+		<tr>
+			<td><a href="#">$config</a></td>
+			<td>array</td>
+			<td>[]</td>
+			<td>配置数组</td>
+		</tr>		
+		<tr>
+			<td><a href="#">$routeInfo</a></td>
+			<td>array</td>
+			<td>[]</td>
+			<td>路由信息</td>
+		</tr>
+		<tr>
+			<td><a href="#">$routeCollector</a></td>
+			<td>object</td>
+			<td>null</td>
+			<td>路由收集器</td>
+		</tr>
+		<tr>
+			<td><a href="#">$dispatcher</a></td>
+			<td>object</td>
+			<td>null</td>
+			<td>调度器</td>
+		</tr>
+		<tr>
+			<td><a href="#">$controller</a></td>
+			<td>object</td>
+			<td>null</td>
+			<td>控制器</td>
+		</tr>
+		<tr>
+			<td><a href="#">$template</a></td>
+			<td>object</td>
+			<td>null</td>
+			<td>模板引擎</td>
+		</tr>
+	</table>
+	
+	<h2>Public Methods</h2>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<th>Method</th>
+			<th>Return</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td><a href="#__construct()">__construct()</a></td>
+			<td></td>
+			<td>导入配置和请求</td>
+		</tr>
+		<tr>
+			<td><a href="">__destruct()</a></td>
+			<td></td>
+			<td>匹配路由并调用控制器</td>
+		</tr>
+		<tr>
+			<td><a href="#getConfig()">getConfig()</a></td>
+			<td>array</td>
+			<td>通过配置路径，获取配置数组</td>
+		</tr>
+		<tr>
+			<td><a href="astro-php.html">routeInfo()</a></td>
+			<td></td>
+			<td>通过请求参数匹配路由规则，返回路由信息</td>
+		</tr>
+		<tr>
+			<td><a href="">router()</a></td>
+			<td></td>
+			<td>获取路由器</td>
+		</tr>
+		<tr>
+			<td><a href="">routeRule()</a></td>
+			<td></td>
+			<td>添加路由规则</td>
+		</tr>
+		<tr>
+			<td><a href="">dispatcher()</a></td>
+			<td></td>
+			<td>获取调度器</td>
+		</tr>
+		<tr>
+			<td><a href="">controller()</a></td>
+			<td></td>
+			<td>获取控制器</td>
+		</tr>
+		<tr>
+			<td><a href="">template()</a></td>
+			<td></td>
+			<td>获取模板引擎</td>
+		</tr>
+		<tr>
+			<td><a href="">getInstance()</a></td>
+			<td></td>
+			<td>获取实例</td>
+		</tr>
+		<tr>
+			<td><a href="">getArrayVar()</a></td>
+			<td></td>
+			<td>获取数组键值</td>
+		</tr>
+		<tr>
+			<td><a href="">getUniqueId()</a></td>
+			<td></td>
+			<td>通过路由、请求、控制器参数，获取唯一标识</td>
+		</tr>
+	</table>
+	
+	<h2>Method Details</h2>
+	<h3 id="__construct()">__construct($config = null, $request = null)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$config</td>
+			<td>string|array</td>
+			<td>路径或数组</td>
+		</tr>
+		<tr>
+			<td>$request</td>
+			<td>array</td>
+			<td>为 null 时使用 $_SERVER</td>
+		</tr>
+	</table>
+	
+	<h3 id="getConfig()">getConfig($file)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$file</td>
+			<td>string|array</td>
+			<td>为数组时合并多个配置</td>
+		</tr>
+	</table>
+</body>
+</html>

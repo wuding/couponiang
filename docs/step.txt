@@ -1,0 +1,33 @@
+1.
+https://github.com/new
+https://github.com/wuding/couponiang.git
+
+2.
+composer.json
+composer install
+
+git config --global user.email "netjoin@gmail.com"
+git config --global user.name "wuding"
+
+3.
+web/index.php
+src/Astro/Php.php
+
+web/.htaccess
+httpd-vhosts.conf
+nginx.conf
+
+4.
+src/Astro/Dispatcher.php
+src/Astro/Controller.php
+app/controller/_controller.php
+
+5.
+_get_index()
+_get()
+index()
+_action()
+_notfound()
+
+6.
+app\template\aero\index\index.php

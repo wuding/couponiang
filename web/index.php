@@ -60,13 +60,14 @@ if (isset($_GET['phpinfo']) || (isset($_SERVER['PATH_INFO']) && '/phpinfo' == $_
  *
  */
 # require_once __DIR__ . '/../app/bootstrap.php';
-define('APP_PATH', __DIR__);
+define('APP_PATH', __DIR__ . '/../app');
 $loader = require APP_PATH . '/../vendor/autoload.php';
-# $loader->addPsr4('Acme\\Test\\', __DIR__);
-new Astro\Php();
-# $test = Astro\Php::getInstance();
+# $loader->addPsr4('Acme\\Test\\', __DIR__);$Astro = 
+new Astro\Php(APP_PATH . '/config.php');
+# $test = $Astro->getInstance(APP_PATH . '/config.php');
+# $test = Astro\Php::getInst(APP_PATH . '/config.php');
 
-# print_r($GLOBALS);
+# print_r($GLOBALS['PHP']);
 
 /* 后置调试 */
 // 结束调试问题

@@ -14,6 +14,11 @@ class Dispatcher
 	
 	// 变量
 	public $moduleInfo = [];
+	public $controllerName = null;
+	public $controllerNamespace = null;
+	public $moduleDefault = 'index';
+	public $controllerDefault = 'index';
+	public $actionDefault = 'index';
 	
 	public function __construct($routeInfo = [], $requestInfo = [], $controllerVars = [])
 	{
@@ -94,13 +99,15 @@ class Dispatcher
 		}
 		
 		$pathInfo = explode('/', $handler);
-		$this->moduleName = $module = Php::getArrayVar($pathInfo, 0, '_module');
-		$this->controllerName = $controller = Php::getArrayVar($pathInfo, 1, '_controller');
-		$this->actionName = $action = Php::getArrayVar($pathInfo, 2, '_action');
+		$this->moduleName = $module = Php::getArrayVar($pathInfo, 0, $this->moduleDefault ? : '_module');
+		$this->controllerName = $controller = Php::getArrayVar($pathInfo, 1, $this->controllerDefault ? : '_controller');
+		$this->actionName = $action = Php::getArrayVar($pathInfo, 2, $this->actionDefault ? : '_action');
 		
-		$namespace = $this->getControllerNamespace($routeInfo, $requestInfo);
+		$moduleInfo = [$module, $controller, $action, $handler, $routeInfo, 'exist' => 0];
+		$namespace = $this->getControllerNamespace($moduleInfo, $requestInfo);
 		$class = $namespace . $controller;
-		$this->moduleInfo[$class] = [$module, $controller, $action, $handler, $routeInfo, 'exist' => 0];
+		
+		$this->moduleInfo[$class] = $moduleInfo;
 		return $this->controllerClass = $class;
 	}
 	
@@ -108,9 +115,13 @@ class Dispatcher
 	 * 获取控制器命名空间
 	 *
 	 */
-	public function getControllerNamespace($requestInfo = [], $moduleInfo = [], $options = [])
+	public function getControllerNamespace($moduleInfo = [], $requestInfo = [], $options = [])
 	{
-		return $this->controllerNamespace = "\\app\\controller\\";
+		$moduleFolder = '';
+		if ('index' != $moduleInfo[0]) {
+			$moduleFolder = '\\module\\' . $moduleInfo[0];
+		}
+		return $this->controllerNamespace = "\\app$moduleFolder\\controller\\";
 	}
 	
 	public function __destruct()
