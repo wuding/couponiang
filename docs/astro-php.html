@@ -27,61 +27,68 @@
 			<th>Description</th>
 		</tr>
 		<tr>
-			<td><a href="#">$instance</a></td>
+			<td><a href="#$instance">$instance</a></td>
 			<td>object</td>
 			<td>null</td>
 			<td>实例</td>
 		</tr>
 		<tr>
-			<td><a href="#">$httpMethod</a></td>
+			<td><a href="#$requestMethod">$httpMethod</a> $requestMethod</td>
 			<td>string</td>
 			<td>null</td>
 			<td>HTPP 请求方法</td>
 		</tr>
 		<tr>
-			<td><a href="#">$uri</a></td>
+			<td><a href="#$requestUri">$uri</a> $requestUri</td>
 			<td>string</td>
 			<td>null</td>
 			<td>请求 URI</td>
 		</tr>
 		<tr>
-			<td><a href="#">$configFile</a></td>
+			<td><a href="#$configFile">$configFile</a></td>
 			<td>string</td>
 			<td>null</td>
 			<td>配置文件路径</td>
 		</tr>
 		<tr>
-			<td><a href="#">$config</a></td>
+			<td><a href="#$config">$config</a></td>
 			<td>array</td>
 			<td>[]</td>
 			<td>配置数组</td>
+		</tr>
+		<tr>
+			<td><a href="#$router">$router</a></td>
+			<td>object</td>
+			<td>null</td>
+			<td>路由器</td>
+		</tr>
+		<tr>
+			<td><a href="#$routeCollector">$routeCollector</a></td>
+			<td>object</td>
+			<td>null</td>
+			<td>路由收集器</td>
 		</tr>		
 		<tr>
-			<td><a href="#">$routeInfo</a></td>
+			<td><a href="#$routeInfo">$routeInfo</a></td>
 			<td>array</td>
 			<td>[]</td>
 			<td>路由信息</td>
 		</tr>
+		
 		<tr>
-			<td><a href="#">$routeCollector</a></td>
-			<td>object</td>
-			<td>null</td>
-			<td>路由收集器</td>
-		</tr>
-		<tr>
-			<td><a href="#">$dispatcher</a></td>
+			<td><a href="#$dispatcher">$dispatcher</a></td>
 			<td>object</td>
 			<td>null</td>
 			<td>调度器</td>
 		</tr>
 		<tr>
-			<td><a href="#">$controller</a></td>
+			<td><a href="#$controller">$controller</a></td>
 			<td>object</td>
 			<td>null</td>
 			<td>控制器</td>
 		</tr>
 		<tr>
-			<td><a href="#">$template</a></td>
+			<td><a href="#$template">$template</a></td>
 			<td>object</td>
 			<td>null</td>
 			<td>模板引擎</td>
@@ -101,7 +108,7 @@
 			<td>导入配置和请求</td>
 		</tr>
 		<tr>
-			<td><a href="">__destruct()</a></td>
+			<td><a href="#__destruct()">__destruct()</a></td>
 			<td></td>
 			<td>匹配路由并调用控制器</td>
 		</tr>
@@ -110,55 +117,98 @@
 			<td>array</td>
 			<td>通过配置路径，获取配置数组</td>
 		</tr>
+		
 		<tr>
-			<td><a href="astro-php.html">routeInfo()</a></td>
+			<td><a href="#getInstance()">getInstance()</a></td>
 			<td></td>
-			<td>通过请求参数匹配路由规则，返回路由信息</td>
+			<td>获取实例</td>
 		</tr>
+		
 		<tr>
-			<td><a href="">router()</a></td>
+			<td><a href="#router()">router()</a></td>
 			<td></td>
 			<td>获取路由器</td>
 		</tr>
 		<tr>
-			<td><a href="">routeRule()</a></td>
+			<td><a href="#addRoute()">routeRule()</a> addRoute()</td>
 			<td></td>
 			<td>添加路由规则</td>
 		</tr>
 		<tr>
-			<td><a href="">dispatcher()</a></td>
+			<td><a href="#routeInfo()">routeInfo()</a></td>
+			<td></td>
+			<td>通过请求参数匹配路由规则，返回路由信息</td>
+		</tr>
+		<tr>
+			<td><a href="#dispatcher()">dispatcher()</a></td>
 			<td></td>
 			<td>获取调度器</td>
 		</tr>
 		<tr>
-			<td><a href="">controller()</a></td>
+			<td><a href="#controller()">controller()</a></td>
 			<td></td>
 			<td>获取控制器</td>
 		</tr>
 		<tr>
-			<td><a href="">template()</a></td>
+			<td><a href="#template()">template()</a></td>
 			<td></td>
 			<td>获取模板引擎</td>
 		</tr>
+		
+		
 		<tr>
-			<td><a href="">getInstance()</a></td>
-			<td></td>
-			<td>获取实例</td>
-		</tr>
-		<tr>
-			<td><a href="">getArrayVar()</a></td>
-			<td></td>
-			<td>获取数组键值</td>
-		</tr>
-		<tr>
-			<td><a href="">getUniqueId()</a></td>
+			<td><a href="#getUniqueId()">getUniqueId()</a></td>
 			<td></td>
 			<td>通过路由、请求、控制器参数，获取唯一标识</td>
+		</tr>
+		<tr>
+			<td><a href="#getArrayVar()">getArrayVar()</a></td>
+			<td></td>
+			<td>获取数组键值</td>
 		</tr>
 	</table>
 	
 	<h2>Method Details</h2>
-	<h3 id="__construct()">__construct($config = null, $request = null)</h3>
+	<h3 id="__construct()">__construct($config = null, $request = null, $multiple = false)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$config</td>
+			<td>string|array</td>
+			<td>路径或数组</td>
+		</tr>
+		<tr>
+			<td>$request</td>
+			<td>array</td>
+			<td>为 null 时使用 $_SERVER</td>
+		</tr>
+		<tr>
+			<td>$multiple</td>
+			<td>boolean</td>
+			<td>多个配置文件</td>
+		</tr>
+	</table>
+	<blockquote>
+		构造函数，导入配置和请求
+	</blockquote>
+	
+	<h3 id="__destruct()">__destruct()</h3>
+	<blockquote>
+		析构函数，获取路由信息和控制器，然后运行控制器
+	</blockquote>
+	
+	<h3 id="getConfig()">getConfig($file = null)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$file</td>
+			<td>string|array</td>
+			<td>单个或多个路径</td>
+		</tr>
+	</table>
+	<blockquote>
+		获取配置数组
+	</blockquote>
+	
+	<h3 id="getInstance()">getInstance($config = null, $request = null)</h3>
 	<table border="1" cellspacing="0" cellpadding="10">
 		<tr>
 			<td>$config</td>
@@ -171,13 +221,146 @@
 			<td>为 null 时使用 $_SERVER</td>
 		</tr>
 	</table>
+	<blockquote>
+		获取实例
+	</blockquote>
 	
-	<h3 id="getConfig()">getConfig($file)</h3>
+	
+	
+	<h3 id="router()">router($name = 'nikic/fast-route', $version = null)</h3>
 	<table border="1" cellspacing="0" cellpadding="10">
 		<tr>
-			<td>$file</td>
-			<td>string|array</td>
-			<td>为数组时合并多个配置</td>
+			<td>$name</td>
+			<td>string</td>
+			<td>路由器名称</td>
+		</tr>
+		<tr>
+			<td>$version</td>
+			<td>string</td>
+			<td>路由器版本</td>
+		</tr>
+	</table>
+	
+	<h3 id="addRoute()">addRoute($rule = [], $multiple = true)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$rule</td>
+			<td>array|string</td>
+			<td>路由规则</td>
+		</tr>
+		<tr>
+			<td>$multiple</td>
+			<td>boolean</td>
+			<td>是否多条</td>
+		</tr>
+	</table>
+	
+	<h3 id="routeInfo()">routeInfo($method = null, $uri = null)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$method</td>
+			<td>string</td>
+			<td>请求方法</td>
+		</tr>
+		<tr>
+			<td>$uri</td>
+			<td>string</td>
+			<td>请求 URI</td>
+		</tr>
+	</table>
+	
+	<h3 id="dispatcher()">dispatcher($routeInfo = [], $requestInfo = [], $controllerVars = [], $last = true)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$routeInfo</td>
+			<td>array</td>
+			<td>路由信息</td>
+		</tr>
+		<tr>
+			<td>$requestInfo</td>
+			<td>array</td>
+			<td>请求信息</td>
+		</tr>
+		<tr>
+			<td>$controllerVars</td>
+			<td>array</td>
+			<td>控制器变量</td>
+		</tr>
+	</table>
+	
+	<h3 id="controller()">controller($routeInfo = [], $requestInfo = [], $controllerVars = [], $last = true)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$routeInfo</td>
+			<td>array</td>
+			<td>路由信息</td>
+		</tr>
+		<tr>
+			<td>$requestInfo</td>
+			<td>array</td>
+			<td>请求信息</td>
+		</tr>
+		<tr>
+			<td>$controllerVars</td>
+			<td>array</td>
+			<td>控制器变量</td>
+		</tr>
+		<tr>
+			<td>$last</td>
+			<td>boolean</td>
+			<td>是否使用最后一个缓存对象</td>
+		</tr>
+	</table>
+	
+	<h3 id="template()">template($engine = 'league/plates', $version = null)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$engine</td>
+			<td>string</td>
+			<td>模板引擎名称</td>
+		</tr>
+		<tr>
+			<td>$version</td>
+			<td>string</td>
+			<td>模板引擎版本</td>
+		</tr>
+	</table>
+	
+	<h3 id="getUniqueId()">getUniqueId($routeInfo = [], $requestInfo = [], $controllerVars = [], $last = true)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$routeInfo</td>
+			<td>array</td>
+			<td>路由信息</td>
+		</tr>
+		<tr>
+			<td>$requestInfo</td>
+			<td>array</td>
+			<td>请求信息</td>
+		</tr>
+		<tr>
+			<td>$controllerVars</td>
+			<td>array</td>
+			<td>控制器变量</td>
+		</tr>
+	</table>
+	
+	<h3 id="getArrayVar()">getArrayVar($arr = [], $key = 0, $default = null)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$arr</td>
+			<td>[]</td>
+			<td>数组</td>
+		</tr>
+		<tr>
+			<td>$key</td>
+			<td>number|string</td>
+			<td>键名</td>
+		</tr>
+		<tr>
+			<td>$default</td>
+			<td></td>
+			<td>缺省值</td>
 		</tr>
 	</table>
 </body>
