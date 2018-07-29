@@ -9,7 +9,8 @@
 	"require": {
 	    "php": ">=5.4.0",
 		"nikic/fast-route": "^1.3.0",
-        "league/plates": "^3.3"
+        "league/plates": "^3.3",
+		"catfan/Medoo": "^1.5"
 	},
 	"autoload": {
 	    "psr-4": {

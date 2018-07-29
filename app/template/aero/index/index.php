@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>红券网￥优惠券折扣返利全网比价购物搜索</title>
-<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css" rel="stylesheet" type="text/css">
+<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=2" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -51,8 +51,29 @@
 			</dl>
 		</blockquote>
 		<nav>
-			<div>
-				<dl>
+			
+			
+			<?php
+			$div = "<div";
+			$html = '';
+			$width = 0;
+			foreach ($cat as $c) {
+				$dl = <<<HEREDOC
+<dl>
+					<dt>
+						<a href="?category=$c->category_id">$c->title</a>
+					</dt>
+					<dd>
+					</dd>
+				</dl>
+HEREDOC;
+				$html .= $dl;
+				$width += 75;
+			}
+			$div .= " style=\"width: {$width}px;\">";
+			echo $div . $html;;
+			?>
+				<!--dl>
 					<dt>
 						<a href="">女装男装</a>
 					</dt>
@@ -83,7 +104,7 @@
 							<a href="">3C配件</a>
 						</li>
 					</dd>
-				</dl>
+				</dl-->
 			</div>
 		</nav>
 	</div>

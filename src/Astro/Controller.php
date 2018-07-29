@@ -130,7 +130,7 @@ class Controller
 		
 		
 		// 输出
-		# print_r([$exit, $var, __METHOD__, __LINE__, __FILE__]);# 
+		# print_r([$exit, $var, __METHOD__, __LINE__, __FILE__]);exit; 
 		$theme = 'aero';
 		$folder = '';
 		$controller = $php->dispatcher->controllerName ? : 'index';

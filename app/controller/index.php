@@ -5,6 +5,9 @@ class Index extends _Abstract
 {
 	public function index()
 	{
-		return [__METHOD__, __LINE__, __FILE__];
+		$AlimamaProductCategory = new \app\model\AlimamaProductCategory;
+		$all = $AlimamaProductCategory->rootIds();
+		return ['cat' => $all];
+		# [$all, __METHOD__, __LINE__, __FILE__];
 	}
 }

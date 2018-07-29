@@ -31,3 +31,6 @@ _notfound()
 
 6.
 app\template\aero\index\index.php
+
+7.
+app\model\AlimamaProductCategory.php
