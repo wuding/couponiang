@@ -4,6 +4,7 @@ namespace Astro;
 class Database
 {
 	public static $instance;
+	public $inst;
 	public $adapter = 'Medoo';
 	public $driver = 'mysql';
 	public $host = 'localhost';
@@ -61,12 +62,12 @@ class Database
 		$name = ucwords($name);
 		$name = str_replace(' ', '', $name);
 		$class = '\Astro\Database\\' . $name;
-		return self::$instance = new $class($arg);
+		return $this->inst = new $class($arg);
 	}
 	
 	public function __call($name, $arguments)
 	{
-		$func = self::$instance;
+		$func = $this->inst;
 		$arg = $arguments;
 		# print_r($arg);exit;
 		

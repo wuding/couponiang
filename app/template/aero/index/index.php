@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>红券网￥优惠券折扣返利全网比价购物搜索</title>
-<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=2" rel="stylesheet" type="text/css">
+<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=11" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -51,61 +51,7 @@
 			</dl>
 		</blockquote>
 		<nav>
-			
-			
-			<?php
-			$div = "<div";
-			$html = '';
-			$width = 0;
-			foreach ($cat as $c) {
-				$dl = <<<HEREDOC
-<dl>
-					<dt>
-						<a href="?category=$c->category_id">$c->title</a>
-					</dt>
-					<dd>
-					</dd>
-				</dl>
-HEREDOC;
-				$html .= $dl;
-				$width += 75;
-			}
-			$div .= " style=\"width: {$width}px;\">";
-			echo $div . $html;;
-			?>
-				<!--dl>
-					<dt>
-						<a href="">女装男装</a>
-					</dt>
-					<dd>
-						<li>
-							<a href="">女装</a>
-						</li>
-						<li>
-							<a href="">男装</a>
-						</li>
-						<li>
-							<a href="">内衣</a>
-						</li>
-					</dd>
-				</dl>
-				<dl>
-					<dt>
-						<a href="">手机数码</a>
-					</dt>
-					<dd>
-						<li>
-							<a href="">手机</a>
-						</li>
-						<li>
-							<a href="">电脑</a>
-						</li>
-						<li>
-							<a href="">3C配件</a>
-						</li>
-					</dd>
-				</dl-->
-			</div>
+			<?=\app\view\Category::barStacked($cat)?>
 		</nav>
 	</div>
 </header>
@@ -315,74 +261,8 @@ HEREDOC;
 	<div class="main-in">
 		<article class="view-huge">
 			<section>
-				<header>
-					<h2>看过</h2>
-				</header>
 				<ol>
-					<li>
-						<div>
-							<a href="">
-								<p><img src="img/545216303635.jpg"></p>
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<p><img src="img/545216303635.jpg"></p>
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<p><img src="img/545216303635.jpg"></p>
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<p><img src="img/545216303635.jpg"></p>
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<img src="img/545216303635.jpg">
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<img src="img/545216303635.jpg">
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<img src="img/545216303635.jpg">
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<img src="img/545216303635.jpg">
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
+					<?=\app\view\Item::super($items)?>
 				</ol>
 			</section>
 			
@@ -394,7 +274,7 @@ HEREDOC;
 					<li>
 						<div>
 							<a href="">
-								<img src="img/545216303635.jpg">
+								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
 								<b>商品</b>
 							</a>
 						</div>
@@ -402,7 +282,7 @@ HEREDOC;
 					<li>
 						<div>
 							<a href="">
-								<img src="img/545216303635.jpg">
+								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
 								<b>商品</b>
 							</a>
 						</div>
@@ -410,7 +290,7 @@ HEREDOC;
 					<li>
 						<div>
 							<a href="">
-								<img src="img/545216303635.jpg">
+								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
 								<b>商品</b>
 							</a>
 						</div>
@@ -418,7 +298,7 @@ HEREDOC;
 					<li>
 						<div>
 							<a href="">
-								<img src="img/545216303635.jpg">
+								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
 								<b>商品</b>
 							</a>
 						</div>
@@ -426,7 +306,7 @@ HEREDOC;
 					<li>
 						<div>
 							<a href="">
-								<img src="img/545216303635.jpg">
+								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
 								<b>商品</b>
 							</a>
 						</div>
@@ -434,7 +314,7 @@ HEREDOC;
 					<li>
 						<div>
 							<a href="">
-								<img src="img/545216303635.jpg">
+								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
 								<b>商品</b>
 							</a>
 						</div>
@@ -442,7 +322,7 @@ HEREDOC;
 					<li>
 						<div>
 							<a href="">
-								<img src="img/545216303635.jpg">
+								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
 								<b>商品</b>
 							</a>
 						</div>
@@ -450,7 +330,7 @@ HEREDOC;
 					<li>
 						<div>
 							<a href="">
-								<img src="img/545216303635.jpg">
+								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
 								<b>商品</b>
 							</a>
 						</div>
@@ -460,7 +340,7 @@ HEREDOC;
 		
 		</article>
 
-		<hr>
+		<!--hr-->
 		
 		<article class="view-large">	
 			<section>

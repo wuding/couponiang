@@ -29,6 +29,7 @@ class Medoo
 	
 	public function setVar($arg = [])
 	{
+		# print_r($arg);
 		foreach ($arg as $key => $value) {
 			$this->$key = $value;
 		}
@@ -44,7 +45,7 @@ class Medoo
 			'password' => $this->password,
 			'port' => $this->port,
 		];
-		# print_r($options);exit; 
+		# print_r($options); exit; 
 		return self::$instance = new \Medoo\Medoo($options);
 	}
 	

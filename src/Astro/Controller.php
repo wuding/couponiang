@@ -83,6 +83,18 @@ class Controller
 		}
 	}
 	
+	/**
+	 * 获取查询
+	 *
+	 */
+	public function _get($name = null, $value = null)
+	{
+		if (isset($_GET[$name]) && null !== $_GET[$name]) {
+			$value = $_GET[$name];
+		}
+		return $value;
+	}
+	
 	public function _destruct($return = null, $exit = null, $destruct = null)
 	{
 		# print_r([$return, $exit, $destruct, __METHOD__, __LINE__, __FILE__]);
