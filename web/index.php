@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('Asia/Shanghai');
+
 /* 全局变量 */
 $_DEBUG = [
 	'code' => null,

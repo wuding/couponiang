@@ -49,6 +49,10 @@ class Medoo
 		return self::$instance = new \Medoo\Medoo($options);
 	}
 	
+	/**
+	 * 获取多条数据
+	 *
+	 */
 	public function select($where = [], $columns = null, $option = [], $group = [], $join = [])
 	{
 		$order = null;

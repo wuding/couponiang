@@ -65,67 +65,76 @@
 		
 		<blockquote class="site">
 			<form>
-				<select>
-					<option>
-						全部
-					</option>
-					<option>
-						女装男装
-					</option>
-				</select>
-				<select disabled>
-					<option>
-						分类
-					</option>
-					<option>
-						潮流女装
-					</option>
-				</select>
-				<select>
-					<option>
-						网站
-					</option>
-					<option>
-						淘宝
-					</option>
-					<option>
-						天猫
-					</option>
-					<option>
-						聚划算
-					</option>
-				</select>
+				<?=\app\view\Category::select($cat, $category_id, ['name' => 'category', 'style' => 'max-width: 75px;'])?>
+				<?php
+				$property = ['name' => 'subclass', 'style' => 'max-width: 75px;'];
+				if (!$category_id) {
+					$property []= 'disabled';
+				}
+				echo $subclasses = \app\view\Category::select($subclass, $subclass_id, $property, ['' => '分类']);
+				
+				$sites = [
+					'' => '网站',
+					1 => '淘宝',
+					2 => '天猫',
+					3 => '聚划算',
+				];
+				
+				echo \app\view\Form::select($sites, $site_id, ['name' => 'site']);
+				?><button type="submit">&crarr;</button>
 			</form>
 		</blockquote>
 		
 		<blockquote class="filter">
 			<h5>筛选</h5>
 			<form>
-				<select>
-					<option>
-						价格
-					</option>
-				</select>
-				<select>
-					<option>
-						省钱
-					</option>
-				</select>
-				<select>
-					<option>
-						开始
-					</option>
-				</select>
-				<select>
-					<option>
-						结束
-					</option>
-				</select>
-				<select>
-					<option>
-						销量
-					</option>
-				</select>
+				<?php
+				$prices = [
+					'' => '价格',
+					'9.9' => '9块9',
+					'20' => '20元',
+					'50' => '50元',
+					'100' => '100',
+				];
+				
+				$saves = [
+					'' => '省钱',
+					'10' => '10元',
+					'20' => '20元',
+					'50' => '50元',
+					'100' => '100',
+				];
+				
+				$starts = [
+					'' => '开始',
+					'2018-7-31' => '今天',
+					'2018-7-30' => '昨天',
+					'2018-7-29' => '前天',
+					'2018-7-23_2018-7-29' => '上周',
+				];
+				
+				$ends = [
+					'' => '结束',
+					'2018-7-31 23:59:59' => '今天',
+					'2018-8-1_2018-8-1 23:59:59' => '明天',
+					'2018-8-2' => '后天',
+					'2018-8-3_2018-8-5 23:59:59' => '周末',
+				];
+				
+				$sales = [
+					'' => '月销',
+					'100' => '100',
+					'500' => '500',
+					'1000' => '1千',
+					'5000' => '5千',
+				];
+				
+				echo \app\view\Form::select($prices, $price, ['name' => 'price']);
+				echo \app\view\Form::select($saves, $save, ['name' => 'save']);
+				echo \app\view\Form::select($starts, $start_time, ['name' => 'start']);
+				echo \app\view\Form::select($ends, $end_time, ['name' => 'end']);
+				echo \app\view\Form::select($sales, $sold, ['name' => 'sale']);
+				?><button type="submit">&crarr;</button>
 			</form>
 		</blockquote>
 	</div>
@@ -134,75 +143,45 @@
 		<blockquote class="view">
 			<h5>查看</h5>
 			<form>
-				<select>
-					<option>
-						默认
-					</option>
-					<option>
-						超大图
-					</option>
-					<option>
-						大图
-					</option>
-					<option>
-						中等图
-					</option>
-					<option>
-						小图
-					</option>
-					<option>
-						列表
-					</option>
-					<option>
-						详细
-					</option>
-					<option>
-						平铺
-					</option>
-					<option>
-						内容
-					</option>
-				</select>
+				<?php
+				$views = [
+					'' => '默认',
+					'huge' => '超大图',
+					'large' => '大图',
+					'medium' => '中等图',
+					'small' => '小图',
+					'list' => '列表',
+					'detail' => '详细',
+					'tile' => '平铺',
+					'content' => '内容',
+				];
+				echo \app\view\Form::select($views, $view, ['name' => 'view']);
+				?><button type="submit">&crarr;</button>
 			</form>
 		</blockquote>
 		
 		<blockquote class="order">
 			<h5>排序</h5>
 			<form>
-				<select>
-					<option>
-						默认
-					</option>
-					<option>
-						价格
-					</option>
-					<option>
-						省钱
-					</option>
-					<option>
-						开始
-					</option>
-					<option>
-						结束
-					</option>
-					<option>
-						销量
-					</option>
-					<option>
-						人气
-					</option>
-				</select>
-				<select>
-					<option>
-						方式
-					</option>
-					<option>
-						升序
-					</option>
-					<option>
-						降序
-					</option>
-				</select>
+				<?php
+				$sorts = [
+					'' => '默认',
+					'price' => '价格',
+					'save' => '省钱',
+					'start' => '开始',
+					'end' => '结束',
+					'sale' => '销量',
+				];
+				
+				$orders = [
+					'' => '方式',
+					'asc' => '升序',
+					'desc' => '降序',
+				];
+				
+				echo \app\view\Form::select($sorts, $sort, ['name' => 'sort']);
+				echo \app\view\Form::select($orders, $order, ['name' => 'order']);
+				?><button type="submit">&crarr;</button>
 			</form>
 		</blockquote>
 	
@@ -243,7 +222,7 @@
 					<option>
 						人气
 					</option>
-				</select>
+				</select><button type="submit">&crarr;</button>
 			</form>
 		</blockquote>
 		
@@ -262,7 +241,7 @@
 		<article class="view-huge">
 			<section>
 				<ol>
-					<?=\app\view\Item::super($items)?>
+					<?=\app\view\Item::huge($items)?>
 				</ol>
 			</section>
 			

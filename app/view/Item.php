@@ -12,7 +12,7 @@ class Item
 	 *
 	 *
 	 */
-	public static function super($data)
+	public static function huge($data)
 	{
 		$lis = '';
 		$i = 1;

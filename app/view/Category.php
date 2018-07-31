@@ -48,4 +48,24 @@ HEREDOC;
 		$div .= " style=\"width: {$width}px;\">";
 		return $div . $dls . '</div>';
 	}
+	
+	/**
+	 * 选择
+	 *
+	 */
+	public static function select($cat, $cat_id = null, $property = [], $arr = null)
+	{
+		if (null === $arr) {
+			$arr = [
+				'' => '全部',
+			];
+		}
+		
+		foreach ($cat as $c) {
+			$arr[$c->category_id] = $c->title;
+		}
+		$sel = \app\view\Form::select($arr, $cat_id, $property);
+		# exit;
+		return $sel;
+	}
 }
