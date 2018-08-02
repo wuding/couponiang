@@ -27,7 +27,7 @@ class _Controller extends \Astro\Controller
 	}
 	
 	/* HTTP映射动作 */
-	public function _get()
+	public function _get_()
 	{
 		# print_r([__METHOD__, __LINE__, __FILE__], true)
 		

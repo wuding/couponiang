@@ -17,10 +17,10 @@ class Controller
 	public $action = 'index'; //缺省的方法名称	
 	public $actionMethods = [
 		'_action' => [
-			'get' => '_get',
-			'post' => '_post',
-			'put' => '_put',
-			'delete' => '_delete',
+			'get' => '_get_',
+			'post' => '_post_',
+			'put' => '_put_',
+			'delete' => '_delete_',
 		],
 	]; //方法映射配置
 	public $destruct = 2; //析构函数执行后续动作 1自动 2手动

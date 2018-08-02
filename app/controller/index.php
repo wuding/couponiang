@@ -20,6 +20,7 @@ class Index extends _Abstract
 		$view = $this->_get('view');
 		$sort = $this->_get('sort');
 		$order = $this->_get('order');
+		$group = $this->_get('group');
 		$Category = new AlimamaProductCategory;
 		$Excel = new AlimamaChoiceExcel;
 		$now = date('Y-m-d H:i:s');
@@ -196,6 +197,7 @@ class Index extends _Abstract
 			'view' => $view,
 			'sort' => $sort,
 			'order' => $order,
+			'group' => $group,
 		];
 		# [$all, __METHOD__, __LINE__, __FILE__];
 	}

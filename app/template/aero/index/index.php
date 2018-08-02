@@ -191,38 +191,21 @@
 		<blockquote class="group">
 			<h5>分组</h5>
 			<form>
-				<select>
-					<option>
-						自动
-					</option>
-					<option>
-						禁用
-					</option>
-					<option>
-						分类
-					</option>
-					<option>
-						网站
-					</option>
-					<option>
-						价格
-					</option>
-					<option>
-						省钱
-					</option>
-					<option>
-						开始
-					</option>
-					<option>
-						结束
-					</option>
-					<option>
-						销量
-					</option>
-					<option>
-						人气
-					</option>
-				</select><button type="submit">&crarr;</button>
+				<?php
+				$groups = [
+					'' => '自动',
+					'disable' => '禁用',
+					'category' => '分类',
+					'site' => '网站',
+					'price' => '价格',
+					'save' => '省钱',
+					'start' => '开始',
+					'end' => '结束',
+					'sale' => '销量',
+				];
+				
+				echo \app\view\Form::select($groups, $group, ['name' => 'group']);
+				?><button type="submit">&crarr;</button>
 			</form>
 		</blockquote>
 		
@@ -236,12 +219,12 @@
 	</div>
 </header>
 
-<main>
+<main class="<?=$view?>">
 	<div class="main-in">
 		<article class="view-huge">
 			<section>
 				<ol>
-					<?=\app\view\Item::huge($items)?>
+					<?=\app\view\Item::huge($items, $view)?>
 				</ol>
 			</section>
 			

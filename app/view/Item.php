@@ -12,14 +12,25 @@ class Item
 	 *
 	 *
 	 */
-	public static function huge($data)
+	public static function huge($data, $view = '')
 	{
+		$cols = [
+			'' => 4,
+			'huge' => 4,
+			'large' => 5,
+			'medium' => 10,
+			'small' => 5,
+		];
+		
+		$col = isset($cols[$view]) ? $cols[$view] : 4;
+		
+		
 		$lis = '';
 		$i = 1;
 		foreach ($data as $row) {
 			$obj = (object) $row;
 			
-			$no = $i % 4;
+			$no = $i % $col;
 			$style = '';
 			if (1 == $no) {
 				$style = ' style="clear: left;"';
