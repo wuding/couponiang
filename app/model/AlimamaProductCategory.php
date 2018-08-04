@@ -31,9 +31,10 @@ class AlimamaProductCategory extends \Astro\Database
 		if ($all) {
 			foreach ($all as $key => $value) {
 				if (is_array($value)) {
-					$arr []= $value;
+					$k = $value['category_id'];
+					$arr [$k]= $value;
 				} elseif (is_object($value)) {
-					$arr []= (array) $all;
+					$arr = (array) $all;
 					break;
 				}
 			}
@@ -86,5 +87,21 @@ class AlimamaProductCategory extends \Astro\Database
 			$keys = array_keys($root->leaves);
 		}
 		return $keys;
+	}
+	
+	/**
+	 * 获取上级 ID
+	 *
+	 */
+	public function supId($id, $data)
+	{
+		$no = null;
+		if (isset($data[$id])) {
+			$datum = (object) $data[$id];
+			if (0 < $datum->upper_id) {
+				$no = $datum->upper_id;
+			}
+		}
+		return $no;
 	}
 }

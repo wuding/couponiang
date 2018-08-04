@@ -33,7 +33,7 @@ class Index extends _Abstract
 		$class = $Category->rootIds();
 		$tree = $Category->tree($class);
 		$keys = array_keys($tree);
-		# print_r([$keys, $tree]); 
+		# print_r([$keys, $tree, $class]);exit; 
 		
 		/* 商品 */
 		$where = [];
@@ -134,6 +134,13 @@ class Index extends _Abstract
 					$where['category_id'] = $Category->subIds($category_id, $tree);
 					# print_r($category_id);exit;
 				}
+				
+			} else {
+				$subclass_id = $category_id;
+				$category_id = $Category->supId($category_id, $class);
+			}
+			
+			if (isset($tree[$category_id])) {
 				$subclass = $tree[$category_id]->leaves;
 			}
 		}
@@ -182,6 +189,8 @@ class Index extends _Abstract
 		
 		$items = $Excel->items($where, $order_by, 40);
 		# print_r([$class, $tree, $items]);
+		$cat = $tree;
+		return get_defined_vars();
 		return [
 			'cat' => $tree, 
 			'items' => $items, 

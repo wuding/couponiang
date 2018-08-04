@@ -22,7 +22,7 @@ class AlimamaChoiceExcel extends \Astro\Database
 		$where += $condition;
 		
 		$column = '*';
-		$column = ['excel_id','category_id','name', 'pic'];
+		$column = ['excel_id', 'category_id', 'name', 'pic', 'cost'];
 		$option = [$sort, $limit];
 		
 		$join = [

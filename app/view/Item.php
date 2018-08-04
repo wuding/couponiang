@@ -41,6 +41,7 @@ class Item
 				<div>
 					<a href="/item/{$row['excel_id']}">
 						<p><img src="{$row['pic']}_400x400.jpg"></p>
+						<var>￥{$row['cost']}</var>
 						<b>{$row['name']}</b>
 					</a>
 				</div>

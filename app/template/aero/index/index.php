@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>红券网￥优惠券折扣返利全网比价购物搜索</title>
-<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=11" rel="stylesheet" type="text/css">
+<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=13" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -26,11 +26,22 @@
 		<div class="search">
 			<form>
 				<blockquote>
-					<button type="submit">&crarr;</button>
+					<button type="submit">&crarr;</button>					
 				</blockquote>
 				<div>
-					<input>
+					<input name="q">
 				</div>
+				<input name="category" value="<?=$category_id?>">
+				<input name="site" value="<?=$site_id?>">
+				<input name="price" value="<?=$price?>">
+				<input name="save" value="<?=$save?>">
+				<input name="start" value="<?=$start_time?>">
+				<input name="end" value="<?=$end_time?>">
+				<input name="sale" value="<?=$sold?>">
+				<input name="view" value="<?=$view?>">
+				<input name="sort" value="<?=$sort?>">
+				<input name="order" value="<?=$order?>">
+				<input name="group" value="<?=$group?>">
 			</form>
 		</div>
 	</div>
