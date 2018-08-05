@@ -21,6 +21,7 @@ class Index extends _Abstract
 		$sort = $this->_get('sort');
 		$order = $this->_get('order');
 		$group = $this->_get('group');
+		$query = trim($this->_get('q'));
 		$Category = new AlimamaProductCategory;
 		$Excel = new AlimamaChoiceExcel;
 		$now = date('Y-m-d H:i:s');
@@ -37,6 +38,11 @@ class Index extends _Abstract
 		
 		/* 商品 */
 		$where = [];
+		// 关键词
+		if ($query) {
+			$where['name[~]'] = $query;
+		}
+		
 		// 优惠价
 		if ($price) {
 			switch ($price) {

@@ -29,19 +29,21 @@
 					<button type="submit">&crarr;</button>					
 				</blockquote>
 				<div>
-					<input name="q">
+					<input name="q" value="<?=htmlspecialchars($query)?>">
 				</div>
-				<input name="category" value="<?=$category_id?>">
-				<input name="site" value="<?=$site_id?>">
-				<input name="price" value="<?=$price?>">
-				<input name="save" value="<?=$save?>">
-				<input name="start" value="<?=$start_time?>">
-				<input name="end" value="<?=$end_time?>">
-				<input name="sale" value="<?=$sold?>">
-				<input name="view" value="<?=$view?>">
-				<input name="sort" value="<?=$sort?>">
-				<input name="order" value="<?=$order?>">
-				<input name="group" value="<?=$group?>">
+				<span style="display:none">
+					<input name="category" value="<?=$subclass_id ? : $category_id?>">
+					<input name="site" value="<?=$site_id?>">
+					<input name="price" value="<?=$price?>">
+					<input name="save" value="<?=$save?>">
+					<input name="start" value="<?=$start_time?>">
+					<input name="end" value="<?=$end_time?>">
+					<input name="sale" value="<?=$sold?>">
+					<input name="view" value="<?=$view?>">
+					<input name="sort" value="<?=$sort?>">
+					<input name="order" value="<?=$order?>">
+					<input name="group" value="<?=$group?>">
+				</span>
 			</form>
 		</div>
 	</div>
@@ -92,7 +94,7 @@
 				];
 				
 				echo \app\view\Form::select($sites, $site_id, ['name' => 'site']);
-				?><button type="submit">&crarr;</button>
+				?>
 			</form>
 		</blockquote>
 		
@@ -145,7 +147,7 @@
 				echo \app\view\Form::select($starts, $start_time, ['name' => 'start']);
 				echo \app\view\Form::select($ends, $end_time, ['name' => 'end']);
 				echo \app\view\Form::select($sales, $sold, ['name' => 'sale']);
-				?><button type="submit">&crarr;</button>
+				?>
 			</form>
 		</blockquote>
 	</div>
@@ -167,7 +169,7 @@
 					'content' => '内容',
 				];
 				echo \app\view\Form::select($views, $view, ['name' => 'view']);
-				?><button type="submit">&crarr;</button>
+				?>
 			</form>
 		</blockquote>
 		
@@ -192,7 +194,7 @@
 				
 				echo \app\view\Form::select($sorts, $sort, ['name' => 'sort']);
 				echo \app\view\Form::select($orders, $order, ['name' => 'order']);
-				?><button type="submit">&crarr;</button>
+				?>
 			</form>
 		</blockquote>
 	
@@ -216,7 +218,7 @@
 				];
 				
 				echo \app\view\Form::select($groups, $group, ['name' => 'group']);
-				?><button type="submit">&crarr;</button>
+				?>
 			</form>
 		</blockquote>
 		
@@ -452,5 +454,40 @@
 		</article>
 	</div>
 </main>
+
+<!-- 脚本 -->
+<script src="js/jquery-3.3.1.js?v=0.2.26"></script>
+<script>
+var idx = {
+	'category': 0,
+	'subclass': 0,
+	'site': 1,
+	'price': 2,
+	'save': 3,
+	'start': 4,
+	'end': 5,
+	'sale': 6,
+	'view': 7,
+	'sort': 8,
+	'order': 9,
+	'group': 10
+};
+var npt = $('.search span input');
+$('.toolbar select').on('change', function(event){
+	var name = $(this).attr('name');
+	var val = $(this).val();
+	if ('subclass' == name && !val) {
+		var sel = $('.toolbar select')[0];
+		val = $(sel).val();
+	}
+	var index = idx[name];
+	var input = npt[index];
+	$(input).val(val);
+	if (!val) {
+		$(input).removeAttr('name');
+	}
+	$('.search form').submit();
+});
+</script>
 </body>
 </html>

@@ -87,7 +87,7 @@ class Medoo
 			# print_r([$join, __METHOD__, __LINE__, __FILE__]);
 			$all = self::$instance->select($table, $join, $columns, $where);
 		}
-		# print_r([self::$instance->sql]);
+		# print_r([self::$instance->sql]); 
 		# print_r([$all, self::$instance, $table, $columns, $where, $join]);exit; 
 		return $all;
 	}
