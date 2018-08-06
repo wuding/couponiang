@@ -69,7 +69,7 @@ class Dispatcher
 		if (!class_exists($class)) {
 			$this->moduleInfo[$class]['exist'] = -1;
 			$routeInfo = [0];
-			$class = $this->getControllerClassName($routeInfo, $requestInfo);
+			$class = $this->getControllerClassName($routeInfo, $requestInfo, 1);
 		}
 		return $this->controller = $this->controllers[$this->controllerUniqueId] = new $class($this->actionName, $requestInfo['method'], $controllerVars);
 	}
@@ -78,7 +78,7 @@ class Dispatcher
 	 * 获取控制器类名
 	 *
 	 */
-	public function getControllerClassName($routeInfo = [], $requestInfo = [])
+	public function getControllerClassName($routeInfo = [], $requestInfo = [], $notFound = null)
 	{
 		$routeInfo = $routeInfo ? : $this->routeInfo;
 		$requestInfo = $requestInfo ? : $this->requestInfo;
@@ -91,7 +91,7 @@ class Dispatcher
 				$vars = $routeInfo[2];
 				break;
 			case 0:
-				$handler = '_module/_controller/_notfound';
+				$handler = $notFound ? '_module/_controller/_notfound' : trim($requestInfo['uri'], '/');
 				break;
 			case 2:
 				$allowedMethods = $routeInfo[1];

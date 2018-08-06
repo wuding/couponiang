@@ -12,6 +12,7 @@ class Controller
 	public $actionMethod = null; //请求的HTTP方法名称
 	public $actionRun = null; //最终执行的方法名称	
 	public $exec = 0;
+	public $disableView = false;
 	
 	/* 配置 */
 	public $action = 'index'; //缺省的方法名称	
@@ -149,7 +150,11 @@ class Controller
 		$path = '/index';
 		$script = $theme . '/' . $folder . $controller . $path;
 		/* 渲染页面 */
-		echo $html = $php->template->render($script, $var);
+		if (!$this->disableView) {
+			echo $html = $php->template->render($script, $var);
+		} elseif ('info' == $this->disableView) {
+			print_r([$exit, $var, __METHOD__, __LINE__, __FILE__]);
+		}
 		
 		// 退出
 		if (null === $exit) {
