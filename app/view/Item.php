@@ -39,10 +39,10 @@ class Item
 			$li = <<<HEREDOC
 			<li $style>
 				<div>
-					<a href="/item/{$row['excel_id']}">
+					<a href="/item/{$row['list_id']}">
 						<p><img src="{$row['pic']}_400x400.jpg"></p>
-						<var>￥{$row['cost']}</var>
-						<b>{$row['name']}</b>
+						<var>￥{$row['price']}</var>
+						<b>{$row['title']}</b>
 					</a>
 				</div>
 			</li>

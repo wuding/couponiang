@@ -2,7 +2,7 @@
 namespace app\controller;
 
 use app\model\AlimamaProductCategory;
-use app\model\AlimamaChoiceExcel;
+use app\model\AlimamaChoiceList;
 
 class Index extends _Abstract
 {
@@ -23,7 +23,7 @@ class Index extends _Abstract
 		$group = $this->_get('group');
 		$query = trim($this->_get('q'));
 		$Category = new AlimamaProductCategory;
-		$Excel = new AlimamaChoiceExcel;
+		$Excel = new AlimamaChoiceList;
 		$now = date('Y-m-d H:i:s');
 		$sites = [1, 2 ,3];
 		$subclass = [];
@@ -40,26 +40,26 @@ class Index extends _Abstract
 		$where = [];
 		// 关键词
 		if ($query) {
-			$where['name[~]'] = $query;
+			$where['title[~]'] = $query;
 		}
 		
 		// 优惠价
 		if ($price) {
 			switch ($price) {
 				case '9.9':
-					$where['cost[<]'] = 10;
+					$where['price[<]'] = 10;
 					break;
 				case '20':
-					$where['cost[<>]'] = [10, 20];
+					$where['price[<>]'] = [10, 20];
 					break;
 				case '50':
-					$where['cost[<>]'] = [20, 50];
+					$where['price[<>]'] = [20, 50];
 					break;
 				case '100':
-					$where['cost[<>]'] = [50, 100];
+					$where['price[<>]'] = [50, 100];
 					break;
 				default:
-					$where['cost[<=]'] = $price;
+					$where['price[<=]'] = $price;
 			}
 		}
 		
@@ -67,19 +67,19 @@ class Index extends _Abstract
 		if ($save) {
 			switch ($save) {
 				case '10':
-					$where['discount[<>]'] = [10, 19.99];
+					$where['save[<>]'] = [10, 19.99];
 					break;
 				case '20':
-					$where['discount[<>]'] = [20, 49.99];
+					$where['save[<>]'] = [20, 49.99];
 					break;
 				case '50':
-					$where['discount[<>]'] = [50, 99.99];
+					$where['save[<>]'] = [50, 99.99];
 					break;
 				case '100':
-					$where['discount[>='] = 100;
+					$where['save[>='] = 100;
 					break;
 				default:
-					$where['discount[>=]'] = $save;
+					$where['save[>=]'] = $save;
 			}
 		}
 		
@@ -112,12 +112,13 @@ class Index extends _Abstract
 				$where['end[>=]'] = $end_times[0];
 			}
 		} else {
-			$where['end[<]'] = $now;
+			$where['end[>]'] = $now;
 		}
 		
 		// 网站
 		if ($site_id) {
 			if (in_array($site_id, $sites)) {
+				/*
 				switch ($site_id) {
 					case '1':
 						$where['platform'] = '淘宝';
@@ -129,6 +130,8 @@ class Index extends _Abstract
 						$where['group[>]'] = 0;
 						break;
 				}
+				*/
+				$where['site'] = $site_id;
 			}
 		}
 		
@@ -155,28 +158,28 @@ class Index extends _Abstract
 		if ($sold) {
 			switch ($sold) {
 				case '100':
-					$where['sale[<>]'] = [100, 499];
+					$where['sold[<>]'] = [100, 499];
 					break;
 				case '500':
-					$where['sale[<>]'] = [500, 999];
+					$where['sold[<>]'] = [500, 999];
 					break;
 				case '1000':
-					$where['sale[<>]'] = [1000, 4999];
+					$where['sold[<>]'] = [1000, 4999];
 					break;
 				default:
-					$where['sale[>=]'] = $sold;
+					$where['sold[>=]'] = $sold;
 			}
 		}
 		
 		// 排序
 		$sort_by = $sort ? : '';
 		$sorts = [
-			'' => 'excel_id',
-			'price' => 'cost',
-			'save' => 'discount',
+			'' => 'list_id',
+			'price' => 'price',
+			'save' => 'save',
 			'start' => 'start',
 			'end' => 'end',
-			'sale' => 'sale',
+			'sale' => 'sold',
 		];
 		$orders = [
 			'' => 'DESC',
@@ -197,23 +200,5 @@ class Index extends _Abstract
 		# print_r([$class, $tree, $items]);
 		$cat = $tree;
 		return get_defined_vars();
-		return [
-			'cat' => $tree, 
-			'items' => $items, 
-			'price' => $price,
-			'save' => $save,
-			'category_id' => $category_id, 
-			'subclass' => $subclass,
-			'subclass_id' => $subclass_id,
-			'start_time' => $start_time,
-			'end_time' => $end_time,
-			'site_id' => $site_id,
-			'sold' => $sold,
-			'view' => $view,
-			'sort' => $sort,
-			'order' => $order,
-			'group' => $group,
-		];
-		# [$all, __METHOD__, __LINE__, __FILE__];
 	}
 }

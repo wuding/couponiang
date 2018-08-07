@@ -71,164 +71,109 @@
 
 <header class="toolbar">
 	<div class="toolbar-in">
-	<div class="toolbar-left">
-		<blockquote class="nav">
-			<a href="" title="导航">[=]</a>
-		</blockquote>
+		<div class="toolbar-left">
+			<blockquote class="site">
+				<form>
+					<?php
+					$property = ['name' => 'subclass', 'style' => 'max-width: 75px;'];
+					if (!$category_id) {
+						$property []= 'disabled';
+					}
+					
+					$sites = [
+						'' => '网站',
+						1 => '淘宝',
+						2 => '天猫',
+						3 => '聚划算',
+					];
+					
+					echo \app\view\Category::select($cat, $category_id, ['name' => 'category', 'style' => 'max-width: 75px;']);
+					echo \app\view\Category::select($subclass, $subclass_id, $property, ['' => '分类']);
+					echo \app\view\Form::select($sites, $site_id, ['name' => 'site']);
+					?>
+				</form>
+			</blockquote>
+			
+			<blockquote class="filter">
+				<h5>筛选</h5>
+				<form>
+					<?php
+					$prices = [
+						'' => '价格',
+						'9.9' => '9块9',
+						'20' => '20元',
+						'50' => '50元',
+						'100' => '100',
+					];
+					
+					$saves = [
+						'' => '省钱',
+						'10' => '10元',
+						'20' => '20元',
+						'50' => '50元',
+						'100' => '100',
+					];
+					
+					$starts = [
+						'' => '开始',
+						'2018-7-31' => '今天',
+						'2018-7-30' => '昨天',
+						'2018-7-29' => '前天',
+						'2018-7-23_2018-7-29' => '上周',
+					];
+					
+					$ends = [
+						'' => '结束',
+						'2018-7-31 23:59:59' => '今天',
+						'2018-8-1_2018-8-1 23:59:59' => '明天',
+						'2018-8-2' => '后天',
+						'2018-8-3_2018-8-5 23:59:59' => '周末',
+					];
+					
+					$sales = [
+						'' => '月销',
+						'100' => '100',
+						'500' => '500',
+						'1000' => '1千',
+						'5000' => '5千',
+					];
+					
+					echo \app\view\Form::select($prices, $price, ['name' => 'price']);
+					echo \app\view\Form::select($saves, $save, ['name' => 'save']);
+					echo \app\view\Form::select($starts, $start_time, ['name' => 'start']);
+					echo \app\view\Form::select($ends, $end_time, ['name' => 'end']);
+					echo \app\view\Form::select($sales, $sold, ['name' => 'sale']);
+					?>
+				</form>
+			</blockquote>
+		</div>
 		
-		<blockquote class="site">
-			<form>
-				<?=\app\view\Category::select($cat, $category_id, ['name' => 'category', 'style' => 'max-width: 75px;'])?>
-				<?php
-				$property = ['name' => 'subclass', 'style' => 'max-width: 75px;'];
-				if (!$category_id) {
-					$property []= 'disabled';
-				}
-				echo $subclasses = \app\view\Category::select($subclass, $subclass_id, $property, ['' => '分类']);
-				
-				$sites = [
-					'' => '网站',
-					1 => '淘宝',
-					2 => '天猫',
-					3 => '聚划算',
-				];
-				
-				echo \app\view\Form::select($sites, $site_id, ['name' => 'site']);
-				?>
-			</form>
-		</blockquote>
-		
-		<blockquote class="filter">
-			<h5>筛选</h5>
-			<form>
-				<?php
-				$prices = [
-					'' => '价格',
-					'9.9' => '9块9',
-					'20' => '20元',
-					'50' => '50元',
-					'100' => '100',
-				];
-				
-				$saves = [
-					'' => '省钱',
-					'10' => '10元',
-					'20' => '20元',
-					'50' => '50元',
-					'100' => '100',
-				];
-				
-				$starts = [
-					'' => '开始',
-					'2018-7-31' => '今天',
-					'2018-7-30' => '昨天',
-					'2018-7-29' => '前天',
-					'2018-7-23_2018-7-29' => '上周',
-				];
-				
-				$ends = [
-					'' => '结束',
-					'2018-7-31 23:59:59' => '今天',
-					'2018-8-1_2018-8-1 23:59:59' => '明天',
-					'2018-8-2' => '后天',
-					'2018-8-3_2018-8-5 23:59:59' => '周末',
-				];
-				
-				$sales = [
-					'' => '月销',
-					'100' => '100',
-					'500' => '500',
-					'1000' => '1千',
-					'5000' => '5千',
-				];
-				
-				echo \app\view\Form::select($prices, $price, ['name' => 'price']);
-				echo \app\view\Form::select($saves, $save, ['name' => 'save']);
-				echo \app\view\Form::select($starts, $start_time, ['name' => 'start']);
-				echo \app\view\Form::select($ends, $end_time, ['name' => 'end']);
-				echo \app\view\Form::select($sales, $sold, ['name' => 'sale']);
-				?>
-			</form>
-		</blockquote>
-	</div>
-	
-	<div class="toolbar-right">
-		<blockquote class="view">
-			<h5>查看</h5>
-			<form>
-				<?php
-				$views = [
-					'' => '默认',
-					'huge' => '超大图',
-					'large' => '大图',
-					'medium' => '中等图',
-					'small' => '小图',
-					'list' => '列表',
-					'detail' => '详细',
-					'tile' => '平铺',
-					'content' => '内容',
-				];
-				echo \app\view\Form::select($views, $view, ['name' => 'view']);
-				?>
-			</form>
-		</blockquote>
-		
-		<blockquote class="order">
-			<h5>排序</h5>
-			<form>
-				<?php
-				$sorts = [
-					'' => '默认',
-					'price' => '价格',
-					'save' => '省钱',
-					'start' => '开始',
-					'end' => '结束',
-					'sale' => '销量',
-				];
-				
-				$orders = [
-					'' => '方式',
-					'asc' => '升序',
-					'desc' => '降序',
-				];
-				
-				echo \app\view\Form::select($sorts, $sort, ['name' => 'sort']);
-				echo \app\view\Form::select($orders, $order, ['name' => 'order']);
-				?>
-			</form>
-		</blockquote>
-	
-		
-		
-		
-		<blockquote class="group">
-			<h5>分组</h5>
-			<form>
-				<?php
-				$groups = [
-					'' => '自动',
-					'disable' => '禁用',
-					'category' => '分类',
-					'site' => '网站',
-					'price' => '价格',
-					'save' => '省钱',
-					'start' => '开始',
-					'end' => '结束',
-					'sale' => '销量',
-				];
-				
-				echo \app\view\Form::select($groups, $group, ['name' => 'group']);
-				?>
-			</form>
-		</blockquote>
-		
-		<blockquote class="tool">
-			<a href="" title="工具" class="hide">[V]</a>
-			<a href="" title="预览">[P]</a>
-			<a href="" title="帮助">[?]</a>
-		</blockquote>	
-		
-	</div>
+		<div class="toolbar-right">
+			<blockquote class="order">
+				<h5>排序</h5>
+				<form>
+					<?php
+					$sorts = [
+						'' => '默认',
+						'price' => '价格',
+						'save' => '省钱',
+						'start' => '开始',
+						'end' => '结束',
+						'sale' => '销量',
+					];
+					
+					$orders = [
+						'' => '方式',
+						'asc' => '升序',
+						'desc' => '降序',
+					];
+					
+					echo \app\view\Form::select($sorts, $sort, ['name' => 'sort']);
+					echo \app\view\Form::select($orders, $order, ['name' => 'order']);
+					?>
+				</form>
+			</blockquote>
+		</div>
 	</div>
 </header>
 

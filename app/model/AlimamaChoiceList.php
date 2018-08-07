@@ -1,11 +1,11 @@
 <?php
 namespace app\model;
 
-class AlimamaChoiceExcel extends \Astro\Database
+class AlimamaChoiceList extends \Astro\Database
 {
 	public $db_name = 'com_urlnk87';
-	public $table_name = 'alimama_choice_excel';
-	public $primary_key = 'excel_id';
+	public $table_name = 'alimama_choice_list';
+	public $primary_key = 'list_id';
 	
 	/**
 	 * 获取产品列表
@@ -13,21 +13,18 @@ class AlimamaChoiceExcel extends \Astro\Database
 	 */
 	public function items($condition = [], $sort = null, $limit = 40)
 	{
-		$sort = $sort ? : ['excel_id' => 'DESC'];
+		$sort = $sort ? : [$this->primary_key => 'DESC'];
 		$now = date('Y-m-d H:i:s');
 		
 		/* 获取数据 */
-		$where = "`upper_id` = -1";
 		$where = [];
 		$where += $condition;
 		
 		$column = '*';
-		$column = ['excel_id', 'category_id', 'name', 'pic', 'cost'];
+		$column = [$this->primary_key, 'category_id', 'title', 'pic', 'price'];
 		$option = [$sort, $limit];
 		
-		$join = [
-			'[>]com_urlnk.alimama_product_category' => ['class' => 'title'],
-		];
+		$join = [];
 		$all = $this->select($where, $column, $option, null, $join);
 		return $all;
 	}
@@ -53,5 +50,18 @@ class AlimamaChoiceExcel extends \Astro\Database
 			}
 		}
 		return $arr;
+	}
+	
+	/**
+	 * 分类条目数 - 未使用
+	 *
+	 */
+	public function categoryNum()
+	{
+		$where = [];
+		$column = ['category_id', 'COUNT(0) AS num'];
+		$option = ['category_id', 200];
+		$all = $this->select($where, $column, $option, ['category_id']);
+		print_r($all);
 	}
 }
