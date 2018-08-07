@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>红券网￥优惠券折扣返利全网比价购物搜索</title>
-<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=13" rel="stylesheet" type="text/css">
+<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=14" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -39,10 +39,8 @@
 					<input name="start" value="<?=$start_time?>">
 					<input name="end" value="<?=$end_time?>">
 					<input name="sale" value="<?=$sold?>">
-					<input name="view" value="<?=$view?>">
 					<input name="sort" value="<?=$sort?>">
 					<input name="order" value="<?=$order?>">
-					<input name="group" value="<?=$group?>">
 				</span>
 			</form>
 		</div>
@@ -64,7 +62,7 @@
 			</dl>
 		</blockquote>
 		<nav>
-			<?=\app\view\Category::barStacked($cat)?>
+			<?=\app\view\Category::barStacked($tree)?>
 		</nav>
 	</div>
 </header>
@@ -87,7 +85,7 @@
 						3 => '聚划算',
 					];
 					
-					echo \app\view\Category::select($cat, $category_id, ['name' => 'category', 'style' => 'max-width: 75px;']);
+					echo \app\view\Category::select($tree, $category_id, ['name' => 'category', 'style' => 'max-width: 75px;']);
 					echo \app\view\Category::select($subclass, $subclass_id, $property, ['' => '分类']);
 					echo \app\view\Form::select($sites, $site_id, ['name' => 'site']);
 					?>
@@ -116,18 +114,18 @@
 					
 					$starts = [
 						'' => '开始',
-						'2018-7-31' => '今天',
-						'2018-7-30' => '昨天',
-						'2018-7-29' => '前天',
-						'2018-7-23_2018-7-29' => '上周',
+						'today' => '今天',
+						'yesterday' => '昨天',
+						'DBY' => '前天',
+						'last_week' => '上周',
 					];
 					
 					$ends = [
 						'' => '结束',
-						'2018-7-31 23:59:59' => '今天',
-						'2018-8-1_2018-8-1 23:59:59' => '明天',
-						'2018-8-2' => '后天',
-						'2018-8-3_2018-8-5 23:59:59' => '周末',
+						'today' => '今天',
+						'tomorrow' => '明天',
+						'DAT' => '后天',
+						'weekend' => '周末',
 					];
 					
 					$sales = [
@@ -159,7 +157,7 @@
 						'save' => '省钱',
 						'start' => '开始',
 						'end' => '结束',
-						'sale' => '销量',
+						'sale' => '月销',
 					];
 					
 					$orders = [
@@ -177,231 +175,27 @@
 	</div>
 </header>
 
-<main class="<?=$view?>">
+<main class="large">
 	<div class="main-in">
 		<article class="view-huge">
 			<section>
 				<ol>
-					<?=\app\view\Item::huge($items, $view)?>
+					<?=\app\view\Item::huge($items)?>
 				</ol>
 			</section>
 			
-			<section>
+			<!--section>
 				<header>
 					<h2>看过</h2>
 				</header>
-				<ol>
-					<li>
-						<div>
-							<a href="">
-								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href="">
-								<img src="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/img/545216303635.jpg">
-								<b>商品</b>
-							</a>
-						</div>
-					</li>
-				</ol>
-			</section>
-		
+			</section-->		
 		</article>
-
 		<!--hr-->
-		
-		<article class="view-large">	
-			<section>
-				<header>
-					<h2>女装男装</h2>
-				</header>
-				<div>
-					<ol>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-					</ol>
-				</div>
-			</section>
-			
-			<section>
-				<header>
-					<h2>聚划算</h2>
-				</header>
-				<div>
-					<ol>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-					</ol>
-				</div>
-			</section>
-		</article>
-
-		<article class="view-medium">	
-			<section>
-				<header>
-					<h2>9块9</h2>
-				</header>
-				<div>
-					<ol>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-					</ol>
-				</div>
-			</section>
-		</article>
-			
-		
-			
-		<article class="view-small">
-			<section>
-				<header>
-					<h2>今天结束</h2>
-				</header>
-				<div>
-					<ol>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-					</ol>
-				</div>
-			</section>
-		</article>
-			
-		<article class="view-list">	
-			<section>
-				<header>
-					<h2>热销</h2>
-				</header>
-				<div>
-					<ol>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-					</ol>
-				</div>
-			</section>
-		</article>
-			
-		<article class="view-detail">	
-			<section>
-				<header>
-					<h2>超高人气</h2>
-				</header>
-				<div>
-					<ol>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-					</ol>
-				</div>
-			</section>
-		</article>
-		
-		<article class="view-tile">	
-			<section>
-				<header>
-					<h2>省10元</h2>
-				</header>
-				<div>
-					<ol>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-					</ol>
-				</div>
-			</section>
-		</article>
-			
-		<article class="view-content">	
-			<section>
-				<header>
-					<h2>今天开始</h2>
-				</header>
-				<div>
-					<ol>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-						<li>商品</li>
-					</ol>
-				</div>
-			</section>
-		</article>
 	</div>
 </main>
 
 <!-- 脚本 -->
-<script src="js/jquery-3.3.1.js?v=0.2.26"></script>
+<script src="js/jquery-3.3.1.js"></script>
 <script>
 var idx = {
 	'category': 0,
@@ -412,10 +206,8 @@ var idx = {
 	'start': 4,
 	'end': 5,
 	'sale': 6,
-	'view': 7,
-	'sort': 8,
-	'order': 9,
-	'group': 10
+	'sort': 7,
+	'order': 8,
 };
 var npt = $('.search span input');
 $('.toolbar select').on('change', function(event){

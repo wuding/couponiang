@@ -15,14 +15,14 @@ class Item
 	public static function huge($data, $view = '')
 	{
 		$cols = [
-			'' => 4,
+			'' => 5,
 			'huge' => 4,
 			'large' => 5,
 			'medium' => 10,
 			'small' => 5,
 		];
 		
-		$col = isset($cols[$view]) ? $cols[$view] : 4;
+		$col = isset($cols[$view]) ? $cols[$view] : $cols[''];
 		
 		
 		$lis = '';

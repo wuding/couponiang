@@ -1,34 +1,29 @@
 <?php
 namespace app\module\api\controller;
 
-use app\model\AlimamaProductCategory;
-use app\model\AlimamaChoiceExcel;
+use app\helper\Item as HelperItem;
 
 class Item extends _Abstract
 {
-	public $disableView = 'info';
+	public $disableView = 'info2';
 	
 	public function index()
 	{
 		return [__METHOD__, __LINE__, __FILE__];
 	}
 	
+	/**
+	 * 获取商品列表
+	 *
+	 */
 	public function _get_list()
 	{
-		$query = trim($this->_get('q'));
-		$category_id = $this->_get('category');
-		$Excel = new AlimamaChoiceExcel;
+		/* 定义 */
+		$Item = new HelperItem;
 		
-		$where = [];
-		$order_by = null;
-		
-		// 关键词
-		if ($query) {
-			$where['name[~]'] = $query;
-		}
-		
-		$items = $Excel->items($where, $order_by, 5);
-		unset($Excel);
+		/* 商品 */
+		extract($Item->list(4));
+		unset($List, $Category);
 		$this->_json(0, '', $items);
 	}
 }

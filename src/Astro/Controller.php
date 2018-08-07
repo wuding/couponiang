@@ -1,7 +1,7 @@
 <?php
 namespace Astro;
 
-class Controller
+class Controller extends Core
 {
 	/* 参数 */
 	public $methods = null;	 //所有的方法名称
@@ -84,23 +84,13 @@ class Controller
 		}
 	}
 	
-	/**
-	 * 获取查询
-	 *
-	 */
-	public function _get($name = null, $value = null)
-	{
-		if (isset($_GET[$name]) && null !== $_GET[$name]) {
-			$value = $_GET[$name];
-		}
-		return $value;
-	}
+	
 	
 	public function _destruct($return = null, $exit = null, $destruct = null)
 	{
 		# print_r([$return, $exit, $destruct, __METHOD__, __LINE__, __FILE__]);
 		$php = $GLOBALS['PHP'];
-		$template = $php->template();
+		# $template = $php->template();
 		# print_r($php);
 		$method = $this->httpMethod;
 		$action = $this->action;
@@ -151,7 +141,7 @@ class Controller
 		$script = $theme . '/' . $folder . $controller . $path;
 		/* 渲染页面 */
 		if (!$this->disableView) {
-			echo $html = $php->template->render($script, $var);
+			echo $html = $php->template()->render($script, $var);
 		} elseif ('info' == $this->disableView) {
 			print_r([$exit, $var, __METHOD__, __LINE__, __FILE__]);
 		}

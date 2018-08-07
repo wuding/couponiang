@@ -16,6 +16,6 @@ class _Abstract extends \Astro\Controller
 			'data' => $data,
 		];
 		echo $json = json_encode($arr);
-		exit;
+		# exit;
 	}
 }

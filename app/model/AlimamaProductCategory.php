@@ -7,12 +7,20 @@ class AlimamaProductCategory extends \Astro\Database
 	public $table_name = 'alimama_product_category';
 	public $primary_key = 'category_id';
 	
+	public static $root_ids = null;
+	public static $tree = null;
+	public static $keys = null;
+	
 	/**
 	 * 获取主类目
 	 *
 	 */
 	public function rootIds()
 	{
+		if (null !== self::$root_ids) {
+			return self::$root_ids;
+		}
+		
 		/* 获取数据 */
 		$where = "`upper_id` = -1";
 		$where = [
@@ -39,15 +47,23 @@ class AlimamaProductCategory extends \Astro\Database
 				}
 			}
 		}
-		return $arr;
+		return self::$root_ids = $arr;
 	}
 	
 	/**
 	 * 分类多维数组
 	 *
 	 */
-	public function tree($data)
+	public function tree($data = null)
 	{
+		if (null !== self::$tree) {
+			return self::$tree;
+		}
+		
+		if (null === $data) {
+			$data = $this->rootIds();
+		}
+		
 		/* 分开 */
 		$root = [];
 		$leaf = [];
@@ -72,15 +88,53 @@ class AlimamaProductCategory extends \Astro\Database
 			}
 			$tree [$key]= $value;
 		}
-		return $tree;
+		return self::$tree = $tree;
 	}
+	
+	/**
+	 * tree 的键名
+	 *
+	 */
+	public function keys($tree = null)
+	{
+		if (null !== self::$keys) {
+			return self::$keys;
+		}
+		
+		if (null === $tree) {
+			$tree = $this->tree();
+		}
+		
+		return self::$keys = array_keys($tree);
+	}
+	
+	/**
+	 * 获取子类目
+	 *
+	 */
+	public function subclass($category_id)
+	{
+		$subclass = [];
+		if ($category_id) {
+			$tree = $this->tree();
+			if (isset($tree[$category_id])) {
+				$subclass = $tree[$category_id]->leaves;
+			}
+		}
+		return $subclass;
+	}
+	
 	
 	/**
 	 * 获取子类 ID
 	 *
 	 */
-	public function subIds($id, $data)
+	public function subIds($id, $data = null)
 	{
+		if (null === $data) {
+			$data = $this->tree();
+		}
+		
 		$keys = [];
 		if (isset($data[$id])) {
 			$root = $data[$id];
@@ -93,8 +147,12 @@ class AlimamaProductCategory extends \Astro\Database
 	 * 获取上级 ID
 	 *
 	 */
-	public function supId($id, $data)
+	public function supId($id, $data = null)
 	{
+		if (null === $data) {
+			$data = $this->rootIds();
+		}
+		
 		$no = null;
 		if (isset($data[$id])) {
 			$datum = (object) $data[$id];
@@ -104,4 +162,6 @@ class AlimamaProductCategory extends \Astro\Database
 		}
 		return $no;
 	}
+	
+	
 }
