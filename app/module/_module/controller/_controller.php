@@ -49,10 +49,10 @@ class _Controller extends \Astro\Controller
 		return [$var, __METHOD__, __LINE__, __FILE__];
 	}
 	
-	/*
-	public function __destruct()
+	/**/
+	public function search()
 	{
-		parent::__destruct();
+		print_r([__METHOD__, __LINE__, __FILE__]);exit;
 	}
-	*/
+	
 }

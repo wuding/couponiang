@@ -13,6 +13,7 @@ class Php
 	public $config = [
 		'route' => [],
 	];
+	public $routeInfo = [0];
 	
 	public function __construct($config = null)
 	{
@@ -20,7 +21,7 @@ class Php
 			if (is_string($config)) {
 				$this->getConfig($config);
 			} elseif (is_array($config)) {
-				$this->config = $config;
+				$this->config = $config + $this->config;
 			} else {
 				print_r([$config, __METHOD__, __LINE__, __FILE__]);
 			}
@@ -61,13 +62,16 @@ class Php
 			$file = $this->configFile;
 		}
 		$this->configFile = $file;
-		return $this->config = include_once $file;
+		$config = include $file;
+		$this->config = $config + $this->config;
+		# print_r($this->config);
+		return $this->config;
 	}
 	
 	/*************** 路由 ***************/
 	public function routeInfo()
 	{
-		$GLOBALS['PHP'] = $this;
+		
 		# print_r([get_class_methods($PHP), __METHOD__, __LINE__, __FILE__]);
 		# $router = $this->router();
 		return $this->routeInfo = $this->router()->dispatch($this->httpMethod, strtolower($this->uri));
@@ -154,9 +158,27 @@ class Php
 		return $this->template = $tpl = new \League\Plates\Engine(APP_PATH . '/template');
 	}
 	
+	/**
+	 * 统计信息
+	 *
+	 */
+	public function getLog()
+	{
+		$runtime = microtime(true) - START_TIME;
+		return $LOG = [
+			'runtime' => round($runtime, 3),
+			'reqs' => number_format(1 / $runtime, 2),
+			'memory_use' => number_format((memory_get_usage() - START_MEM) / 1024, 3),
+			'file_load' => count(get_included_files()),
+		];
+	}
+	
 	public function __destruct()
 	{
-		$routeInfo = $this->routeInfo();
+		$GLOBALS['PHP'] = $this;
+		if ($this->config['route']) {
+			$routeInfo = $this->routeInfo(); # 
+		}
 		$controller = $this->controller();
 		if (!$controller->exec && 2 == $controller->destruct) {
 			$controller->_destruct(null, null, 0);
@@ -164,6 +186,5 @@ class Php
 		# 
 		# $this->dispatcher()->getController([1, 'test/a/url', []])->_destruct();
 		# print_r([$routeInfo, $controller, __METHOD__, __LINE__, __FILE__]);
-		# $GLOBALS['PHP'] = $this;
 	}
 }

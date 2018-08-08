@@ -38,6 +38,10 @@ class Medoo
 	
 	public function getInstance()
 	{
+		if (null !== $this->inst) {
+			return $this->inst;
+		}
+		
 		$options = [
 			'database_type' => $this->driver,
 			'database_name' => $this->db_name,
@@ -66,6 +70,10 @@ class Medoo
 			$order = $option[0];
 			if (isset($option[1])) {
 				$limit = $option[1];
+				if (isset($option[2])) {
+					$offset = $option[2];
+					$limit = [$offset, $limit];
+				}
 			}
 		}
 		
@@ -93,5 +101,21 @@ class Medoo
 		# print_r([$this->inst->sql]); 
 		# print_r([$all, self::$instance, $table, $columns, $where, $join]);exit; 
 		return $all;
+	}
+	
+	public function __call($name, $arguments)
+	{
+		$func = $this->inst;
+		$arg = $arguments;
+		# print_r($arg);exit;
+		
+		$str = [];
+		foreach ($arg as $key => $value) {
+			$str []= "\$arg[$key]";
+		}
+		$str = implode(', ', $str);
+		$code = "\$result = \$func->\$name($str);";
+		eval($code);
+		return $result;
 	}
 }

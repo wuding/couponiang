@@ -13,6 +13,8 @@ class AlimamaChoiceList extends \Astro\Database
 	public static $week = null;
 	public static $DBY = null;
 	
+	public $columns = null;
+	
 	/**
 	 * 初始化
 	 *
@@ -34,7 +36,7 @@ class AlimamaChoiceList extends \Astro\Database
 	 * 获取产品列表
 	 *
 	 */
-	public function items($condition = [], $sort = null, $limit = 40)
+	public function items($condition = [], $sort = null, $limit = 40, $offset = 0)
 	{
 		$sort = $sort ? : [$this->primary_key => 'DESC'];
 		
@@ -44,11 +46,11 @@ class AlimamaChoiceList extends \Astro\Database
 		$where += $condition;
 		
 		$column = '*';
-		$column = [$this->primary_key, 'category_id', 'title', 'pic', 'price'];
-		$option = [$sort, $limit];
+		$this->columns = [$this->primary_key, 'category_id', 'title', 'pic', 'price'];
+		$option = [$sort, $limit, $offset];
 		
 		$join = [];
-		$all = $this->select($where, $column, $option, null, $join);
+		$all = $this->select($where, $this->columns, $option, null, $join);
 		return $all;
 	}
 	

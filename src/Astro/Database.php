@@ -56,8 +56,12 @@ class Database
 		
 	}
 	
-	public function getAdapter($name, $arg)
+	public function getAdapter($name = null, $arg = null)
 	{
+		if (null !== $this->inst) {
+			return $this->inst;
+		}
+		
 		$name = str_replace('_', ' ', $name);
 		$name = ucwords($name);
 		$name = str_replace(' ', '', $name);

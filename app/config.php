@@ -1,8 +1,8 @@
 <?php
 return [
-	'route' => [
+	'_route' => [
 		[['GET', 'POST', 'PUT'], '/[index]', '/index/index'],
-		['GET', '/search', '_module/_controller']
+		['GET', '/search', '_module/_controller/search']
 	],
 	'database' => array(
 		'adapter' => 'Medoo',

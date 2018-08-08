@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>红券网￥优惠券折扣返利全网比价购物搜索</title>
-<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=14" rel="stylesheet" type="text/css">
+<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=15" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -178,19 +178,36 @@
 <main class="large">
 	<div class="main-in">
 		<article class="view-huge">
+			
 			<section>
+			<?php
+			if (!$items) {
+				echo '<div style="text-align:center">
+					<h3>无结果</h3>
+						<blockquote>请修改关键词或清除筛选与分类</blockquote>
+					</div>
+					';
+			}
+			?>
 				<ol>
 					<?=\app\view\Item::huge($items)?>
 				</ol>
 			</section>
 			
+			
 			<!--section>
 				<header>
-					<h2>看过</h2>
+					<h2></h2>
 				</header>
-			</section-->		
+			</section-->
 		</article>
 		<!--hr-->
+	</div>
+	<div style="text-align:center">
+		<!--?=\app\view\Item::pagination($page, $pages)?-->
+		<div class="pagerfanta">
+			<?=$pagination?>
+		</div>
 	</div>
 </main>
 

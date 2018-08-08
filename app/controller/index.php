@@ -3,6 +3,7 @@ namespace app\controller;
 
 use app\helper\Item;
 use app\model\AlimamaProductCategory;
+use app\view\Item as ViewItem;
 
 class Index extends _Abstract
 {
@@ -11,16 +12,21 @@ class Index extends _Abstract
 		/* 定义 */
 		$Item = new Item;
 		$Category = new AlimamaProductCategory;
+		$limit = 40;
 		
 		/* 分类 */
 		$class = $Category->rootIds();
 		$tree = $Category->tree($class);
 		
 		/* 商品 */
-		extract($Item->list(40, $Category));
+		extract($Item->list($limit, $Category));
 		list($category_id, $subclass_id) = $cats;
 		$subclass = $Category->subclass($category_id);
+		# echo $pages;
 		
+		
+		$pagination = ViewItem::paginator($count, $page, $limit);
+
 		return get_defined_vars();
 	}
 }

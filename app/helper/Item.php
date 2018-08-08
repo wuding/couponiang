@@ -23,10 +23,12 @@ class Item extends \Astro\Core
 		$sold = $this->_get('sale');
 		$sort = $this->_get('sort');
 		$order = $this->_get('order');
+		$page = $this->_get('page', 1);
 		$List = new AlimamaChoiceList;
 		if (null === $Category) {
 			$Category = new AlimamaProductCategory;
 		}
+		$items = [];
 		
 		/* 商品 */
 		$where = [];
@@ -58,7 +60,18 @@ class Item extends \Astro\Core
 		// 排序
 		$order_by = $List->orderBy($sort, $order);
 		
-		$items = $List->items($where, $order_by, $limit);
+		// 计算
+		$count = $List->count($List->table_name, $where);
+		$pages = ceil($count / $limit);
+		
+		
+		// 结果集
+		if ($count) {
+			$page = ($page > $pages) ? $pages : $page;
+			$offset = $page * $limit - $limit;
+			$items = $List->items($where, $order_by, $limit, $offset);
+		}
+		
 		return get_defined_vars();
 	}
 }
