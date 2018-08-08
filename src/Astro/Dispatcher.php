@@ -65,11 +65,27 @@ class Dispatcher
 		
 		$this->controllerUniqueId = Php::getUniqueId($routeInfo, $requestInfo, $controllerVars);
 		
+		// 匹配的
 		$class = $this->getControllerClassName($routeInfo, $requestInfo);
 		if (!class_exists($class)) {
 			$this->moduleInfo[$class]['exist'] = -1;
-			$routeInfo = [0];
-			$class = $this->getControllerClassName($routeInfo, $requestInfo, 1);
+			$class_exists = 0;
+			// 调用这个模块的缺省控制器
+			if ('_module' != $this->moduleName && !is_numeric($this->moduleName)) {
+				$handler = $this->moduleName . '/_controller/' . $this->actionName;
+				$routeInfo = [1, $handler, []];
+				$class = $this->getControllerClassName($routeInfo, $requestInfo);
+				$class_exists = class_exists($class);
+				if (!$class_exists) {
+					$this->moduleInfo[$class]['exist'] = -1;
+				}
+			}
+			
+			// 缺省模块
+			if (!$class_exists) {
+				$routeInfo = [0];
+				$class = $this->getControllerClassName($routeInfo, $requestInfo, 1);
+			}
 		}
 		return $this->controller = $this->controllers[$this->controllerUniqueId] = new $class($this->actionName, $requestInfo['method'], $controllerVars);
 	}
@@ -99,9 +115,27 @@ class Dispatcher
 		}
 		
 		$pathInfo = explode('/', $handler);
-		$this->moduleName = $module = Php::getArrayVar($pathInfo, 0, $this->moduleDefault ? : '_module');
-		$this->controllerName = $controller = Php::getArrayVar($pathInfo, 1, $this->controllerDefault ? : '_controller');
-		$this->actionName = $action = Php::getArrayVar($pathInfo, 2, $this->actionDefault ? : '_action');
+		$module = Php::getArrayVar($pathInfo, 0);
+		$controller = Php::getArrayVar($pathInfo, 1);
+		$action = Php::getArrayVar($pathInfo, 2);
+		
+		// 校验		
+		if (preg_match('/^[a-z_]/i', $module) && preg_match('/^([a-z_0-9]+)$/i', $module)) {
+		} else {
+			$module = $this->moduleDefault ? : '_module';
+		}
+		if (preg_match('/^[a-z_]/i', $controller) && preg_match('/^([a-z_0-9]+)$/i', $controller)) {
+		} else {
+			$controller = $this->controllerDefault ? : '_controller';
+		}
+		if (preg_match('/^[a-z_]/i', $action) && preg_match('/^([a-z_0-9]+)$/i', $action)) {
+		} else {
+			$action = $this->actionDefault ? : '_action';
+		}
+		
+		$this->moduleName = $module;
+		$this->controllerName = $controller;
+		$this->actionName = $action;
 		
 		$moduleInfo = [$module, $controller, $action, $handler, $routeInfo, 'exist' => 0];
 		$namespace = $this->getControllerNamespace($moduleInfo, $requestInfo);

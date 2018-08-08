@@ -43,7 +43,7 @@ class Item
 			$li = <<<HEREDOC
 			<li $style>
 				<div>
-					<a href="/item/{$row['list_id']}">
+					<a href="/item/{$row['list_id']}" target="_blank">
 						<p><img src="{$row['pic']}_400x400.jpg"></p>
 						<var>￥{$row['price']}</var>
 						<b>{$row['title']}</b>

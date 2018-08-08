@@ -103,6 +103,26 @@ class Medoo
 		return $all;
 	}
 	
+	public function sel($where = [], $columns = null, $option = [], $group = [], $join = [])
+	{
+		$row = null;
+		$all = $this->select($where, $columns, $option, $group, $join);
+		if (isset($all[0])) {
+			$row = (object) $all[0];
+		}
+		return $row;
+	}
+	
+	public function find($id, $columns = '*', $option = [], $group = [], $join = [])
+	{
+		$opt = [[$this->primary_key => 'DESC'], 1, 0];
+		$option = $option + $opt;
+		
+		$where = [$this->primary_key => $id];
+		$row = $this->sel($where, $columns, $option, $group, $join);
+		return $row;
+	}
+	
 	public function __call($name, $arguments)
 	{
 		$func = $this->inst;

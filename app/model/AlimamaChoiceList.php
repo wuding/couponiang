@@ -54,6 +54,20 @@ class AlimamaChoiceList extends \Astro\Database
 		return $all;
 	}
 	
+	public function item($condition = [], $sort = null, $limit = 1, $offset = 0)
+	{
+		$sort = $sort ? : [$this->primary_key => 'DESC'];
+		
+		$where = [];
+		$where += $condition;
+		
+		$columns = [$this->primary_key, 'category_id', 'title', 'pic', 'price'];
+		
+		$option = [$sort, $limit, $offset];
+		
+		return $row = $this->sel($where, $columns, $option);
+	}
+	
 	/**
 	 * 时间条件
 	 *

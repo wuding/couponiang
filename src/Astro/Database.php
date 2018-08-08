@@ -13,7 +13,7 @@ class Database
 	public $password = 'root';
 	public $db_name = 'mysql';
 	public $table_name = 'user';
-	public $primary_key = null;
+	public $primary_key = 'id';
 	
 	public function __construct($arg = [])
 	{
@@ -38,16 +38,22 @@ class Database
 	{
 		# print_r([$arg, __METHOD__, __LINE__, __FILE__]);
 		$this->setVar($arg);
+		
+		/*
 		$arg = [
 			'host' => $this->host,
 			'port' => $this->port,
 			'db_name' => $this->db_name,
 			'table_name' => $this->table_name,
-			'username' => $this->user,
+			'user' => $this->user,
 			'password' => $this->password,
 			'driver' => $this->driver,
+			'primary_key' => $this->primary_key,
 		];
-		# print_r([$arg, __METHOD__, __LINE__, __FILE__]);
+		*/
+		$arg = get_object_vars($this);
+		unset($arg['inst'], $arg['adapter']);
+		# print_r([$arg, __METHOD__, __LINE__, __FILE__]); 
 		$this->getAdapter($this->adapter, $arg);
 	}
 	
