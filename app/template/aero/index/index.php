@@ -3,7 +3,18 @@
 <head>
 <meta charset="utf-8">
 <title>红券网￥优惠券折扣返利全网比价购物搜索</title>
-<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=15" rel="stylesheet" type="text/css">
+<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=17" rel="stylesheet" type="text/css">
+<!--[if IE]>
+<style>
+.category li {
+	display: inline-block;
+	max-width: 45px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+</style>
+<![endif]-->
 </head>
 
 <body>
@@ -11,16 +22,16 @@
 	<div class="top-in">
 		<div class="logo">
 			<h1>
-				<a href="">红券网</a>
+				<a href="/">红券网</a>
 			</h1>
 			<address>
-				<a href="">cpn.red</a>
+				<a href="/">cpn.red</a>
 			</address>
 		</div>
 		
 		<div class="account">
-			<a href="">登录</a>
-			<a href="">设置</a>
+			<!--a href="">登录</a>
+			<a href="">设置</a-->
 		</div>
 		
 		<div class="search">
@@ -41,6 +52,7 @@
 					<input name="sale" value="<?=$sold?>">
 					<input name="sort" value="<?=$sort?>">
 					<input name="order" value="<?=$order?>">
+					<?=isset($_GET['debug']) ? '<input name="debug" value="0">' : ''?>
 				</span>
 			</form>
 		</div>
@@ -52,11 +64,11 @@
 		<blockquote>
 			<dl>
 				<dt>
-					<a href="">全部</a>
+					<a href="/">全部</a>
 				</dt>
 				<dd>
 					<li>
-						<a href="" title="分类">分类</a>
+						<a href="/" title="分类">分类</a>
 					</li>
 				</dd>
 			</dl>
@@ -73,21 +85,15 @@
 			<blockquote class="site">
 				<form>
 					<?php
-					$property = ['name' => 'subclass', 'style' => 'max-width: 75px;'];
+					$prop = ['name' => 'category', 'style' => 'max-width: 80px;'];
+					$property = ['name' => 'subclass', 'style' => 'max-width: 80px;'];
 					if (!$category_id) {
 						$property []= 'disabled';
 					}
-					
-					$sites = [
-						'' => '网站',
-						1 => '淘宝',
-						2 => '天猫',
-						3 => '聚划算',
-					];
-					
-					echo \app\view\Category::select($tree, $category_id, ['name' => 'category', 'style' => 'max-width: 75px;']);
-					echo \app\view\Category::select($subclass, $subclass_id, $property, ['' => '分类']);
-					echo \app\view\Form::select($sites, $site_id, ['name' => 'site']);
+
+					echo \app\view\Item::selectCategory($tree, $category_id, $prop);
+					echo \app\view\Item::selectCategory($subclass, $subclass_id, $property, ['' => '分类']);
+					echo \app\view\Item::selectSite($site_id);
 					?>
 				</form>
 			</blockquote>
@@ -95,52 +101,12 @@
 			<blockquote class="filter">
 				<h5>筛选</h5>
 				<form>
-					<?php
-					$prices = [
-						'' => '价格',
-						'9.9' => '9块9',
-						'20' => '20元',
-						'50' => '50元',
-						'100' => '100',
-					];
-					
-					$saves = [
-						'' => '省钱',
-						'10' => '10元',
-						'20' => '20元',
-						'50' => '50元',
-						'100' => '100',
-					];
-					
-					$starts = [
-						'' => '开始',
-						'today' => '今天',
-						'yesterday' => '昨天',
-						'DBY' => '前天',
-						'last_week' => '上周',
-					];
-					
-					$ends = [
-						'' => '结束',
-						'today' => '今天',
-						'tomorrow' => '明天',
-						'DAT' => '后天',
-						'weekend' => '周末',
-					];
-					
-					$sales = [
-						'' => '月销',
-						'100' => '100',
-						'500' => '500',
-						'1000' => '1千',
-						'5000' => '5千',
-					];
-					
-					echo \app\view\Form::select($prices, $price, ['name' => 'price']);
-					echo \app\view\Form::select($saves, $save, ['name' => 'save']);
-					echo \app\view\Form::select($starts, $start_time, ['name' => 'start']);
-					echo \app\view\Form::select($ends, $end_time, ['name' => 'end']);
-					echo \app\view\Form::select($sales, $sold, ['name' => 'sale']);
+					<?php					
+					echo \app\view\Item::selectPrice($price);
+					echo \app\view\Item::selectSave($save);
+					echo \app\view\Item::selectStart($start_time);
+					echo \app\view\Item::selectEnd($end_time);
+					echo \app\view\Item::selectSale($sold);
 					?>
 				</form>
 			</blockquote>
@@ -151,23 +117,8 @@
 				<h5>排序</h5>
 				<form>
 					<?php
-					$sorts = [
-						'' => '默认',
-						'price' => '价格',
-						'save' => '省钱',
-						'start' => '开始',
-						'end' => '结束',
-						'sale' => '月销',
-					];
-					
-					$orders = [
-						'' => '方式',
-						'asc' => '升序',
-						'desc' => '降序',
-					];
-					
-					echo \app\view\Form::select($sorts, $sort, ['name' => 'sort']);
-					echo \app\view\Form::select($orders, $order, ['name' => 'order']);
+					echo \app\view\Item::selectSort($sort);
+					echo \app\view\Item::selectOrder($order);
 					?>
 				</form>
 			</blockquote>
@@ -177,23 +128,20 @@
 
 <main class="large">
 	<div class="main-in">
-		<article class="view-huge">
-			
+		<article class="view-huge">			
 			<section>
-			<?php
-			if (!$items) {
-				echo '<div style="text-align:center">
-					<h3>无结果</h3>
+				<?php
+				if (!$items) {
+					echo '<div style="text-align:center">
+						<h3>无结果</h3>
 						<blockquote>请修改关键词或清除筛选与分类</blockquote>
-					</div>
-					';
-			}
-			?>
+					</div>';
+				}
+				?>
 				<ol>
 					<?=\app\view\Item::huge($items)?>
 				</ol>
-			</section>
-			
+			</section>			
 			
 			<!--section>
 				<header>
@@ -212,36 +160,13 @@
 </main>
 
 <!-- 脚本 -->
-<script src="js/jquery-3.3.1.js"></script>
 <script>
-var idx = {
-	'category': 0,
-	'subclass': 0,
-	'site': 1,
-	'price': 2,
-	'save': 3,
-	'start': 4,
-	'end': 5,
-	'sale': 6,
-	'sort': 7,
-	'order': 8,
-};
-var npt = $('.search span input');
-$('.toolbar select').on('change', function(event){
-	var name = $(this).attr('name');
-	var val = $(this).val();
-	if ('subclass' == name && !val) {
-		var sel = $('.toolbar select')[0];
-		val = $(sel).val();
-	}
-	var index = idx[name];
-	var input = npt[index];
-	$(input).val(val);
-	if (!val) {
-		$(input).removeAttr('name');
-	}
-	$('.search form').submit();
-});
+/* 预定义 */
+var interval = <?=$items ? 'self.setInterval("update()", 1000)' : 'null'?>;
+var end = '<?=isset($items[0]) ? $items[0]['end'] : 'null'?>';
 </script>
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/search.js?v=1"></script>
+<?php if (!$stat) { $this->insert('stat'); } ?>
 </body>
 </html>

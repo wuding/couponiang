@@ -28,7 +28,7 @@ class Category
 HEREDOC;
 
 				$dd .= $li;
-				$w += 46;
+				$w += 50;
 			}
 			
 			$dl = <<<HEREDOC
@@ -50,22 +50,8 @@ HEREDOC;
 	}
 	
 	/**
-	 * 选择
+	 * 
 	 *
 	 */
-	public static function select($cat, $cat_id = null, $property = [], $arr = null)
-	{
-		if (null === $arr) {
-			$arr = [
-				'' => '全部',
-			];
-		}
-		
-		foreach ($cat as $c) {
-			$arr[$c->category_id] = $c->title;
-		}
-		$sel = \app\view\Form::select($arr, $cat_id, $property);
-		# exit;
-		return $sel;
-	}
+	
 }

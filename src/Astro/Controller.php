@@ -51,6 +51,11 @@ class Controller extends Core
 		}
 		$this->action = $action;
 		# print_r([__METHOD__, __LINE__, __FILE__]);
+		$this->_init();
+	}
+	
+	public function _init()
+	{
 	}
 	
 	public function _notfound()

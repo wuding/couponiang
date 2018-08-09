@@ -1,15 +1,18 @@
 <?php
 namespace app\view;
 
+use app\view\Form;
 use Pagerfanta\Adapter\SimpleAdapter;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\DefaultView;
 
 class Item
 {
-	public function __construct()
-	{
-	}
+	/*
+	 ------------------------------------------------------------------
+	 | 查看方式
+	 ------------------------------------------------------------------
+	 */
 	
 	/**
 	 * 超大图
@@ -36,16 +39,29 @@ class Item
 			
 			$no = $i % $col;
 			$style = '';
+			$class = '';
+			$save = '券';
+			$sold = "已领 $obj->sold 张券";
 			if (1 == $no) {
 				$style = ' style="clear: left;"';
+			}			
+			if (3 == $obj->site) {
+				$save = '省';
+				$sold = "$obj->sold 件已售";
+				$class = ' class="tuan"';
 			}
 			
 			$li = <<<HEREDOC
-			<li $style>
+			<li $style $class>
 				<div>
-					<a href="/item/{$row['list_id']}" target="_blank">
+					<a href="/item/{$row['list_id']}" target="_blank" data-end="$obj->end" data-no="$i">
+						<menu>{$save}￥{$row['save']}</menu>
 						<p><img src="{$row['pic']}_400x400.jpg"></p>
-						<var>￥{$row['price']}</var>
+						<time>$obj->end</time>
+						<span>
+							<var>￥{$row['price']}</var>
+							<s>$sold</s>
+						</span>
 						<b>{$row['title']}</b>
 					</a>
 				</div>
@@ -58,6 +74,7 @@ HEREDOC;
 		return $lis;
 	}
 	
+	#! 未使用
 	public static function pagination($page, $pages)
 	{
 		$queryString = $_SERVER['QUERY_STRING'];
@@ -77,6 +94,13 @@ HEREDOC;
 
 		return $html;
 	}
+
+
+	/*
+	 ------------------------------------------------------------------
+	 | 通用功能
+	 ------------------------------------------------------------------
+	 */
 	
 	/**
 	 * 地址生成器
@@ -128,5 +152,156 @@ HEREDOC;
 			'next_message' => '下一页',
 		];
 		return $pagination = $view->render($pagerfanta, $routeGenerator, $options);
+	}
+
+
+	/*
+	 ------------------------------------------------------------------
+	 | HTML select 标签元素
+	 ------------------------------------------------------------------
+	 */
+
+	/**
+	 * select - 排序方式
+	 * 
+	 */
+	public static function selectOrder($order)
+	{
+		$orders = [
+			'' => '方式',
+			'asc' => '升序',
+			'desc' => '降序',
+		];
+		return Form::select($orders, $order, ['name' => 'order']);
+	}
+
+	/**
+	 * select - 排序字段
+	 * 
+	 */
+	public static function selectSort($sort)
+	{
+		$sorts = [
+			'' => '默认',
+			'price' => '价格',
+			'save' => '省钱',
+			'start' => '开始',
+			'end' => '结束',
+			'sale' => '月销',
+		];
+		return Form::select($sorts, $sort, ['name' => 'sort']);
+	}
+
+	/**
+	 * select - 价格
+	 * 
+	 */
+	public static function selectPrice($price)
+	{
+		$prices = [
+			'' => '价格',
+			'9.9' => '9块9',
+			'20' => '20元',
+			'50' => '50元',
+			'100' => '100',
+		];
+		return Form::select($prices, $price, ['name' => 'price']);
+	}
+
+	/**
+	 * select - 省钱
+	 * 
+	 */
+	public static function selectSave($save)
+	{
+		$saves = [
+			'' => '省钱',
+			'10' => '10元',
+			'20' => '20元',
+			'50' => '50元',
+			'100' => '100',
+		];
+		return Form::select($saves, $save, ['name' => 'save']);
+	}
+
+	/**
+	 * select - 开始时间
+	 * 
+	 */
+	public static function selectStart($start_time)
+	{
+		$starts = [
+			'' => '开始',
+			'today' => '今天',
+			'yesterday' => '昨天',
+			'DBY' => '前天',
+			'last_week' => '上周',
+		];
+		return Form::select($starts, $start_time, ['name' => 'start']);
+	}
+
+	/**
+	 * select - 结束时间
+	 * 
+	 */
+	public static function selectEnd($end_time)
+	{				
+		$ends = [
+			'' => '结束',
+			'today' => '今天',
+			'tomorrow' => '明天',
+			'DAT' => '后天',
+			'weekend' => '周末',
+		];
+		return Form::select($ends, $end_time, ['name' => 'end']);
+	}
+
+	/**
+	 * select - 月销量
+	 * 
+	 */
+	public static function selectSale($sold)
+	{				
+		$sales = [
+			'' => '月销',
+			'100' => '100',
+			'500' => '500',
+			'1000' => '1千',
+			'5000' => '5千',
+		];
+		return Form::select($sales, $sold, ['name' => 'sale']);
+	}
+
+	/**
+	 * select - 站点
+	 * 
+	 */
+	public static function selectSite($site_id)
+	{
+		$sites = [
+			'' => '网站',
+			1 => '淘宝',
+			2 => '天猫',
+			3 => '聚划算',
+		];
+		return Form::select($sites, $site_id, ['name' => 'site']);
+	}
+
+	/**
+	 * select - 分类
+	 * 
+	 */
+	public static function selectCategory($cat, $cat_id = null, $property = [], $arr = null)
+	{
+		if (null === $arr) {
+			$arr = [
+				'' => '全部',
+			];
+		}
+		
+		foreach ($cat as $c) {
+			$arr[$c->category_id] = $c->title;
+		}
+		return Form::select($arr, $cat_id, $property);
 	}
 }

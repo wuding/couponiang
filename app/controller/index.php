@@ -13,6 +13,7 @@ class Index extends _Abstract
 		$Item = new Item;
 		$Category = new AlimamaProductCategory;
 		$limit = 40;
+		$stat = $this->stat;
 		
 		/* 分类 */
 		$class = $Category->rootIds();
@@ -20,13 +21,13 @@ class Index extends _Abstract
 		
 		/* 商品 */
 		extract($Item->list($limit, $Category));
+
+		// 分类
 		list($category_id, $subclass_id) = $cats;
 		$subclass = $Category->subclass($category_id);
-		# echo $pages;
-		
-		
-		$pagination = ViewItem::paginator($count, $page, $limit);
 
+		// 分页
+		$pagination = ViewItem::paginator($count, $page, $limit);
 		return get_defined_vars();
 	}
 }

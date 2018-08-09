@@ -46,7 +46,7 @@ class AlimamaChoiceList extends \Astro\Database
 		$where += $condition;
 		
 		$column = '*';
-		$this->columns = [$this->primary_key, 'category_id', 'title', 'pic', 'price'];
+		$this->columns = [$this->primary_key, 'title', 'pic', 'price', 'save', 'site', 'sold', 'end'];
 		$option = [$sort, $limit, $offset];
 		
 		$join = [];

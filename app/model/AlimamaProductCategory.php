@@ -28,6 +28,7 @@ class AlimamaProductCategory extends \Astro\Database
 				'upper_id' => '-1',
 				'upper_id[>]' => 0,
 			],
+			'total[>]' => 0,
 		];
 		$column = '*';
 		$column = ['category_id','upper_id','title'];
