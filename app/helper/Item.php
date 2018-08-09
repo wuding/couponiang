@@ -30,48 +30,28 @@ class Item extends \Astro\Core
 		}
 		$items = [];
 		
-		/* 商品 */
-		$where = [];
-		
-		// 关键词
-		$where = $List->whereQuery($query);		
-		
-		// 分类
-		$cats = $List->whereCategory($category_id, $Category);
-		
-		// 网站
-		$where = $List->whereSite($site_id);
-		
-		// 优惠价
-		$where = $List->wherePrice($price);
-		
-		// 省钱
-		$where = $List->whereSave($save);
-		
-		// 开始
-		$where = $List->whereStart($start_time);
-		
-		// 结束
-		$where = $List->whereEnd($end_time);
-		
-		// 月销
-		$where = $List->whereSale($sold);
-		
-		// 排序
-		$order_by = $List->orderBy($sort, $order);
+		/* 商品 */		
+		$cats = $List->whereCategory($category_id, $Category); // 分类		
+		$List->whereQuery($query); // 关键词		
+		$List->whereSite($site_id); // 网站		
+		$List->wherePrice($price); // 优惠价		
+		$List->whereSave($save); // 省钱		
+		$List->whereStart($start_time); // 开始		
+		$List->whereEnd($end_time); // 结束
+		$where = $List->whereSale($sold); // 月销
 		
 		// 计算
 		$count = $List->count($List->table_name, $where);
 		$pages = ceil($count / $limit);
-		
-		
+				
 		// 结果集
-		if ($count) {
+		if ($count) {			
+			$order_by = $List->orderBy($sort, $order); // 排序
+			
 			$page = ($page > $pages) ? $pages : $page;
 			$offset = $page * $limit - $limit;
 			$items = $List->items($where, $order_by, $limit, $offset);
-		}
-		
+		}		
 		return get_defined_vars();
 	}
 }

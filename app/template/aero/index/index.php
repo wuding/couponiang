@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>红券网￥优惠券折扣返利全网比价购物搜索</title>
-<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=17" rel="stylesheet" type="text/css">
+<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=30" rel="stylesheet" type="text/css">
 <!--[if IE]>
 <style>
 .category li {
@@ -74,7 +74,7 @@
 			</dl>
 		</blockquote>
 		<nav>
-			<?=\app\view\Category::barStacked($tree)?>
+			<?=\app\view\Category::barStacked($tree, $category_id, $subclass_id)?>
 		</nav>
 	</div>
 </header>
@@ -166,7 +166,7 @@ var interval = <?=$items ? 'self.setInterval("update()", 1000)' : 'null'?>;
 var end = '<?=isset($items[0]) ? $items[0]['end'] : 'null'?>';
 </script>
 <script src="js/jquery-3.3.1.js"></script>
-<script src="js/search.js?v=1"></script>
+<script src="js/search.js?v=9"></script>
 <?php if (!$stat) { $this->insert('stat'); } ?>
 </body>
 </html>

@@ -25,7 +25,11 @@ $('.toolbar select').on('change', function(event){
 	if (!val) {
 		$(input).removeAttr('name');
 	}
-	$('.search form').submit();
+	if ('category' == name) {
+		var _anchor = 'cat_' + val;
+		document.getElementById(_anchor).click();
+	}
+	$('.search form').submit();// 
 });
 
 
