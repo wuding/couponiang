@@ -265,7 +265,7 @@ class AlimamaChoiceList extends \Astro\Database
 					$where['save[<>]'] = [50, 99.99];
 					break;
 				case '100':
-					$where['save[>='] = 100;
+					$where['save[>=]'] = 100;
 					break;
 				default:
 					$where['save[>=]'] = $save;
