@@ -135,7 +135,62 @@ class AlimamaChoiceList extends \Astro\Database
 	{
 		$where = $this->getWhere($where);
 		if ($query) {
-			$where['title[~]'] = $query;
+			# $where['title[~]'] = $query;
+			$and = [];
+			$qe = preg_split("/\s+/", $query);
+			$fill = ['REGEXP' => [], '!REGEXP' => []];
+			foreach ($qe as $qr) {
+				$qr = trim($qr);
+				$matche = 'REGEXP';
+				if (preg_match("/^-/", $qr, $matches)) {
+					$qr = preg_replace("/^[-]+/", "", $qr);
+					$matche = '!REGEXP';
+				}
+				$arr = $fill[$matche];
+				# print_r([ __LINE__, $arr]);
+				$status = 0;
+				foreach ($arr as &$v) {
+					$a = mb_strlen($v);
+					$b = mb_strlen($qr);
+					$pos = null;
+					if ($a == $b) {
+					} elseif ($a > $b) {
+						$pos = strpos($v, $qr);
+					} else {
+						$pos = strpos($qr, $v);
+					}
+					# print_r([var_dump($pos), __LINE__, $a, $b]);
+					if (null !== $pos) {
+						if (false !== $pos) {
+							if ($a < $b) {
+								$v = $qr;# 
+							}
+							$status++;
+							# break; 
+						}
+					}
+				}
+				# print_r([ __LINE__, $arr]);
+				if (!$status && !in_array($qr, $arr)) {
+					$arr[] = $qr;
+				}
+				$fill[$matche] = $arr;
+				# print_r([$qr, __LINE__, $fill[$matche], $arr]);
+				
+			}
+			
+			foreach ($fill as $key => $value) {
+				foreach ($value as $val) {
+					# $fill[$key][] = $val;
+					$k = "title[$key]";
+					if (!isset($and[$k])) {
+						$and[$k] = ['AND' => []];
+					}
+					$and[$k]['AND'][] = $val;
+				}
+			}
+			# print_r([$qe, $and]);
+			$where['AND'] = $and;
 		}
 		return $this->getWhere($where);
 	}

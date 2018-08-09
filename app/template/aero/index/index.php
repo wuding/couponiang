@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>红券网￥优惠券折扣返利全网比价购物搜索</title>
-<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=30" rel="stylesheet" type="text/css">
+<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=31" rel="stylesheet" type="text/css">
 <!--[if IE]>
 <style>
 .category li {
@@ -132,14 +132,27 @@
 			<section>
 				<?php
 				if (!$items) {
+					$tip = [];
+					if ($query) {
+						$tip[0] = '修改<a href="javascript:keyword()">关键词</a>';
+					}
+					if ($filter || $category_id || $site_id) {
+						$tip[2] = '清除<a href="javascript:filter()">筛选与分类</a>';
+					}
+					$tips = count($tip);
+					if (1 < $tips) {
+						$tip[1] = '或';
+					}
+					ksort($tip);
+					$tip = implode('', $tip);
 					echo '<div style="text-align:center">
 						<h3>无结果</h3>
-						<blockquote>请修改关键词或清除筛选与分类</blockquote>
+						<blockquote>请' . $tip . '</blockquote>
 					</div>';
 				}
 				?>
 				<ol>
-					<?=\app\view\Item::huge($items)?>
+					<?=\app\view\Item::huge($items, '', $query)?>
 				</ol>
 			</section>			
 			
@@ -166,7 +179,7 @@ var interval = <?=$items ? 'self.setInterval("update()", 1000)' : 'null'?>;
 var end = '<?=isset($items[0]) ? $items[0]['end'] : 'null'?>';
 </script>
 <script src="js/jquery-3.3.1.js"></script>
-<script src="js/search.js?v=9"></script>
+<script src="js/search.js?v=15"></script>
 <?php if (!$stat) { $this->insert('stat'); } ?>
 </body>
 </html>

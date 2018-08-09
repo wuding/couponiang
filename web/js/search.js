@@ -29,23 +29,23 @@ $('.toolbar select').on('change', function(event){
 		var _anchor = 'cat_' + val;
 		document.getElementById(_anchor).click();
 	}
-	$('.search form').submit();// 
+	submit()
 });
 
 
 
 /* 全局变量定义 */
-var no = 1;
-var main = document.getElementsByTagName('main');
-var li = main[0].getElementsByTagName('li');
+var no = 1
+var main = document.getElementsByTagName('main')
+var li = main[0].getElementsByTagName('li')
 
 /**
  * 改变属性变量
  * @return {[type]} [description]
  */
 function change() {
-	end = this.getAttribute('data-end');
-	no = this.getAttribute('data-no');
+	end = this.getAttribute('data-end')
+	no = this.getAttribute('data-no')
 }
 
 /**
@@ -94,9 +94,45 @@ function update() {
  */
 function add(len) {
 	for (var i = 0; i < len; i++) {
-		var a = li[i].getElementsByTagName('a');
-		a[0].addEventListener("mouseover", change);
+		var a = li[i].getElementsByTagName('a')
+		a[0].addEventListener("mouseover", change)
 	}
+}
+
+/**
+ * 清除关键词
+ *
+ */
+function keyword() {
+	$('.search div input').val('')
+	submit()
+}
+
+/**
+ * 清除筛选与分类
+ *
+ */
+function filter() {
+	document.getElementById('cat_').click();
+	for (var i = 0; i < npt.length; i++) {
+		var input = npt[i]
+		$(input).removeAttr('name')
+	}
+	$('.search form').submit()
+}
+
+/**
+ * 清除无用输入后提交
+ *
+ */
+function submit() {
+	for (var i = 0; i < npt.length; i++) {
+		var input = npt[i]
+		if (! $(input).val() ) {
+			$(input).removeAttr('name')
+		}
+	}
+	$('.search form').submit()
 }
 
 add(li.length);

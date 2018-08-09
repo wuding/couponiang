@@ -29,6 +29,13 @@ class Item extends \Astro\Core
 			$Category = new AlimamaProductCategory;
 		}
 		$items = [];
+		$filters = [$price, $save, $start_time, $end_time, $sold];
+		$filter = 0;
+		foreach ($filters as $f) {
+			if (!empty($f)) {
+				$filter++;
+			}
+		}
 		
 		/* 商品 */		
 		$cats = $List->whereCategory($category_id, $Category); // 分类		

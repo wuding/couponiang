@@ -19,7 +19,7 @@ class Item
 	 *
 	 *
 	 */
-	public static function huge($data, $view = '')
+	public static function huge($data, $view = '', $query = null)
 	{
 		$cols = [
 			'' => 5,
@@ -42,6 +42,7 @@ class Item
 			$class = '';
 			$save = '券';
 			$sold = "已领 $obj->sold 张券";
+			$title = $obj->title;
 			if (1 == $no) {
 				$style = ' style="clear: left;"';
 			}			
@@ -51,9 +52,35 @@ class Item
 				$class = ' class="tuan"';
 			}
 			
+			if ($query) {
+				$queries = preg_split('/\s+/', $query);
+				$arr = [];
+				foreach ($queries as $q) {
+					$q = trim($q);
+					if ($q && !preg_match('/^-/', $q)) {
+						if (!in_array($q, $arr)) {
+							$arr[] = $q;
+						}
+					}
+				}
+				foreach ($arr as $q) {
+					# $title = preg_replace("/($q)/i", "{:mark:}$1{:_mark:}", $title);
+					$title = preg_replace("/($q)/i", "<mark>$1</mark>", $title);
+				}
+			}
+			
+			$tip = $obj->title;
+			/*
+			$tip = htmlspecialchars($tip);
+			
+			$title = htmlspecialchars($title); # 
+			$title = str_replace('{:mark:}', '<mark>', $title);
+			$title = str_replace('{:_mark:}', '</mark>', $title);
+			*/
+			
 			$li = <<<HEREDOC
 			<li $style $class>
-				<div>
+				<div title="$tip">
 					<a href="/item/{$row['list_id']}" target="_blank" data-end="$obj->end" data-no="$i">
 						<menu>{$save}￥{$row['save']}</menu>
 						<p><img src="{$row['pic']}_400x400.jpg"></p>
@@ -62,7 +89,7 @@ class Item
 							<var>￥{$row['price']}</var>
 							<s>$sold</s>
 						</span>
-						<b>{$row['title']}</b>
+						<b>$title</b>
 					</a>
 				</div>
 			</li>
