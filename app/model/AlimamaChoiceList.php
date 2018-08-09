@@ -138,8 +138,10 @@ class AlimamaChoiceList extends \Astro\Database
 			# $where['title[~]'] = $query;
 			$and = [];
 			$qe = preg_split("/\s+/", $query);
+			
 			$fill = ['REGEXP' => [], '!REGEXP' => []];
 			foreach ($qe as $qr) {
+				// 生成键值
 				$qr = trim($qr);
 				$matche = 'REGEXP';
 				if (preg_match("/^-/", $qr, $matches)) {
@@ -148,6 +150,8 @@ class AlimamaChoiceList extends \Astro\Database
 				}
 				$arr = $fill[$matche];
 				# print_r([ __LINE__, $arr]);
+				
+				// 数组搜索包含
 				$status = 0;
 				foreach ($arr as &$v) {
 					$a = mb_strlen($v);
@@ -171,6 +175,8 @@ class AlimamaChoiceList extends \Astro\Database
 					}
 				}
 				# print_r([ __LINE__, $arr]);
+				
+				// 填充数组
 				if (!$status && !in_array($qr, $arr)) {
 					$arr[] = $qr;
 				}
@@ -179,6 +185,7 @@ class AlimamaChoiceList extends \Astro\Database
 				
 			}
 			
+			// 生成查询数组
 			foreach ($fill as $key => $value) {
 				foreach ($value as $val) {
 					# $fill[$key][] = $val;

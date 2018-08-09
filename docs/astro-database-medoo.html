@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Medoo, Astro\Datebase\Medoo | API Documentation for Wuphp 1.0 | Wu PHP Framework</title>
+</head>
+
+<body>
+	<h1>Class Astro\Datebase\Medoo</h1>
+	<table>
+		<tr>
+			<th>Source Code</th>
+			<td>
+				<a href="https://github.com/wuding/astrophp/blob/master/src/Astro/Datebase/Medoo.php">
+					https://github.com/wuding/astrophp/blob/master/src/Astro/Datebase/Medoo.php
+				</a>
+			</td>
+		</tr>
+	</table>
+	
+	<h2>Public Properties</h2>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<th>Property</th>
+			<th>Type</th>
+			<th>Value</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td><a href="#">$driver</a></td>
+			<td>string</td>
+			<td>mysql</td>
+			<td>数据库类型</td>
+		</tr>
+		<tr>
+			<td><a href="#">$host</a></td>
+			<td>string</td>
+			<td>localhost</td>
+			<td>主机名</td>
+		</tr>
+		<tr>
+			<td><a href="#">$port</a></td>
+			<td>number</td>
+			<td>3306</td>
+			<td>端口号</td>
+		</tr>
+		<tr>
+			<td><a href="#">$user</a></td>
+			<td>string</td>
+			<td>root</td>
+			<td>用户名</td>
+		</tr>
+		<tr>
+			<td><a href="#">$password</a></td>
+			<td>string</td>
+			<td>root</td>
+			<td>密码</td>
+		</tr>		
+		<tr>
+			<td><a href="#">$db_name</a></td>
+			<td>string</td>
+			<td>mysql</td>
+			<td>数据库名</td>
+		</tr>
+		<tr>
+			<td><a href="#">$table_name</a></td>
+			<td>string</td>
+			<td>user</td>
+			<td>数据表名</td>
+		</tr>
+		<tr>
+			<td><a href="#">$primary_key</a></td>
+			<td>string</td>
+			<td>id</td>
+			<td>主键名</td>
+		</tr>
+	</table>
+	
+	<h2>Public Methods</h2>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<th>Method</th>
+			<th>Return</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td><a href="#__construct()">__construct()</a></td>
+			<td></td>
+			<td>传入数据库配置</td>
+		</tr>
+		<tr>
+			<td><a href="">__call()</a></td>
+			<td></td>
+			<td>方法重载</td>
+		</tr>
+		<tr>
+			<td><a href="">init()</a> initialization()</td>
+			<td></td>
+			<td>设定初值，初始化适配器对象</td>
+		</tr>
+		<tr>
+			<td><a href="">getInstance()</a></td>
+			<td>object</td>
+			<td>获取对象实例</td>
+		</tr>
+		<tr>
+			<td><a href="">select()</a></td>
+			<td>array</td>
+			<td>获取多条数据</td>
+		</tr>
+		<tr>
+			<td><a href="">sel()</a></td>
+			<td>object</td>
+			<td>获取一条数据</td>
+		</tr>
+		<tr>
+			<td><a href="">find()</a></td>
+			<td>object</td>
+			<td>查找主键获取一条数据</td>
+		</tr>
+	</table>
+	
+	<h2>Method Details</h2>
+	<h3 id="__construct()">__construct($arg = [])</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$arg</td>
+			<td>array</td>
+			<td>数据库配置</td>
+		</tr>
+	</table>
+	
+	<h3 id="">__call($name, $arguments)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$name</td>
+			<td>string</td>
+			<td>方法名称</td>
+		</tr>
+		<tr>
+			<td>$arguments</td>
+			<td>array</td>
+			<td>参数集</td>
+		</tr>
+	</table>
+	
+	<h3 id="">initialization($arg = [])</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$arg</td>
+			<td>array</td>
+			<td>变量数组</td>
+		</tr>
+	</table>
+	
+	<h3 id="">getInstance($arg = null)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$arg</td>
+			<td>array</td>
+			<td>参数集</td>
+		</tr>
+	</table>
+
+	<h3 id="">select($where = [], $columns = null, $option = null, $group = null, $join = null)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$where</td>
+			<td>array</td>
+			<td>查询条件</td>
+		</tr>
+		<tr>
+			<td>$columns</td>
+			<td>array|string</td>
+			<td>列名</td>
+		</tr>
+		<tr>
+			<td>$option</td>
+			<td>array</td>
+			<td>排序和条数</td>
+		</tr>
+		<tr>
+			<td>$group</td>
+			<td>array</td>
+			<td>分组和条件</td>
+		</tr>
+		<tr>
+			<td>$join</td>
+			<td>array</td>
+			<td>连接</td>
+		</tr>
+	</table>
+
+	<h3 id="">sel($where = [], $columns = null, $option = null, $group = null, $join = null)</h3>
+	<blockquote>
+		同上，区别是可以省略 LIMIT，返回数据为对象
+	</blockquote>
+
+	<h3 id="">find($id, $columns = '*', $option = null, $group = null, $join = null)</h3>
+	<blockquote>
+		同上，区别是查询条件是匹配主键
+	</blockquote>
+</body>
+</html>
