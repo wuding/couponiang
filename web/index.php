@@ -1,5 +1,5 @@
 <?php
-define('APP_PATH', realpath(__DIR__ . '/../app'));
+define('APP_PATH', dirname(__DIR__) . '/app');
 date_default_timezone_set('Asia/Shanghai');
 
 /**

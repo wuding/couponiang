@@ -100,6 +100,58 @@ HEREDOC;
 		}
 		return $lis;
 	}
+
+	/**
+	 * mobile - 瀑布流
+	 */
+	public static function dl($data, $view = '', $query = null)
+	{
+		$lis = ['', ''];
+		$i = 0;
+		foreach ($data as $row) {
+			$odd = $i % 2;
+			$obj = (object) $row;			
+			$em = (3 == $obj->site) ? '<em>聚</em>' : '';
+			$sold = "月销{$obj->sold}笔";
+
+			$title = $obj->title;
+			if ($query) {
+				$queries = preg_split('/\s+/', $query);
+				$arr = [];
+				foreach ($queries as $q) {
+					$q = trim($q);
+					if ($q && !preg_match('/^-/', $q)) {
+						if (!in_array($q, $arr)) {
+							$arr[] = $q;
+						}
+					}
+				}
+				foreach ($arr as $q) {
+					$title = preg_replace("/($q)/i", "<mark>$1</mark>", $title);
+				}
+			}
+
+			$li = <<<HEREDOC
+			<dl>
+				<a href="/item/$obj->list_id" target="_blank">
+					<img src="{$obj->pic}_200x200.jpg">
+					<span>
+						$em
+						<h4>$title</h4>
+					</span>
+					<data>
+						<p>￥$obj->price</p>
+						<s>$sold</s>
+					</data>
+				</a>
+			</dl>
+HEREDOC;
+
+			$lis[$odd] .= $li;
+			$i++;
+		}
+		return $lis;
+	}
 	
 	#! 未使用
 	public static function pagination($page, $pages)
@@ -330,5 +382,127 @@ HEREDOC;
 			$arr[$c->category_id] = $c->title;
 		}
 		return Form::select($arr, $cat_id, $property);
+	}
+
+	/**
+	 * 分类导航
+	 */
+	public static function catNav($cat, $cat_id = null, $query = null)
+	{
+		$q = urlencode($query);
+		$qu = $query ? "q=$q" : '';
+		$lis = '';
+		$sel = 0;
+		$width = 90;
+		foreach ($cat as $c) {
+			$class = '';
+			if ($cat_id == $c->category_id) {
+				 $class = 'class="cat"';
+				 $sel++;
+			}
+			$url = "?category=$c->category_id";
+			$url = $query ? $url . "&$qu" : $url;
+			$lis .= "<li $class><a id=\"cat_$c->category_id\" href=\"$url#cat_$c->category_id\">$c->title</a></li>";
+			$width += 90;
+		}
+
+		$cls = (!$sel) ? 'class="cat"' : '';
+		$all = "<li $cls><a id=\"cat_\" href=\"?$qu\">全部</a></li>";
+
+		$lis = '<ol style="width: ' . $width . 'px">' . $all . $lis . '</ol>';
+		return $lis;
+	}
+
+	/**
+	 * 排序挑选列表
+	 */
+	public static function orderList()
+	{
+		$arr = [
+			'' => '默认',
+			'price:asc' => '价格升序',
+			'price:desc' => '价格降序',
+			'start:desc' => '开始时间',
+			'end:asc' => '结束时间',
+		];
+
+		$queryString = $_SERVER['QUERY_STRING'];
+		parse_str($queryString, $formData);
+
+		$sort = isset($formData['sort']) ? $formData['sort'] : '';
+		$order = isset($formData['order']) ? $formData['order'] : '';
+		$cur = $sort && $order ? $sort . ':' . $order : '';
+
+		
+		$lis = '';
+		$name = '默认';
+		foreach ($arr as $key => $value) {
+			$keys = explode(':', $key);
+			$len = count($keys);
+			$sel = $formData['sort'] = $keys[0];
+			unset($formData['order']);
+			if (1 < $len) {
+				$formData['order'] = $keys[1];
+				$sel .= ':' . $formData['order'];
+			}
+			$queryStr = http_build_query($formData);
+
+			$class = '';
+			$sup = '';
+			if ($cur == $sel) {
+				$class = 'class="sel"';
+				$sup = '<sup>√</sup>';
+				$name = $value;
+			}			
+			$lis .= "<li $class>$sup<a href=\"?$queryStr\">$value</a></li>";
+		}
+		return [$name, $lis];
+	}
+
+	/**
+	 * 排序挑选卡
+	 */
+	public static function orderTab($name = null, $sort = '')
+	{
+		$arr = [
+			'sale:desc' => '销量',
+			'save:desc' => '省钱',
+		];
+
+		$queryString = $_SERVER['QUERY_STRING'];
+		parse_str($queryString, $formData);
+
+		$sort = isset($formData['sort']) ? $formData['sort'] : $sort;
+		$order = isset($formData['order']) ? $formData['order'] : '';
+		$cur = $sort && $order ? $sort . ':' . $order : '';
+
+		$lis = '';
+		$sup = 0;
+		foreach ($arr as $key => $value) {
+			$keys = explode(':', $key);
+			$len = count($keys);
+			$sel = $formData['sort'] = $keys[0];
+			unset($formData['order']);
+			if (1 < $len) {
+				$formData['order'] = $keys[1];
+				$sel .= ':' . $formData['order'];
+			}
+			$queryStr = http_build_query($formData);
+
+			$class = '';
+			if ($cur == $sel) {
+				$class = 'class="cur"';
+				$sup++;
+			}
+			$lis .= "<li><a $class href=\"?$queryStr\">$value</a></li>";
+		}
+		
+		$cls = '';
+		if (!$sup) {
+			$cls = 'class="cur"';
+		}
+		$list = "<li><a $cls id=\"order_first\" href=\"javascript:order()\">$name</a></li>";
+		$lis = $list . $lis;
+		return $lis;
 	}
 }
