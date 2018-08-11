@@ -36,6 +36,7 @@ class Item extends \Astro\Core
 				$filter++;
 			}
 		}
+		$overflow = 0;
 		
 		/* 商品 */		
 		$cats = $List->whereCategory($category_id, $Category); // 分类		
@@ -54,8 +55,8 @@ class Item extends \Astro\Core
 		// 结果集
 		if ($count) {			
 			$order_by = $List->orderBy($sort, $order); // 排序
-			
-			$page = ($page > $pages) ? $pages : $page;
+			$overflow = ($page >= $pages);
+			$page = $overflow ? $pages : $page;
 			$offset = $page * $limit - $limit;
 			$items = $List->items($where, $order_by, $limit, $offset);
 		}		

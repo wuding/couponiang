@@ -262,8 +262,8 @@ a.cur
 	position: fixed;
 	z-index: 6;
 	display: none;
-	right: 20px;
-	bottom: 20px;
+	right: 10px;
+	bottom: 10px;
 	width: 36px;
 	height: 36px;
 	background-image: url(img/gotop.png);

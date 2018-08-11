@@ -10,7 +10,3 @@ date_default_timezone_set('Asia/Shanghai');
  */
 require APP_PATH . '/../src/Astro/console.php';
 Wu::php();
-# print_r($GLOBALS['PHP']); 
-# print_r($PHP->getLog()); 
-
-

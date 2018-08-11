@@ -22,8 +22,14 @@ class Item extends _Abstract
 		$Item = new HelperItem;
 		
 		/* 商品 */
-		extract($Item->list(4));
+		extract($Item->list(40));
 		unset($List, $Category);
-		$this->_json(0, '', $items);
+		
+		$code = (int) $overflow;
+		$msg = '';
+		if (1 == $code) {
+			$msg = '没有更多了';
+		}
+		$this->_json($code, $msg, $items);
 	}
 }
