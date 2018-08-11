@@ -317,12 +317,12 @@ function order() {
  */
 function goTop(step) {
 	step = step || 3
-	top = _.viewport().scrollTop	
-	per = Math.ceil(top / step) + 1
+	scrollTop = _.viewport().top	
+	per = Math.ceil(scrollTop / step) + 1
 	i = 1
 	len = step + 1
 	for (; i < len; i++) {
-		y = top - per * i
+		y = scrollTop - per * i
 		setTimeout("window.scrollTo(0, " + y + ")", 100 * i)
 	}
 	return false
