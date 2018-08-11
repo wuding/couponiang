@@ -90,11 +90,35 @@ config = {
 page = query.page + 1
 overflow = <?=(int) $overflow?>
 
+count = <?=$count?>
+
 XHR = []
 AJAX = []
 RESP = []
 
 window.onscroll = scroll
+
+/*---- polyfill ------*/
+
+if ( 'undefined' == typeof URLSearchParams ) {
+	var URLSearchParams = function ( init ) {
+		obj = new Object
+		obj.data = {}
+		
+		obj.append = function ( key, value ) {
+			obj.data[ key ] = value
+		}
+		
+		obj.toString = function () {
+			arr = []
+			for ( key in obj.data ) {
+				arr.push( key + '=' + encodeURIComponent( obj.data[ key ] ) )
+			}
+			return arr.join( '&' )
+		}
+		return obj
+	}
+}
 
 /*---- 类库 ------*/
 /**
@@ -109,41 +133,40 @@ _.form = function () {
 /**
  * 接口 - 调用
  */
-_.api = function (uri, formData, method, query, arg) {
+_.api = function ( uri, formData, method, query, arg ) {
 	method = method || 'get'
 	method = method.toUpperCase()
-	arg = arg || {}
+	arg = arg || {}	
 	
-	if ('GET' == method && !query && formData) {
+	if ( 'GET' == method && !query && formData ) {
 		params = new URLSearchParams
-		entries = formData.entries()
-		for (pair of entries) {
-		   params.append(pair[0], pair[1])
+		for ( pair in formData ) {
+		   params.append( pair, formData[ pair ] )
 		}
-		query = params.toString()
+		query = params.toString()		
 	}
 	
 	url = config.api_host + '/api/' + uri
-	if (query) {
+	if ( query ) {
 		url += '?' + query
 	}
 	
-	uri = uri.replace(/\//, '_')
-	req = XHR[uri] = new XMLHttpRequest
+	uri = uri.replace( /\//, '_' )
+	req = XHR[ uri ] = new XMLHttpRequest
 	req.onreadystatechange = function () {
-		if (4 == req.readyState) {
-			if (200 == req.status) {
-				eval("json = " + req.responseText + "; _.api.run(json, '" + uri + "', '" + encodeURI(JSON.stringify(arg)) + "')")
+		if ( 4 == req.readyState ) {
+			if ( 200 == req.status ) {
+				eval( "json = " + req.responseText + "; _.api.run( json, '" + uri + "', '" + encodeURI(JSON.stringify(arg)) + "' )" )
 			} else {
-				alert('Problem retrieving data: ' + req.statusText)
+				alert( 'Problem retrieving data: ' + req.statusText )
 			}
 		}
 	}
-	req.open(method, url, true)
-	if ('POST' == method) {
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+	req.open( method, url, true )
+	if ( 'POST' == method ) {
+		req.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' )
 	}
-	req.send(formData)
+	req.send( formData )
 }
 
 /**
@@ -268,24 +291,24 @@ function api_item_list(arg) {
 function loadData() {	
 	uri = 'item/list'
 	key = uri + ':' + page
-	if (!overflow && !AJAX[key]) {
-		AJAX[key] = 1		
+	if ( count && !overflow && !AJAX[ key ] ) {
+		AJAX[ key ] = 1		
 		load_info.innerHTML = '玩命加载中……'
 		
-		formData = new FormData()
-		npt = search_form.getElementsByTagName('input')
+		formData = {}
+		npt = search_form.getElementsByTagName( 'input' )
 		len = npt.length
 		i = 0
-		for (; i < len; i++) {
-			el = npt[i]
-			if (el.name && '' !== el.value) {
-				formData.append(el.name, el.value)
+		for ( ; i < len; i++ ) {
+			el = npt[ i ]
+			if ( el.name && '' !== el.value ) {
+				formData[ el.name ] = el.value
 			}
 		}
-		if (1 < page) {
-			formData.append('page', page)
+		if ( 1 < page ) {
+			formData.page = page
 		}
-		_.api(uri, formData)
+		_.api( uri, formData )
 	}
 }
 
