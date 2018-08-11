@@ -387,27 +387,48 @@ HEREDOC;
 	/**
 	 * 分类导航
 	 */
-	public static function catNav($cat, $cat_id = null, $query = null)
+	public static function catNav($cat, $cat_id = null, $query = null, $sort = null, $order = null)
 	{
+		/*
 		$q = urlencode($query);
 		$qu = $query ? "q=$q" : '';
+		*/
 		$lis = '';
 		$sel = 0;
 		$width = 90;
+		$formData = [];
+		if ($query) {
+			$formData['q'] = $query;
+		}
+		if ($sort) {
+			$formData['sort'] = $sort;
+		}
+		if ($order) {
+			$formData['order'] = $order;
+		}
+		$formData = self::array_index($formData);
+		$queryStr = http_build_query($formData);
+		$allStr = $queryStr ? "?$queryStr" : '/';
 		foreach ($cat as $c) {
 			$class = '';
 			if ($cat_id == $c->category_id) {
 				 $class = 'class="cat"';
 				 $sel++;
 			}
+			/*
 			$url = "?category=$c->category_id";
 			$url = $query ? $url . "&$qu" : $url;
-			$lis .= "<li $class><a id=\"cat_$c->category_id\" href=\"$url#cat_$c->category_id\">$c->title</a></li>";
+			*/
+			$formData['category'] = $c->category_id;
+			$formData = self::array_index($formData);
+			$queryStr = http_build_query($formData);
+			
+			$lis .= "<li $class><a id=\"cat_$c->category_id\" href=\"?$queryStr#cat_$c->category_id\">$c->title</a></li>";
 			$width += 90;
 		}
 
 		$cls = (!$sel) ? 'class="cat"' : '';
-		$all = "<li $cls><a id=\"cat_\" href=\"?$qu\">全部</a></li>";
+		$all = "<li $cls><a id=\"cat_\" href=\"$allStr\">全部</a></li>";
 
 		$lis = '<ol style="width: ' . $width . 'px">' . $all . $lis . '</ol>';
 		return $lis;
@@ -416,7 +437,7 @@ HEREDOC;
 	/**
 	 * 排序挑选列表
 	 */
-	public static function orderList()
+	public static function orderList($category_id = null)
 	{
 		$arr = [
 			'' => '默认',
@@ -432,19 +453,25 @@ HEREDOC;
 		$sort = isset($formData['sort']) ? $formData['sort'] : '';
 		$order = isset($formData['order']) ? $formData['order'] : '';
 		$cur = $sort && $order ? $sort . ':' . $order : '';
-
+		
+		# $category_id = isset($formData['category']) ? $formData['category'] : '';
+		$fragment = $category_id ? "#cat_$category_id" : '';
 		
 		$lis = '';
 		$name = '默认';
 		foreach ($arr as $key => $value) {
 			$keys = explode(':', $key);
 			$len = count($keys);
-			$sel = $formData['sort'] = $keys[0];
-			unset($formData['order']);
+			$sel = $keys[0];
+			unset($formData['order'], $formData['sort']);
+			if ($sel) {
+				$formData['sort'] = $sel;
+			}
 			if (1 < $len) {
 				$formData['order'] = $keys[1];
 				$sel .= ':' . $formData['order'];
 			}
+			$formData = self::array_index($formData);
 			$queryStr = http_build_query($formData);
 
 			$class = '';
@@ -454,7 +481,7 @@ HEREDOC;
 				$sup = '<sup>√</sup>';
 				$name = $value;
 			}			
-			$lis .= "<li $class>$sup<a href=\"?$queryStr\">$value</a></li>";
+			$lis .= "<li $class>$sup<a href=\"?$queryStr$fragment\">$value</a></li>";
 		}
 		return [$name, $lis];
 	}
@@ -462,7 +489,7 @@ HEREDOC;
 	/**
 	 * 排序挑选卡
 	 */
-	public static function orderTab($name = null, $sort = '')
+	public static function orderTab($name = null, $sort = '', $category_id = null)
 	{
 		$arr = [
 			'sale:desc' => '销量',
@@ -475,6 +502,8 @@ HEREDOC;
 		$sort = isset($formData['sort']) ? $formData['sort'] : $sort;
 		$order = isset($formData['order']) ? $formData['order'] : '';
 		$cur = $sort && $order ? $sort . ':' . $order : '';
+		
+		$fragment = $category_id ? "#cat_$category_id" : '';
 
 		$lis = '';
 		$sup = 0;
@@ -487,6 +516,7 @@ HEREDOC;
 				$formData['order'] = $keys[1];
 				$sel .= ':' . $formData['order'];
 			}
+			$formData = self::array_index($formData);
 			$queryStr = http_build_query($formData);
 
 			$class = '';
@@ -494,7 +524,7 @@ HEREDOC;
 				$class = 'class="cur"';
 				$sup++;
 			}
-			$lis .= "<li><a $class href=\"?$queryStr\">$value</a></li>";
+			$lis .= "<li><a $class href=\"?$queryStr$fragment\">$value</a></li>";
 		}
 		
 		$cls = '';
@@ -504,5 +534,29 @@ HEREDOC;
 		$list = "<li><a $cls id=\"order_first\" href=\"javascript:order()\">$name</a></li>";
 		$lis = $list . $lis;
 		return $lis;
+	}
+	
+	/**
+	 * array - 根据设置好的键名索引排序
+	 *
+	 */
+	public static function array_index($data = [])
+	{
+		$index = ['q', 'category', 'sort', 'order'];
+		$filp = array_flip($index);
+		$arr = [];
+		foreach ($data as $key => $value) {
+			$idx = isset($filp[$key]) ? $filp[$key] : null;
+			
+			$arr[$idx] = [$key, $value];
+		}
+		ksort($arr);
+		
+		$form = [];
+		foreach ($arr as $row) {
+			$k = $row[0];
+			$form[$k] = $row[1];
+		}
+		return $form;
 	}
 }

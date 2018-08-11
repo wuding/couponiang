@@ -7,7 +7,7 @@
 	<link href="ui/mobi/style.css?v=10" rel="stylesheet" type="text/css">
 </head>
 <?php
-$orderList = \app\view\Item::orderList();
+$orderList = \app\view\Item::orderList($category_id);
 $itemLists = \app\view\Item::dl($items, '', $query);
 ?>
 <body>
@@ -16,7 +16,7 @@ Your browser does not support JavaScript!
 </noscript>
 
 <header>
-	<form>
+	<form id="search_form" action="" onsubmit="return search()">
 		<h1>
 			<a href="/">红券网</a>
 		</h1>
@@ -42,14 +42,14 @@ Your browser does not support JavaScript!
 		</span>
 	</form>
 	<nav>
-		<?=\app\view\Item::catNav($tree, $category_id, $query)?>
+		<?=\app\view\Item::catNav($tree, $category_id, $query, $sort, $order)?>
 	</nav>
 	<div class="tool">
 		<blockquote>
 			<a href="">筛选</a>
 		</blockquote>
 		<span>
-			<?=\app\view\Item::orderTab($orderList[0], $sort)?>
+			<?=\app\view\Item::orderTab($orderList[0], $sort, $category_id)?>
 		</span>
 	</div>
 	<div class="order" id="order_list">
@@ -76,6 +76,10 @@ Your browser does not support JavaScript!
 
 <script>
 <!--
+query = {
+	category_id : <?=$category_id ? : '""'?>
+}
+
 window.onscroll = scroll
 
 function displayMsg() {
@@ -138,6 +142,37 @@ function getViewPort () {
             height: document.documentElement.clientHeight
         };
     }
+}
+
+/**
+ * form - 删除表单的空值元素
+ *
+ */
+function formElementsRemoveNull() {
+	npt = search_form.getElementsByTagName('input')
+	len = npt.length
+	i = 0
+	for (; i < len; i++) {
+		el = npt[i]
+		if ('' === el.value) {
+			el.removeAttribute('name')
+		}
+	}
+	return true
+}
+
+/**
+ * onsubmit - 搜索
+ */
+function search() {
+	formElementsRemoveNull()
+	if (query.category_id) {
+		hash = '#cat_' + query.category_id
+		if (hash != location.hash) {
+			search_form.action = hash
+		}
+	}
+	return true
 }
 //-->
 </script>
