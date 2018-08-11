@@ -1,23 +1,19 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>红券网￥优惠券折扣返利全网比价购物搜索</title>
-<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=31" rel="stylesheet" type="text/css">
-<!--[if IE]>
-<style>
-.category li {
-	display: inline-block;
-	max-width: 45px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-</style>
-<![endif]-->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>红券网￥优惠券折扣返利全网比价购物搜索</title>
+	<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=34" rel="stylesheet" type="text/css">
 </head>
 
 <body>
+<noscript>
+	<div>
+		<p>您正在使用的设备不支持 JavaScript，无法正常体验本页提供的功能！</p>
+	</div>
+</noscript>
+
 <header class="top">
 	<div class="top-in">
 		<div class="logo">

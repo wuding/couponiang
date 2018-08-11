@@ -43,6 +43,24 @@ body {
 	background: #ccc;
 }
 
+noscript {
+	overflow: hidden;
+	text-align: center;
+	color: #fff;	
+	line-height: 22px;
+	font-size: 16px;
+}
+
+noscript div
+{
+	padding: 4px 0;
+	background: #000;
+}
+
+noscript p {
+	
+}
+
 header {
 	background: #F8F8F8;
 }
@@ -353,7 +371,7 @@ data {
 	line-height: 16px;
 }
 
-p {
+data p {
 	float: left;
 	color: #f00;
 	font-size: 16px;

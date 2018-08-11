@@ -143,7 +143,9 @@ class Controller extends Core
 		$folder = '';
 		$controller = $php->dispatcher->controllerName ? : 'index';
 		$path = '/index';
-		$path .= '.mobi'; # 
+		if (Core::_isMobile()) {
+			$path .= '.mobi'; # 
+		}
 		$script = $theme . '/' . $folder . $controller . $path;
 		/* 渲染页面 */
 		if (!$this->disableView) {

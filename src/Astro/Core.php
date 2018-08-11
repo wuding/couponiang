@@ -17,4 +17,12 @@ class Core
 		}
 		return $value;
 	}
+	
+	/**
+	 * 检测是否手机
+	 */
+	public static function _isMobile($pattern = '/iPhone|Android/i')
+	{
+		return isset($_SERVER['HTTP_USER_AGENT']) && preg_match($pattern, $_SERVER['HTTP_USER_AGENT']);
+	}
 }

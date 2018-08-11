@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<title>红券网</title>
-	<link href="ui/mobi/style.css?v=11" rel="stylesheet" type="text/css">
+	<link href="ui/mobi/style.css?v=22" rel="stylesheet" type="text/css">
 </head>
 <?php
 $orderList = \app\view\Item::orderList($category_id);
@@ -12,7 +12,10 @@ $itemLists = \app\view\Item::dl($items, '', $query);
 ?>
 <body>
 <noscript>
-Your browser does not support JavaScript!
+	<div>
+		<p>您正在使用的设备不支持 JavaScript</p>
+		<p>无法正常体验本页提供的功能！</p>
+	</div>
 </noscript>
 
 <header>
