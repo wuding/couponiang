@@ -78,6 +78,7 @@ Your browser does not support JavaScript!
 <!--
 query = {
 	category_id : <?=$category_id ? : '""'?>
+	
 }
 
 window.onscroll = scroll
