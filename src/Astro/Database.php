@@ -20,7 +20,6 @@ class Database
 		global $PHP;
 		if (!$arg) {
 			$arg = $PHP->config['database'];
-			# print_r([$arg, __METHOD__, __LINE__, __FILE__]); exit;
 		}
 		$this->init($arg);
 		$this->_init();
@@ -36,24 +35,9 @@ class Database
 	
 	public function init($arg = [])
 	{
-		# print_r([$arg, __METHOD__, __LINE__, __FILE__]);
 		$this->setVar($arg);
-		
-		/*
-		$arg = [
-			'host' => $this->host,
-			'port' => $this->port,
-			'db_name' => $this->db_name,
-			'table_name' => $this->table_name,
-			'user' => $this->user,
-			'password' => $this->password,
-			'driver' => $this->driver,
-			'primary_key' => $this->primary_key,
-		];
-		*/
 		$arg = get_object_vars($this);
 		unset($arg['inst'], $arg['adapter']);
-		# print_r([$arg, __METHOD__, __LINE__, __FILE__]); 
 		$this->getAdapter($this->adapter, $arg);
 	}
 	
@@ -79,7 +63,6 @@ class Database
 	{
 		$func = $this->inst;
 		$arg = $arguments;
-		# print_r($arg);exit;
 		
 		$str = [];
 		foreach ($arg as $key => $value) {

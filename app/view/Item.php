@@ -15,7 +15,7 @@ class Item
 	 */
 	
 	/**
-	 * 超大图
+	 * desktop - 超大图
 	 *
 	 *
 	 */
@@ -153,26 +153,7 @@ HEREDOC;
 		return $lis;
 	}
 	
-	#! 未使用
-	public static function pagination($page, $pages)
-	{
-		$queryString = $_SERVER['QUERY_STRING'];
-		parse_str($queryString, $formData);
-		
-		$last = $page + 1;
-		$last = ($last > $pages) ? $pages : $last;
-		
-		$formData['page'] = $last;
-		$queryStr = http_build_query($formData);
-		
-		$html = <<<HEREDOC
-		
-		$page/$pages
-		<a href="?$queryStr">下一页</a>
-HEREDOC;
-
-		return $html;
-	}
+	
 
 
 	/*
@@ -231,6 +212,27 @@ HEREDOC;
 			'next_message' => '下一页',
 		];
 		return $pagination = $view->render($pagerfanta, $routeGenerator, $options);
+	}
+	
+	#! 未使用
+	public static function pagination($page, $pages)
+	{
+		$queryString = $_SERVER['QUERY_STRING'];
+		parse_str($queryString, $formData);
+		
+		$last = $page + 1;
+		$last = ($last > $pages) ? $pages : $last;
+		
+		$formData['page'] = $last;
+		$queryStr = http_build_query($formData);
+		
+		$html = <<<HEREDOC
+		
+		$page/$pages
+		<a href="?$queryStr">下一页</a>
+HEREDOC;
+
+		return $html;
 	}
 
 
@@ -383,9 +385,15 @@ HEREDOC;
 		}
 		return Form::select($arr, $cat_id, $property);
 	}
+	
+	/*
+	 ------------------------------------------------------------------
+	 | list - 分类及排序
+	 ------------------------------------------------------------------
+	 */
 
 	/**
-	 * 分类导航
+	 * 分类 - 横向导航条
 	 */
 	public static function catNav($cat, $cat_id = null, $query = null, $sort = null, $order = null)
 	{
@@ -435,7 +443,7 @@ HEREDOC;
 	}
 
 	/**
-	 * 排序挑选列表
+	 * 排序 - 挑选列表
 	 */
 	public static function orderList($category_id = null)
 	{
@@ -487,7 +495,7 @@ HEREDOC;
 	}
 
 	/**
-	 * 排序挑选卡
+	 * 排序 - 选项卡
 	 */
 	public static function orderTab($name = null, $sort = '', $category_id = null)
 	{
@@ -536,13 +544,19 @@ HEREDOC;
 		return $lis;
 	}
 	
+	/*
+	 ------------------------------------------------------------------
+	 | functions - 核心功能
+	 ------------------------------------------------------------------
+	 */
+	
 	/**
 	 * array - 根据设置好的键名索引排序
 	 *
 	 */
 	public static function array_index($data = [])
 	{
-		$index = ['q', 'category', 'sort', 'order'];
+		$index = ['q', 'category', 'sort', 'order', 'page'];
 		$filp = array_flip($index);
 		$arr = [];
 		foreach ($data as $key => $value) {

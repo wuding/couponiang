@@ -25,10 +25,16 @@ class Controller extends Core
 		],
 	]; //方法映射配置
 	public $destruct = 2; //析构函数执行后续动作 1自动 2手动
-	public $exit = null; //执行后退出# 
+	public $exit = null; //执行后退出
 	
+	/**
+	 * 构造函数
+	 *
+	 * 传入动作名、HTTP方法和控制器变量
+	 */
 	public function __construct($action = '', $method = '', $vars = [])
 	{
+		// 变量
 		# print_r($vars);
 		if ($vars) {
 			foreach ($vars as $key => $value) {
@@ -36,49 +42,54 @@ class Controller extends Core
 			}
 		}
 		
+		// 请求
 		$this->httpMethod = strtolower($method ? : $_SERVER['REQUEST_METHOD']);
-		$this->actionName = $action = $action ? : $GLOBALS['PHP']->dispatcher->actionName;
 		
-		
-		/* 检测方法是否存在 */
+		// 动作
+		$this->actionName = $action = $action ? : $GLOBALS['PHP']->dispatcher->actionName;		
 		$this->methods = $methods = get_class_methods($this);
 		$action = $action ? : $this->action;
-		if ($action) {			
+		if ($action) {
+			// 检测方法是否存在			
 			$this->actionMethod = $actionMethod = '_' . $this->httpMethod . '_' . $action;
 			if (in_array($actionMethod, $methods)) {
 				$action = $actionMethod;
 			}
 		}
 		$this->action = $action;
-		# print_r([__METHOD__, __LINE__, __FILE__]);
+		
+		// 执行自定义初始化
 		$this->_init();
 	}
 	
+	/**
+	 * 自定义初始化
+	 */
 	public function _init()
 	{
+		//
 	}
 	
+	/**
+	 * 默认404动作
+	 */
 	public function _notfound()
 	{
 		return [__METHOD__, __LINE__, __FILE__];
 	}
 	
 	/**
+	 * 转接动作
 	 *
 	 * 主动作执行后才可用
 	 */
 	public function _forward($routeInfo = [], $requestInfo = [], $options = [], $destruct = 2)
 	{
-		global $PHP;# 
-		# $PHP = $PHP ? : $GLOBALS['PHP'];
-		# var_dump($PHP);
-		# exit;
-		
+		global $PHP;		
 		$opt = ['vars' => null, 'return' => null, 'exit' => null];
 		$options = array_merge($opt, $options);
 		
 		$var = null;
-		# $dispatcher = $dispatcher->getController();
 		$controller = $PHP->controller($routeInfo, $requestInfo, $options['vars'], 0);
 		if (2 == $destruct) {					
 			$var = $controller->_destruct($options['return'], $options['exit']);
@@ -90,13 +101,14 @@ class Controller extends Core
 	}
 	
 	
-	
+	/**
+	 * 运行动作方法
+	 *
+	 * 然后返回数据或输出结果
+	 */
 	public function _destruct($return = null, $exit = null, $destruct = null)
 	{
-		# print_r([$return, $exit, $destruct, __METHOD__, __LINE__, __FILE__]);
 		$php = $GLOBALS['PHP'];
-		# $template = $php->template();
-		# print_r($php);
 		$method = $this->httpMethod;
 		$action = $this->action;
 		$maps = $this->actionMethods;
@@ -130,15 +142,13 @@ class Controller extends Core
 		}
 		
 		/* 后续动作 */
+		
 		// 返回
 		if ($return) {
 			return $var;
 		}
 		
-		
-		
 		// 输出
-		# print_r([$exit, $var, __METHOD__, __LINE__, __FILE__]);exit; 
 		$theme = 'aero';
 		$folder = '';
 		$controller = $php->dispatcher->controllerName ? : 'index';
@@ -147,8 +157,8 @@ class Controller extends Core
 			$path .= '.mobi'; # 
 		}
 		$script = $theme . '/' . $folder . $controller . $path;
-		/* 渲染页面 */
-		if (!$this->disableView) {
+		
+		if (!$this->disableView) { //渲染页面
 			$var = is_array($var) ? $var : [];
 			echo $html = $php->template()->render($script, $var);
 		} elseif ('info' == $this->disableView) {
@@ -157,25 +167,22 @@ class Controller extends Core
 		
 		// 退出
 		if (null === $exit) {
-			$exit = $this->exit; #@
+			$exit = $this->exit;
 		}
 		if (null !== $exit) {
 			exit($exit);
 		}
 	}
 	
-	/*
-	public function setExit($exit = null)
-	{
-		$this->exit = $exit;
-	}
-	*/
-	
+	/**
+	 * 析构函数
+	 *
+	 * 调用动作函数
+	 */
 	public function __destruct()
 	{
 		if ($GLOBALS['_CONTROLLER']['destruct'] && 1 == $this->destruct) {
 			$this->_destruct(null, null, 0);
 		}
-		# print_r([__METHOD__, __LINE__, __FILE__]);# 
 	}
 }

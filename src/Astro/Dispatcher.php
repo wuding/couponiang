@@ -20,6 +20,11 @@ class Dispatcher
 	public $controllerDefault = 'index';
 	public $actionDefault = 'index';
 	
+	/**
+	 * 构造函数
+	 *
+	 * 调用初始化函数
+	 */
 	public function __construct($routeInfo = [], $requestInfo = [], $controllerVars = [])
 	{
 		$this->init($routeInfo, $requestInfo, $controllerVars);
@@ -156,10 +161,6 @@ class Dispatcher
 			$moduleFolder = '\\module\\' . $moduleInfo[0];
 		}
 		return $this->controllerNamespace = "\\app$moduleFolder\\controller\\";
-	}
-	
-	public function __destruct()
-	{
 	}
 }
 	
