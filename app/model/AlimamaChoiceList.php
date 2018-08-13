@@ -13,7 +13,10 @@ class AlimamaChoiceList extends \Astro\Database
 	public static $week = null;
 	public static $DBY = null;
 	
-	public $columns = null;
+	public $columns = [
+		'all' => ['excel_id', 'title', 'pic', 'price', 'save', 'sold', 'end', 'site'],
+		'row' => ['category_id', 'title', 'pic', 'price'],
+	];
 	
 	/**
 	 * 初始化
@@ -30,6 +33,8 @@ class AlimamaChoiceList extends \Astro\Database
 			'date' => $date,
 			'time' => $time,
 		];
+		
+		# array_unshift($this->columns['all'], $this->primary_key);
 	}
 	
 	/**
@@ -45,15 +50,13 @@ class AlimamaChoiceList extends \Astro\Database
 		$where = [];
 		$where += $condition;
 		
-		$column = '*';
-		$this->columns = [$this->primary_key, 'title', 'pic', 'price', 'save', 'site', 'sold', 'end'];
 		$option = [$sort, $limit, $offset];
-		
 		$join = [];
-		$all = $this->select($where, $this->columns, $option, null, $join);
+		$all = $this->select($where, $this->columns['all'], $option, null, $join);
 		return $all;
 	}
 	
+	#! 未使用
 	public function item($condition = [], $sort = null, $limit = 1, $offset = 0)
 	{
 		$sort = $sort ? : [$this->primary_key => 'DESC'];
@@ -61,11 +64,8 @@ class AlimamaChoiceList extends \Astro\Database
 		$where = [];
 		$where += $condition;
 		
-		$columns = [$this->primary_key, 'category_id', 'title', 'pic', 'price'];
-		
-		$option = [$sort, $limit, $offset];
-		
-		return $row = $this->sel($where, $columns, $option);
+		$option = [$sort, $limit, $offset];		
+		return $row = $this->sel($where, $this->columns['row'], $option);
 	}
 	
 	/**

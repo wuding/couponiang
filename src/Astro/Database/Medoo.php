@@ -105,6 +105,9 @@ class Medoo
 	
 	public function sel($where = [], $columns = null, $option = [], $group = [], $join = [])
 	{
+		$opt = [[$this->primary_key => 'DESC'], 1, 0];
+		$option = $option + $opt;
+		
 		$row = null;
 		$all = $this->select($where, $columns, $option, $group, $join);
 		if (isset($all[0])) {

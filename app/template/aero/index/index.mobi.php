@@ -269,7 +269,7 @@ function api_item_list(arg) {
 		odd = i % 2
 		row = data[i]
 		html = '<dl>'
-				+ '<a href="/item/' + row.list_id + '" target="_blank">'
+				+ '<a href="/item/' + row.excel_id + '" target="_blank">'
 					+ '<img src="' + row.pic + '_200x200.jpg">'
 					+ '<span>'						
 						+ '<h4>' + row.title + '</h4>'

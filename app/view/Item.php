@@ -42,7 +42,7 @@ class Item
 			$class = '';
 			$save = '券';
 			$sold = "已领 $obj->sold 张券";
-			$title = $obj->title;
+			$title = $tip = $obj->title;
 			if (1 == $no) {
 				$style = ' style="clear: left;"';
 			}			
@@ -64,29 +64,19 @@ class Item
 					}
 				}
 				foreach ($arr as $q) {
-					# $title = preg_replace("/($q)/i", "{:mark:}$1{:_mark:}", $title);
 					$title = preg_replace("/($q)/i", "<mark>$1</mark>", $title);
 				}
 			}
 			
-			$tip = $obj->title;
-			/*
-			$tip = htmlspecialchars($tip);
-			
-			$title = htmlspecialchars($title); # 
-			$title = str_replace('{:mark:}', '<mark>', $title);
-			$title = str_replace('{:_mark:}', '</mark>', $title);
-			*/
-			
 			$li = <<<HEREDOC
 			<li $style $class>
 				<div title="$tip">
-					<a href="/item/{$row['list_id']}" target="_blank" data-end="$obj->end" data-no="$i">
-						<menu>{$save}￥{$row['save']}</menu>
-						<p><img src="{$row['pic']}_200x200.jpg"></p>
+					<a href="/item/$obj->excel_id" target="_blank" data-end="$obj->end" data-no="$i">
+						<menu>{$save}￥$obj->save</menu>
+						<p><img src="{$obj->pic}_200x200.jpg"></p>
 						<time>$obj->end</time>
 						<span>
-							<var>￥{$row['price']}</var>
+							<var>￥$obj->price</var>
 							<s>$sold</s>
 						</span>
 						<b>$title</b>
@@ -133,7 +123,7 @@ HEREDOC;
 
 			$li = <<<HEREDOC
 			<dl>
-				<a href="/item/$obj->list_id" target="_blank">
+				<a href="/item/$obj->excel_id" target="_blank">
 					<img src="{$obj->pic}_200x200.jpg">
 					<span>
 						$em

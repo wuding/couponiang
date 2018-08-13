@@ -1,7 +1,7 @@
 <?php
 namespace app\module\item\controller;
 
-use app\model\AlimamaChoiceList;
+use app\model\AlimamaChoiceExcel;
 
 class Index extends \Astro\Controller
 {
@@ -38,19 +38,18 @@ class Index extends \Astro\Controller
 	public function index()
 	{
 		global $PHP;
-		$List = new AlimamaChoiceList;
+		$Excel = new AlimamaChoiceExcel;
 		
 		$uri = $PHP->uri;
 		$arr = explode('/', $uri);
 		$id = $arr[2];
 		
 		# $where = ['list_id' => $id];
-		$item = $List->find($id, ['url', 'link', 'site']);
-		$url = '/';
-		if ($item) {
-			$url = $item->link;
-			if (3 != $item->site) {
-				/*
+		$row = $Excel->find($id, ['taobaoke', 'promotion', 'group']);
+		$url = '/notfound';
+		if ($row) {
+			$url = $row->group ? $row->taobaoke : $row->promotion;
+			/*
 				检测优惠券状态
 				$query = parse_url($item->link, PHP_URL_QUERY);
 				parse_str($query, $STR);
@@ -77,9 +76,6 @@ class Index extends \Astro\Controller
 					}
 				}
 				*/
-			} else {
-				$url = $item->url;
-			}
 			
 		}
 		header('Location: ' . $url);exit;
