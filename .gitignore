@@ -4,7 +4,12 @@ composer.phar
 # Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
 # You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
 composer.lock
+<<<<<<< HEAD
 composer.json
+=======
+/composer.json
+>>>>>>> 015a400774d1ecaf5968745fd60c14fec43121e3
 
+/app/config.php
 /web/js/jquery-3.3.1.js
 /app/config.php

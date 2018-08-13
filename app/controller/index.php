@@ -14,6 +14,11 @@ class Index extends _Abstract
 		$Category = new AlimamaProductCategory;
 		$limit = 40;
 		$stat = $this->stat;
+		$request_uri = htmlspecialchars($_SERVER['REQUEST_URI']);
+		$source_url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $request_uri;
+		$uaStr = '';
+		$UA = \Astro\Core::_userAgent($uaStr);
+		$wx = \Astro\Core::_isMobile('/MicroMessenger/i', $uaStr);
 		
 		/* 分类 */
 		$class = $Category->rootIds();
