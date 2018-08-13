@@ -431,8 +431,12 @@ function appDevice() {
 		if ( ! server.client ) {
 			tip_bar.style.display = 'none'
 			
-		// 非微信
-		} else if ( 'undefined' != typeof tip_open && ! server.client.match( /^(MicroMessenger)$/i ) ) {
+		
+		} else if ( 'undefined' != typeof tip_open) {
+			// 微信
+			if ( server.client.match( /^(MicroMessenger)$/i ) ) {
+				tip_wx.style.display = 'none'
+			}
 			tip_open.style.display = 'block'
 		}
 	}
