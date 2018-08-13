@@ -19,10 +19,31 @@ class Core
 	}
 	
 	/**
-	 * 检测是否手机
+	 * User Agent - 检测是否手机
 	 */
-	public static function _isMobile($pattern = '/iPhone|Android/i')
+	public static function _isMobile($pattern = '/iPhone|Android/i', $ua = null)
 	{
-		return isset($_SERVER['HTTP_USER_AGENT']) && preg_match($pattern, $_SERVER['HTTP_USER_AGENT']);
+		$ua = $ua ? : (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '');
+		return preg_match($pattern, $ua);
+	}
+	
+	/**
+	 * User Agent - 特定APP检测
+	 */
+	public static function _userAgent($ua = null)
+	{
+		$ua = $ua ? : $_SERVER['HTTP_USER_AGENT'];
+		$device = '未知APP';
+		$client = null;
+		$version = null;
+		if (preg_match("/AliApp\((TB|AP)\/([0-9\.]+)\)/i", $ua, $matches)) {
+			$client = $matches[1];
+			$version = $matches[2];
+			
+		} elseif (preg_match("/(MicroMessenger|QQ)/i", $ua, $matches)) {
+			$client = $matches[1];
+			$device = $matches[1];
+		}
+		return [$client, $device, $version];
 	}
 }

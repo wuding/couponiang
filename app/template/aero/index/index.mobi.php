@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<title>红券网</title>
-	<link href="ui/mobi/style.css?v=22" rel="stylesheet" type="text/css">
+	<link href="ui/mobi/style.css?v=23" rel="stylesheet" type="text/css">
 </head>
 <?php
 $orderList = \app\view\Item::orderList($category_id);
@@ -18,6 +18,35 @@ $itemLists = \app\view\Item::dl($items, '', $query);
 	</div>
 </noscript>
 
+<?php
+if ($UA[0]) :
+?>
+<header class="tip" id="tip_bar">
+	<?php
+	if ($wx) :
+	?>
+	<h5 id="tip_wx">
+		本页可能已被重新排版，请点击上面的
+		<a href="<?=$source_url?>">原网页</a>，再点击
+		<a href="<?=$source_url?>">访问原网页</a>；
+		建议您复制下面的链接在浏览器中查看！
+	</h5>
+	<?php
+	endif;
+	?>
+	<h5 style="display: none" id="tip_open">
+		点击右上角... 选择在浏览器中打开，
+		您正在使用的<?=$UA[1]?>可能无法正常查看！
+		下面是本页链接地址。
+	</h5>
+	<div contenteditable="true">
+		<?=$source_url?>
+	</div>
+</header>
+<?php
+endif;
+?>
+	
 <header>
 	<form id="search_form" action="" onsubmit="return search()">
 		<h1>
@@ -80,24 +109,30 @@ $itemLists = \app\view\Item::dl($items, '', $query);
 <script>
 <!--
 /*---- 定义 ------*/
-query = {
+// 服务器变量
+server = {
 	category_id : <?=$category_id ? : '""'?>,
-	page: <?=$page ? : 1?>
+	page: <?=$page ? : 1?>,
+	client: '<?=$UA[0]?>',
+	count: <?=$count?>,
+	overflow: <?=(int) $overflow?>
 	
 }
 
-config = {
-	api_host: ''
+// 全局变量
+global = {
+	page: server.page + 1,
+	overflow: server.overflow	
 }
-
-page = query.page + 1
-overflow = <?=(int) $overflow?>
-
-count = <?=$count?>
 
 XHR = []
 AJAX = []
 RESP = []
+
+// 配置
+config = {
+	api_host: ''
+}
 
 window.onscroll = scroll
 
@@ -136,22 +171,22 @@ _.form = function () {
 /**
  * 接口 - 调用
  */
-_.api = function ( uri, formData, method, query, arg ) {
+_.api = function ( uri, formData, method, queryString, arg ) {
 	method = method || 'get'
 	method = method.toUpperCase()
 	arg = arg || {}	
 	
-	if ( 'GET' == method && !query && formData ) {
+	if ( 'GET' == method && ! queryString && formData ) {
 		params = new URLSearchParams
 		for ( pair in formData ) {
 		   params.append( pair, formData[ pair ] )
 		}
-		query = params.toString()		
+		queryString = params.toString()		
 	}
 	
 	url = config.api_host + '/api/' + uri
-	if ( query ) {
-		url += '?' + query
+	if ( queryString ) {
+		url += '?' + queryString
 	}
 	
 	uri = uri.replace( /\//, '_' )
@@ -251,7 +286,7 @@ function api_item_list(arg) {
 		case 1:
 		case 2:
 			load_msg = msg
-			overflow = 1
+			global.overflow = 1
 			break
 		case 3:
 			alert(msg)
@@ -284,7 +319,7 @@ function api_item_list(arg) {
 		list[odd].insertAdjacentHTML(position, html)
 	}
 	load_info.innerHTML = load_msg
-	page++
+	global.page++
 }
 
 /**
@@ -293,8 +328,8 @@ function api_item_list(arg) {
  */
 function loadData() {	
 	uri = 'item/list'
-	key = uri + ':' + page
-	if ( count && !overflow && !AJAX[ key ] ) {
+	key = uri + ':' + global.page
+	if ( server.count && ! global.overflow && ! AJAX[ key ] ) {
 		AJAX[ key ] = 1		
 		load_info.innerHTML = '玩命加载中……'
 		
@@ -308,8 +343,8 @@ function loadData() {
 				formData[ el.name ] = el.value
 			}
 		}
-		if ( 1 < page ) {
-			formData.page = page
+		if ( 1 < global.page ) {
+			formData.page = global.page
 		}
 		_.api( uri, formData )
 	}
@@ -378,14 +413,31 @@ function scroll() {
  */
 function search() {
 	_.form.removeNull(search_form)
-	if (query.category_id) {
-		hash = '#cat_' + query.category_id
+	if ( server.category_id ) {
+		hash = '#cat_' + server.category_id
 		if (hash != location.hash) {
 			search_form.action = hash
 		}
 	}
 	return true
 }
+
+/**
+ * APP - 检测设备
+ */
+function appDevice() {
+	if ( 'undefined' != typeof tip_bar ) {
+		// 非特定设备
+		if ( ! server.client ) {
+			tip_bar.style.display = 'none'
+			
+		// 非微信
+		} else if ( 'undefined' != typeof tip_open && ! server.client.match( /^(MicroMessenger)$/i ) ) {
+			tip_open.style.display = 'block'
+		}
+	}
+}
+appDevice()
 //-->
 </script>
 <?php if (!$stat) { $this->insert('stat'); } ?>

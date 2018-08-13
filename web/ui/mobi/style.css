@@ -3,7 +3,7 @@
 /*----- reset ------*/
 
 body,p,blockquote,
-h1,h4,
+h1,h4,h5,
 dl
 {
 	margin: 0;
@@ -49,12 +49,14 @@ noscript {
 	color: #fff;	
 	line-height: 22px;
 	font-size: 16px;
+	font-weight: bold;
 }
 
 noscript div
 {
 	padding: 4px 0;
 	background: #000;
+	border-bottom: 1px #ccc solid;
 }
 
 noscript p {
@@ -63,6 +65,32 @@ noscript p {
 
 header {
 	background: #F8F8F8;
+}
+
+/*------- tip ---------*/
+header.tip {
+	background: #fff;
+	border-bottom: 1px #ccc solid;
+}
+
+header.tip h5 {	
+	line-height: 22px;
+	font-size: 15px;
+	font-weight: bold;	
+	text-align: center;
+    background: #000;
+    color: #fff;
+    padding: 10px;
+	border-bottom: 1px #ccc solid;
+}
+
+header.tip a {
+	color: #aaaaff;
+	text-decoration: underline;
+}
+
+header.tip div {
+	padding: 10px;
 }
 
 /*----- search ------*/
