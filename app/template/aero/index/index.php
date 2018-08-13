@@ -174,7 +174,8 @@
 var interval = <?=$items ? 'self.setInterval("update()", 1000)' : 'null'?>;
 var end = '<?=isset($items[0]) ? $items[0]['end'] : 'null'?>';
 </script>
-<script src="js/jquery-3.3.1.js"></script>
+<!--script src="js/jquery-3.3.1.js"></script-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="js/search.js?v=15"></script>
 <?php if (!$stat) { $this->insert('stat'); } ?>
 </body>
