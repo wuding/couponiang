@@ -22,7 +22,7 @@ class Item extends _Abstract
 		$Item = new HelperItem;
 		
 		/* 商品 */
-		extract($Item->list(40));
+		extract($Item->lists(40));
 		unset($List, $Category);
 		
 		$code = (int) $overflow;

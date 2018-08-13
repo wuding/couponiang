@@ -48,9 +48,9 @@ $itemLists = \app\view\Item::dl($items, '', $query);
 		<?=\app\view\Item::catNav($tree, $category_id, $query, $sort, $order)?>
 	</nav>
 	<div class="tool">
-		<blockquote>
+		<!--blockquote>
 			<a href="">筛选</a>
-		</blockquote>
+		</blockquote-->
 		<span>
 			<?=\app\view\Item::orderTab($orderList[0], $sort, $category_id)?>
 		</span>

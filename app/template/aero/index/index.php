@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<title>红券网￥优惠券折扣返利全网比价购物搜索</title>
-	<link href="http://www.loc.urlnk.com/perfect/GUI/GinsengFruitTree/css/new-ui.css?v=34" rel="stylesheet" type="text/css">
+	<link href="/css/new-ui.css?v=34" rel="stylesheet" type="text/css">
 </head>
 
 <body>

@@ -52,6 +52,7 @@ class Item
 				$class = ' class="tuan"';
 			}
 			
+			// 关键词高亮
 			if ($query) {
 				$queries = preg_split('/\s+/', $query);
 				$arr = [];
@@ -68,12 +69,14 @@ class Item
 				}
 			}
 			
+			$pic = preg_replace('/^http:/i', '', $obj->pic);
+			
 			$li = <<<HEREDOC
 			<li $style $class>
 				<div title="$tip">
 					<a href="/item/$obj->excel_id" target="_blank" data-end="$obj->end" data-no="$i">
 						<menu>{$save}￥$obj->save</menu>
-						<p><img src="{$obj->pic}_200x200.jpg"></p>
+						<p><img src="{$pic}_200x200.jpg"></p>
 						<time>$obj->end</time>
 						<span>
 							<var>￥$obj->price</var>
@@ -120,11 +123,12 @@ HEREDOC;
 					$title = preg_replace("/($q)/i", "<mark>$1</mark>", $title);
 				}
 			}
+			$pic = preg_replace('/^http:/i', '', $obj->pic);
 
 			$li = <<<HEREDOC
 			<dl>
 				<a href="/item/$obj->excel_id" target="_blank">
-					<img src="{$obj->pic}_200x200.jpg">
+					<img src="{$pic}_200x200.jpg">
 					<span>
 						$em
 						<h4>$title</h4>

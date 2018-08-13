@@ -3,7 +3,7 @@ namespace app\model;
 
 class AlimamaProductCategory extends \Astro\Database
 {
-	public $db_name = 'com_urlnk';
+	public $db_name = 'shopping';
 	public $table_name = 'alimama_product_category';
 	public $primary_key = 'category_id';
 	

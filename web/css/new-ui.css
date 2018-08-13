@@ -1,0 +1,602 @@
+@charset "utf-8";
+
+/*********** reset ************/
+/*html {
+	overflow: hidden;
+	overflow-y: auto;
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+*/
+
+body,p,blockquote,
+h1,h2,h3,h4,h5,h6
+{
+	margin: 0;
+}
+
+ol
+{
+	margin: 0;
+	padding: 0;
+}
+
+li
+{
+	list-style: none;
+}
+
+hr {
+	margin: -10px 0 0 0;
+	position: absolute;
+	width: 100%;
+	left: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+/********** 通用 *********/
+.hide {
+	display: none;
+}
+
+
+/******** 布局 ********/
+
+body {
+	height: 1200px;
+}
+
+noscript {
+	overflow: hidden;
+	text-align: center;
+	color: #fff;	
+	line-height: 36px;
+	font-size: 16px;
+}
+
+noscript div
+{
+	padding: 4px 0;
+	background: #000;
+}
+
+noscript p {
+	
+}
+
+/**/
+
+.pick,
+.toolbar
+{
+	min-width: 1000px;
+}
+
+.top
+{
+	min-width: 960px;
+}
+
+main
+{
+	min-width: 980px;
+}
+
+.top-in
+{
+	max-width: 1200px;
+}
+
+.toolbar-in,
+.main-in
+{
+	max-width: 1200px;
+}
+
+/******** 顶部 ********/
+
+.top {
+	overflow: hidden;
+	padding: 0 20px;
+	border-bottom: solid 1px #ccc;
+}
+
+.top-in {
+	margin: 0 auto;
+}
+
+/* 标志 */
+.logo {
+	padding: 12px 0 0 0;
+	float: left;
+	text-align: left;
+	width: 200px;/**/
+	height: 36px;
+}
+
+.logo h1 {
+	float: left;
+	height: 36px;
+	line-height: 36px;
+	font-size: 32px;
+	font-weight: normal;
+	font-family: "Microsoft YaHei";
+}
+
+.logo address {	
+	padding: 0 0 0 8px;
+	float: left;
+	height: 36px;
+	line-height: 36px;
+	font-size: 24px;
+	font-style: normal;
+}
+
+.logo a {
+	color: #f00;
+	text-decoration: none;
+}
+
+/* 帐号 */
+.account {
+	padding: 20px 0;
+	float: right;
+	text-align: right;
+	width: 200px;/**/
+	height: 24px;
+}
+
+.account nav {
+	height: 24px;
+	line-height: 24px;
+}
+
+.account a {
+	padding: 0 6px;
+	font-size: 14px;
+}
+
+/******** 搜索 ********/
+.search {
+	overflow: hidden;
+	margin: 0 200px;/**/
+	padding: 14px 0 0 0;
+}
+
+.search form {
+	overflow: hidden;
+	margin: 0 auto;
+    max-width: 600px;
+	width: 100%;
+}
+
+.search div {
+	margin: 0 100px 0 0;
+	padding: 0 0 0 10px;
+	border: solid 1px #ccc;
+	border-right: none;
+	border-radius: 4px 0px 0px 4px;
+}
+
+.search div:hover {
+	border-color: #e62e04;
+}
+
+.search div input {
+	margin: 0;
+	padding: 0;
+	border: none;
+	outline: none;
+	display: block;
+	width: 100%;
+	height: 34px;
+	line-height: 34px;
+	font-size: 16px;
+	background: rgba(255,255,255, 0.5);
+}
+
+.search blockquote {
+	border: solid 1px #e62e04;
+	border-radius: 0px 4px 4px 0px;
+	float: right;
+	text-align: center;
+	width: 98px;
+}
+
+.search blockquote button {
+	padding: 0;
+	border: none;
+	outline: none;
+	width: 100%;
+	height: 34px;
+	line-height: 34px;
+	font-size: 26px;
+	color: #fff;
+	background: #e62e04;
+}
+
+.search blockquote button:hover {
+	background: #f10215;
+}
+
+/******** 快选 ********/
+.pick {
+	border-bottom: dashed 1px #ddd;
+}
+
+/******** 分类 ********/
+
+.category {
+	font-size: 15px;
+}
+
+.category blockquote {
+	margin: 0;
+	padding: 0 10px;
+}
+
+.category nav {	
+	overflow: hidden;
+	overflow-x: auto;/**/
+}
+
+.category div {
+	overflow: hidden;
+	/*width: 1920px;*/
+	white-space: nowrap;
+}
+
+.category dl {
+	margin: 0;
+	padding: 5px;
+	float: left;
+}
+
+.category nav dl {
+	border-left: 1px solid #eee;
+}
+
+.category nav dl.current-tab {
+	background: #fff7fa;
+}
+
+.category nav ol {
+	padding: 5px 0;
+	display: block;
+	float: left;
+	max-width: 5px;
+	height: 20px;
+	line-height: 20px;
+}
+
+.category dt {
+	text-align: center;
+}
+
+.category nav dt.current-cat {
+	font-weight: bold;
+}
+
+.category dd {
+	margin: 0;
+}
+
+.category li {
+	display: inline-block;
+	max-width: 45px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.category li.current-cat {
+	font-weight: bold;
+}
+
+.category a {
+}
+
+.category nav dt a {
+	display: block;
+}
+
+.category nav ol a {
+	display: block;
+	width: 5px;
+}
+
+/* 工具栏 */
+.toolbar {
+	border-bottom: solid 1px #ddd;
+}
+
+.toolbar-in
+{
+	overflow: hidden;
+	margin: 0 auto;
+	padding: 8px 0;
+}
+
+.toolbar-left {
+	float: left;
+}
+
+.toolbar-right {
+	padding: 0 10px 0 0;
+	float: right;
+}
+
+.toolbar blockquote {
+	padding: 0 0 0 10px;
+	float: left;
+}
+
+.toolbar h5
+{
+	padding: 0 5px 0 0;
+	float: left;
+	height: 21px;
+	line-height: 21px;
+}
+
+.toolbar form
+{
+	float: left;
+}
+
+.nav {
+}
+
+.site {
+}
+
+.filter {
+}
+
+.tool {
+}
+
+.group {
+}
+
+.order {
+}
+
+.view {
+}
+
+/* 主要 */
+main {
+	overflow: hidden;
+	display: block;
+	clear: left;
+	/*margin: 0 200px;*/
+	padding: 20px 10px;
+}
+
+.main-in
+{
+	margin: 0 auto;	
+	
+}
+
+article {
+	overflow: hidden;
+	padding: 5px;
+	margin-bottom: 20px;
+	border: dashed 1px #ddd;
+}
+
+section {
+	/*margin: 5px 0 0 0;*/
+	padding: 5px;
+	/*border-bottom: solid 1px #ddd;*/
+}
+
+section header {
+	padding: 0 0 0 10px;
+	border-bottom: solid 1px #eee;
+}
+
+section header h2 {
+	line-height: 28px;
+	font-size: 16px;
+}
+
+section ol {
+	overflow: hidden;
+	padding: 10px 0;
+}
+
+section li {
+	float: left;
+	/*text-align: center;
+	padding: 5px;
+	width: 284px;*/
+	width: 25%;
+	height: auto;
+	/*min-height: 286px;*/
+}
+
+section div {
+	overflow: hidden;
+	margin: 5px;
+	padding: 5px;
+	border: solid 2px #fff;
+	border-radius: 5px;
+}
+
+section li div:hover {
+	border-color: #f22;
+	/*background: #f55;*/
+}
+
+section li div:hover a {
+	/*color: #fff;*/
+}
+
+section li div a {
+	overflow: hidden;
+    display: block;
+	text-decoration: none;
+}
+
+/*
+section div a:link {
+	color: #222;
+}
+*/
+
+section div p {
+	margin: 0;
+}
+
+section div menu {
+	position: relative;	
+	margin: 0 0 -26px 0;
+	padding: 0 8px;
+	border: 1px dotted #ff0060;
+	width: auto;
+    height: 24px;
+    line-height: 24px;
+    font-size: 12px;
+	
+	display: block;
+    float: right;
+	text-align: center;
+    color: #ff0060;
+	background: #fff7fa;
+}
+
+section .tuan div menu {
+	border: 1px dotted #FF0B04;
+    color: #FF0B04;
+	background: #FEEA7E;
+}
+
+section div:hover menu {
+	 display: none;
+}
+
+section div time {
+    display: none;
+    position: relative;
+    margin: -28px 0 0 0;
+    line-height: 28px;
+    font-size: 12px;
+    background-color: rgba(0,0,0,.6);
+    color: #fff;
+    text-align: center;
+}
+
+section div:hover time {
+	 display: block;
+}
+
+section div img {
+	width: 270px;
+	max-width: 100%;
+	max-height: 270px;
+}
+
+section div b {
+	overflow: hidden;
+    text-overflow: ellipsis;
+	display: block;
+	clear: left;
+	max-width: 100%;
+	max-height: 40px;
+	line-height: 20px;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+
+
+section div span {
+	display: block;
+	line-height: 24px;
+}
+
+section div var {
+	display: block;
+	float: left;
+    font-size: 16px;
+	font-weight: normal;
+	font-style: normal;
+	color: #f00;
+}
+
+section div:hover var {
+	font-weight: bold;
+}
+
+section div s {
+	display: block;
+	float: right;
+	font-size: 12px;
+	text-decoration: none;
+	color: #999;
+}
+
+.large section li {
+	width: 20%;
+}
+
+.medium section li {
+	width: 10%;
+}
+
+.small section li {
+	width: 20%;
+	min-height: auto;
+}
+
+.small section div p {
+	float: left;
+	width: 80px;
+}
+
+.small section div b {
+	/*float: left;*/
+	max-height: 60px;
+	padding: 0 0 0 5px;
+}
+
+/* 分页 */
+.pagerfanta {
+}
+
+.pagerfanta a,
+.pagerfanta span {
+    display: inline-block;
+    border: 1px solid blue;
+    color: blue;
+    margin-right: .2em;
+    padding: .25em .35em;
+}
+
+.pagerfanta a {
+    text-decoration: none;
+}
+
+.pagerfanta a:hover {
+    background: #ccf;
+}
+
+.pagerfanta .dots {
+    border-width: 0;
+}
+
+.pagerfanta .current {
+    background: #ccf;
+    font-weight: bold;
+}
+
+.pagerfanta .disabled {
+    border-color: #ccf;
+    color: #ccf;
+}

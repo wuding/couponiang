@@ -10,7 +10,7 @@ class Item extends \Astro\Core
 	 * 获取商品列表
 	 *
 	 */
-	public function list($limit = 10, $Category = null)
+	public function lists($limit = 10, $Category = null)
 	{
 		/* 定义 */
 		$query = trim($this->_get('q'));

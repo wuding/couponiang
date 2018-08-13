@@ -1,0 +1,6 @@
+.category li {
+	display: inline-block;
+	max-width: 45px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

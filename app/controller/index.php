@@ -20,7 +20,7 @@ class Index extends _Abstract
 		$tree = $Category->tree($class);
 		
 		/* 商品 */
-		extract($Item->list($limit, $Category));
+		extract($Item->lists($limit, $Category));
 
 		// 分类
 		list($category_id, $subclass_id) = $cats;
