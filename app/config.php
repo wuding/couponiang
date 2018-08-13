@@ -11,6 +11,6 @@ return [
 		'port' => 3306,
 		# 'db_name' => 'com_urlnk',
 		'user' => 'root',
-		'password' => 'root',
+		'password' => 'wtf23206',
 	),
 ];
