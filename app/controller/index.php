@@ -28,7 +28,7 @@ class Index extends _Abstract
 		}
 		
 		// 设备检测
-		$uaStr = 'MicroMessenger';
+		$uaStr = '';
 		$UA = \Astro\Core::_userAgent($uaStr);
 		$wx = \Astro\Core::_isMobile('/MicroMessenger/i', $uaStr);
 		
