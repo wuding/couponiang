@@ -83,7 +83,7 @@ class Item
 				<div title="$tip">
 					<a href="/item/{$row['list_id']}" target="_blank" data-end="$obj->end" data-no="$i">
 						<menu>{$save}￥{$row['save']}</menu>
-						<p><img src="{$row['pic']}_400x400.jpg"></p>
+						<p><img src="{$row['pic']}_200x200.jpg"></p>
 						<time>$obj->end</time>
 						<span>
 							<var>￥{$row['price']}</var>
@@ -269,6 +269,7 @@ HEREDOC;
 			'start' => '开始',
 			'end' => '结束',
 			'sale' => '月销',
+			# 'update' => '更新',
 		];
 		return Form::select($sorts, $sort, ['name' => 'sort']);
 	}

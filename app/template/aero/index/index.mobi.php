@@ -367,7 +367,7 @@ function scroll() {
 		got_top.style.display = 'none'
 	}
 	
-	height = viewport.scrollHeight - 44
+	height = viewport.scrollHeight - 144
 	if (height <= clientHeight + scrollTop) {
 		loadData()
 	}

@@ -3,7 +3,7 @@ namespace app\model;
 
 class AlimamaChoiceList extends \Astro\Database
 {
-	public $db_name = 'com_urlnk87';
+	public $db_name = 'shopping';
 	public $table_name = 'alimama_choice_list';
 	public $primary_key = 'list_id';
 	
@@ -406,12 +406,14 @@ class AlimamaChoiceList extends \Astro\Database
 		$order_by = null;
 		$sort_by = $sort ? : '';
 		$sorts = [
-			'' => 'list_id',
+			'' => 'updated',
 			'price' => 'price',
 			'save' => 'save',
 			'start' => 'start',
 			'end' => 'end',
 			'sale' => 'sold',
+			'update' => 'updated',
+			'id' => 'list_id',
 		];
 		$orders = [
 			'' => 'DESC',
@@ -420,6 +422,8 @@ class AlimamaChoiceList extends \Astro\Database
 			'start' => 'DESC',
 			'end' => 'ASC',
 			'sale' => 'DESC',
+			'update' => 'DESC',
+			'id' => 'DESC',
 		];	
 		if (isset($sorts[$sort_by])) {
 			$order_input = strtoupper($order);

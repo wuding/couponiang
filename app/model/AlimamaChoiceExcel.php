@@ -3,7 +3,7 @@ namespace app\model;
 
 class AlimamaChoiceExcel extends \Astro\Database
 {
-	public $db_name = 'com_urlnk87';
+	public $db_name = 'shopping';
 	public $table_name = 'alimama_choice_excel';
 	public $primary_key = 'excel_id';
 	
