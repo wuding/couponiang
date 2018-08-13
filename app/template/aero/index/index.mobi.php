@@ -437,7 +437,7 @@ function appDevice() {
 			if ( server.client.match( /^(MicroMessenger)$/i ) ) {
 				tip_wx.style.display = 'none'
 			}
-			tip_open.style.display = 'block'
+			window.setTimeout( "tip_open.style.display = 'block'", 700 )
 		}
 	}
 }
