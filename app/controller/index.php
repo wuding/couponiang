@@ -14,9 +14,21 @@ class Index extends _Abstract
 		$Category = new AlimamaProductCategory;
 		$limit = 40;
 		$stat = $this->stat;
-		$request_uri = htmlspecialchars($_SERVER['REQUEST_URI']);
-		$source_url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $request_uri;
-		$uaStr = '';
+		
+		// 请求地址
+		$request_uri = $_SERVER['REQUEST_URI'];
+		$URL = parse_url($request_uri);
+		$request_path = $URL['path'];
+		parse_str($_SERVER['QUERY_STRING'], $QUERY);
+		unset($QUERY['nsukey']);
+		$query_string = http_build_query($QUERY);		
+		$source_url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $request_path;
+		if ($query_string) {
+			$source_url .= '?' . $query_string;
+		}
+		
+		// 设备检测
+		$uaStr = 'MicroMessenger';
 		$UA = \Astro\Core::_userAgent($uaStr);
 		$wx = \Astro\Core::_isMobile('/MicroMessenger/i', $uaStr);
 		
