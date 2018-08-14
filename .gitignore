@@ -9,3 +9,4 @@ composer.lock
 /app/config.php
 /web/js/jquery-3.3.1.js
 /web/log/
+/docs/pull.bat
