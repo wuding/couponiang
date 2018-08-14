@@ -30,6 +30,8 @@ class Git extends _Abstract
 				case 'push':
 					$result = $this->git_pull();
 					break;
+				case 'ping':
+					break;
 				default:
 					break;
 			}
