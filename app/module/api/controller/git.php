@@ -23,14 +23,18 @@ class Git extends _Abstract
 		$payload = isset($_POST['payload']) ? $_POST['payload'] : urldecode(preg_replace('/^payload=/', '', $php_input)); # echo exit;
 		
 		// 比较签名、切换事件、解码内容		
-		$hash = "sha1=" . hash_hmac('sha1', $php_input, $secret);
-		$cmp = strcmp($signature, $hash);		
-		switch ($github_event) {
-			case 'push':
-				$result = $this->git_pull();
-				break;
-			default:
-				break;
+		$hash = "sha1=" . hash_hmac('sha1', $php_input, $secret);		
+		$cmp = strcmp($signature, $hash);
+		if (0 === $cmp) {		
+			switch ($github_event) {
+				case 'push':
+					$result = $this->git_pull();
+					break;
+				default:
+					break;
+			}
+		} else {
+			http_response_code(404);
 		}
 		$json = json_decode($payload);
 		
@@ -49,9 +53,11 @@ class Git extends _Abstract
 	public function git_pull()
 	{
 		$filename = realpath(APP_PATH . '/../docs/pull.bat');
-		$command = file_get_contents($filename);
-		$cmd_line = exec($command, $output, $return_var);
-		# print_r([$filename, $cmd_line, $command, $output, $return_var]);exit;
+		# $command = file_get_contents($filename);
+		$command = <<<HEREDOC
+start $filename
+HEREDOC;
+		$last_line = exec($command, $output, $return_var);
 		return get_defined_vars();
 	}
 }
