@@ -23,6 +23,11 @@ class _Controller extends \Astro\Controller
 	/* HTTP方法动作 */
 	public function _get__action()
 	{
+		global $PHP;
+		if ('/play' == $PHP->uri) {
+			$url = 'http://cpn.red' . $_SERVER['REQUEST_URI'];
+			header('Location: ' . $url);exit;
+		}
 		return [__METHOD__, __LINE__, __FILE__];
 	}
 	
