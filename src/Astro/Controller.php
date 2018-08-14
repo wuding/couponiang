@@ -161,7 +161,7 @@ class Controller extends Core
 		if (!$this->disableView) { //渲染页面
 			$var = is_array($var) ? $var : [];
 			echo $html = $php->template()->render($script, $var);
-		} elseif ('info' == $this->disableView) {
+		} elseif ('info' === $this->disableView) {
 			print_r([$exit, $var, __METHOD__, __LINE__, __FILE__]);
 		}
 		
