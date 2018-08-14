@@ -11,9 +11,11 @@ class Git extends _Abstract
 	 */
 	public function hooks()
 	{
+		header('Content-Type: application/json');
 		$secret = '';
 		$signature = isset($_SERVER['HTTP_X_HUB_SIGNATURE']) ? $_SERVER['HTTP_X_HUB_SIGNATURE'] : '';
 		$input = file_get_contents('php://input');
+		$json = json_decode($input);
 		
 		$hash = "sha1=" . hash_hmac('sha1', $input, $secret);
 		$cmp = strcmp($signature, $hash);
