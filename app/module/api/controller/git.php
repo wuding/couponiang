@@ -23,14 +23,18 @@ class Git extends _Abstract
 		$payload = isset($_POST['payload']) ? $_POST['payload'] : urldecode(preg_replace('/^payload=/', '', $php_input)); # echo exit;
 		
 		// 比较签名、切换事件、解码内容		
-		$hash = "sha1=" . hash_hmac('sha1', $php_input, $secret);
-		$cmp = strcmp($signature, $hash);		
-		switch ($github_event) {
-			case 'push':
-				$result = $this->git_pull();
-				break;
-			default:
-				break;
+		$hash = "sha1=" . hash_hmac('sha1', $php_input, $secret);		
+		$cmp = strcmp($signature, $hash);
+		if (0 === $cmp) {		
+			switch ($github_event) {
+				case 'push':
+					$result = $this->git_pull();
+					break;
+				default:
+					break;
+			}
+		} else {
+			http_response_code(404);
 		}
 		$json = json_decode($payload);
 		
