@@ -53,9 +53,11 @@ class Git extends _Abstract
 	public function git_pull()
 	{
 		$filename = realpath(APP_PATH . '/../docs/pull.bat');
-		$command = file_get_contents($filename);
-		$cmd_line = exec($command, $output, $return_var);
-		# print_r([$filename, $cmd_line, $command, $output, $return_var]);exit;
+		# $command = file_get_contents($filename);
+		$command = <<<HEREDOC
+start $filename
+HEREDOC;
+		$last_line = exec($command, $output, $return_var);
 		return get_defined_vars();
 	}
 }
