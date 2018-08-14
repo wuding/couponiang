@@ -112,7 +112,7 @@ class Dispatcher
 				$vars = $routeInfo[2];
 				break;
 			case 0:
-				$handler = $notFound ? '_module/_controller/_notfound' : trim($requestInfo['uri'], '/');
+				$handler = $notFound ? '_module/_controller/_action' : trim($requestInfo['uri'], '/');
 				break;
 			case 2:
 				$allowedMethods = $routeInfo[1];
