@@ -47,12 +47,9 @@ class AlimamaChoiceList extends \Astro\Database
 		
 		
 		/* 获取数据 */
-		$where = [];
-		$where += $condition;
-		
+		$where = $condition + [];		
 		$option = [$sort, $limit, $offset];
-		$join = [];
-		$all = $this->select($where, $this->columns['all'], $option, null, $join);
+		$all = $this->select($where, $this->columns['all'], $option);
 		return $all;
 	}
 	
@@ -225,25 +222,110 @@ class AlimamaChoiceList extends \Astro\Database
 	public function wherePrice($price, $where = null)
 	{
 		$where = $this->getWhere($where);
-		if ($price) {
-			switch ($price) {
-				case '9.9':
-					$where['price[<]'] = 10;
-					break;
-				case '20':
-					$where['price[<>]'] = [10, 20];
-					break;
-				case '50':
-					$where['price[<>]'] = [20, 50];
-					break;
-				case '100':
-					$where['price[<>]'] = [50, 100];
-					break;
-				default:
-					$where['price[<=]'] = $price;
+		list($pr, $min, $max, $count) = $price;
+		if ($pr) {			
+			if (2 > $count) {
+				switch ($pr) {
+					case '9.9':
+						$where['price[<]'] = 10;
+						break;
+					case '20':
+					case '50':
+					case '100':
+						$where['price[<>]'] = [$min, $max];
+						break;
+					default:
+						$where['price[<=]'] = $pr;
+				}
+			} elseif (!$min) {
+				$where['price[<=]'] = $max;
+			} elseif (!$max) {
+				$where['price[>=]'] = $min;
+			} else {
+				$where['price[<>]'] = [$min, $max];
 			}
 		}
+		# print_r($where);
 		return $this->getWhere($where);
+	}
+	
+	/**
+	 * query - 范围
+	 */
+	public function queryScope($price, $type = 'price')
+	{
+		$price = trim($price);
+		$min = $max = '';
+		$count = 0;
+		if ($price) {
+			$prices = preg_split('/\s*_\s*/', $price);
+			$count = count($prices);
+			# print_r([$price, $prices, $count]);
+			if (2 > $count) {
+				if ('price' == $type) {
+					switch ($price) {
+						case '9.9':
+							$max = 10;
+							break;
+						case '20':
+							$min = 10;
+							$max = 20;
+							break;
+						case '50':
+							$min = 20;
+							$max = 50;
+							break;
+						case '100':
+							$min = 50;
+							$max = 100;
+							break;
+						default:
+							$max = $price;
+					}
+				} elseif ('save' == $type) {
+					switch ($price) {
+						case '10':
+							$min = 10;
+							$max = 19.99;
+							break;
+						case '20':
+							$min = 20;
+							$max = 49.99;
+							break;
+						case '50':
+							$min = 50;
+							$max = 99.99;
+							break;
+						default:
+							$min = $price;
+					}
+				} elseif ('sale' == $type) {
+					switch ($price) {
+						case '100':
+							$min = 100;
+							$max = 499;
+							break;
+						case '500':
+							$min = 500;
+							$max = 999;
+							break;
+						case '1000':
+							$min = 1000;
+							$max = 4999;
+							break;
+						default:
+							$min = $price;
+					}
+				}
+			} else {
+				$min = isset($prices[0]) ? $prices[0] : '';
+				$max = isset($prices[1]) ? $prices[1] : '';
+				if (in_array($type, ['price', 'save', 'sale']) && is_numeric($min) && is_numeric($max)) {
+					$max = $min > $max ? '' : $max;
+				}
+			}
+		}
+		return $arr = [$price, $min, $max, $count];
 	}
 	
 	/**
@@ -253,22 +335,24 @@ class AlimamaChoiceList extends \Astro\Database
 	public function whereSave($save, $where = null)
 	{
 		$where = $this->getWhere($where);
-		if ($save) {
-			switch ($save) {
-				case '10':
-					$where['save[<>]'] = [10, 19.99];
-					break;
-				case '20':
-					$where['save[<>]'] = [20, 49.99];
-					break;
-				case '50':
-					$where['save[<>]'] = [50, 99.99];
-					break;
-				case '100':
-					$where['save[>=]'] = 100;
-					break;
-				default:
-					$where['save[>=]'] = $save;
+		list($pr, $min, $max, $count) = $save;
+		if ($pr) {
+			if (2 > $count) {
+				switch ($pr) {
+					case '10':
+					case '20':
+					case '50':
+						$where['save[<>]'] = [$min, $max];
+						break;
+					default:
+						$where['save[>=]'] = $pr;
+				}
+			} elseif (!$min) {
+				$where['save[<=]'] = $max;
+			} elseif (!$max) {
+				$where['save[>=]'] = $min;
+			} else {
+				$where['save[<>]'] = [$min, $max];
 			}
 		}
 		return $this->getWhere($where);
@@ -357,19 +441,25 @@ class AlimamaChoiceList extends \Astro\Database
 	public function whereSale($sold, $where = null)
 	{
 		$where = $this->getWhere($where);
-		if ($sold) {
-			switch ($sold) {
-				case '100':
-					$where['sold[<>]'] = [100, 499];
-					break;
-				case '500':
-					$where['sold[<>]'] = [500, 999];
-					break;
-				case '1000':
-					$where['sold[<>]'] = [1000, 4999];
-					break;
-				default:
-					$where['sold[>=]'] = $sold;
+		list($pr, $min, $max, $count) = $sold;
+		if ($pr) {
+			if (2 > $count) {
+				switch ($pr) {
+					case '100':
+					case '500':
+					case '1000':
+						$where['sold[<>]'] = [$min, $max];
+						break;
+					default:
+						$where['sold[>=]'] = $pr;
+				}
+			
+			} elseif (!$min) {
+				$where['sold[<=]'] = $max;
+			} elseif (!$max) {
+				$where['sold[>=]'] = $min;
+			} else {
+				$where['sold[<>]'] = [$min, $max];
 			}
 		}
 		return $this->getWhere($where);

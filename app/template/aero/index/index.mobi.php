@@ -4,19 +4,102 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<title>红券网</title>
-	<link href="ui/mobi/style.css?v=23" rel="stylesheet" type="text/css">
+	<link href="https://urlnk.host/ui/mobi/style.css?v=23" rel="stylesheet" type="text/css">
 </head>
 <?php
 $orderList = \app\view\Item::orderList($category_id);
 $itemLists = \app\view\Item::dl($items, '', $query);
 ?>
-<body>
+<body id="body">
 <noscript>
 	<div>
 		<p>您正在使用的设备不支持 JavaScript</p>
 		<p>无法正常体验本页提供的功能！</p>
 	</div>
 </noscript>
+
+<div class="filter" id="panel_filter">
+	
+		<div>
+			<form id="filter_form"  onsubmit="return filterSubmit()">
+				<ol>
+					<dl>
+						<dt>分类</dt>
+						<dd>
+							<?php
+							$prop = ['name' => 'category', 'style' => 'max-width: 80px;'];
+							$property = ['name' => 'subclass', 'style' => 'max-width: 80px;'];
+							if (!$category_id) {
+								$property []= 'disabled';
+							}
+
+							echo \app\view\Item::selectCategory($tree, $category_id, $prop);
+							echo \app\view\Item::selectCategory($subclass, $subclass_id, $property, ['' => '子类']);
+							
+							?>
+						</dd>
+					</dl>
+					<dl>
+						<dt>网站</dt>
+						<dd>
+							<?=\app\view\Item::selectSite($site_id, ['' => '所有'])?>
+						</dd>
+					</dl>
+					<dl>
+						<dt>价格</dt>
+						<dd>
+							<input name="price[]" value="<?=$prices[1]?>"> - 
+							<input name="price[]" value="<?=$prices[2]?>"> 元
+						</dd>
+					</dl>
+					<dl>
+						<dt>省钱</dt>
+						<dd>
+							<input name="save[]" value="<?=$saves[1]?>"> - 
+							<input name="save[]" value="<?=$saves[2]?>"> 元
+						</dd>
+					</dl>
+					<dl class="datetime">
+						<dt>开始时间</dt>
+						<dd>
+							<input value="">
+							至 
+							<input value="">
+						</dd>
+					</dl>
+					<dl class="datetime">
+						<dt>结束时间</dt>
+						<dd>
+							<input value="">
+							至 
+							<input value="">
+						</dd>
+					</dl>
+					<dl>
+						<dt>月销</dt>
+						<dd>
+							<input name="sale[]" value="<?=$sales[1]?>"> - 
+							<input name="sale[]" value="<?=$sales[2]?>"> 件
+						</dd>
+					</dl>
+					<li>
+						<button type="reset">重置</button>
+						<button type="submit">确定</button>
+					</li>
+				</ol>
+			</form>
+		</div>
+
+		<blockquote>
+			<span>
+				<button type="reset" onclick="filter_form.reset()">重置</button>
+				<button type="submit" onclick="filterSubmit(1)">确定</button>
+			</span>
+		</blockquote>
+	
+	<aside onclick="filter()">
+	</aside>
+</div>
 
 <?php
 if ($UA[0]) :
@@ -48,7 +131,7 @@ endif;
 ?>
 	
 <header>
-	<form id="search_form" action="" onsubmit="return search()">
+	<form class="search" id="search_form" action="" onsubmit="return search()">
 		<h1>
 			<a href="/">红券网</a>
 		</h1>
@@ -77,9 +160,9 @@ endif;
 		<?=\app\view\Item::catNav($tree, $category_id, $query, $sort, $order)?>
 	</nav>
 	<div class="tool">
-		<!--blockquote>
-			<a href="">筛选</a>
-		</blockquote-->
+		<blockquote>
+			<a href="javascript:filter()">筛选</a>
+		</blockquote>
 		<span>
 			<?=\app\view\Item::orderTab($orderList[0], $sort, $category_id)?>
 		</span>
@@ -131,7 +214,8 @@ RESP = []
 
 // 配置
 config = {
-	api_host: ''
+	api_host: '',
+	cdn_host: 'https://urlnk.host/'
 }
 
 window.onscroll = scroll
@@ -184,7 +268,7 @@ _.api = function ( uri, formData, method, queryString, arg ) {
 		queryString = params.toString()		
 	}
 	
-	url = config.api_host + '/api/' + uri
+	url = config.api_host + 'api/' + uri
 	if ( queryString ) {
 		url += '?' + queryString
 	}
@@ -367,9 +451,25 @@ function order() {
 		display = 'block'
 		url = 'ui/mobi/img/uarr' + color + '.png'
 	}
-	
+	url = config.cdn_host + url
 	order_list.style.display = glass.style.display = display
 	order_first.style.backgroundImage = 'url(' + url + ')'
+	return false
+}
+
+/**
+ * UI - 切换筛选浮动面板
+ */
+function filter() {
+	if ('block' != panel_filter.style.display) {
+		panel_filter.style.display = 'block'
+		body.style.overflow = 'hidden'
+		
+	} else {
+		panel_filter.style.display = 'none'
+		body.style.overflow = ''
+		
+	}
 	return false
 }
 
@@ -412,14 +512,58 @@ function scroll() {
  * onsubmit - 搜索
  */
 function search() {
-	_.form.removeNull(search_form)
-	if ( server.category_id ) {
+	// _.form.removeNull(search_form)
+	//if ( server.category_id ) {
 		hash = '#cat_' + server.category_id
 		if (hash != location.hash) {
 			search_form.action = hash
 		}
-	}
+	//}
 	return true
+}
+
+/**
+ * onsubmit - 过滤
+ */
+function filterSubmit( id ) {
+	// 单选列表
+	select = panel_filter.getElementsByTagName('select')
+	len = select.length
+	i = 0
+	for (; i < len; i++) {
+		row = select[i]
+		nm = row.name
+		// console.log(row)
+		if ('subclass' == nm && row.value) {
+			nm = 'category'
+		} else if('category' == nm) {
+			server.category_id = row.value
+		}
+		el = document.getElementsByName(nm)
+		// console.log(el)
+		if (1 < el.length) {
+			el[1].value = row.value
+		}
+	}
+	
+	// 范围
+	key = ['price', 'save', 'sale']
+	j = 0
+	for (; j < 3; j++) {
+		nm = key[j]
+		price = document.getElementsByName(nm + '[]')
+		min = price[0].value
+		max = price[1].value
+		val = (min || max) ? min + '_' + max : ''
+		document.getElementsByName(nm)[0].value = val
+	}
+
+	search()
+	// return true
+	//if (id) {
+		search_form.submit()
+	//}
+	return false
 }
 
 /**

@@ -38,15 +38,19 @@ class Item extends \Astro\Core
 		}
 		$overflow = 0;
 		
-		/* 商品 */		
+		/* 商品 */
+		$prices = $List->queryScope($price);
+		$saves = $List->queryScope($save, 'save');
+		$sales = $List->queryScope($sold, 'sale');
 		$cats = $List->whereCategory($category_id, $Category); // 分类		
 		$List->whereQuery($query); // 关键词		
 		$List->whereSite($site_id); // 网站		
-		$List->wherePrice($price); // 优惠价		
-		$List->whereSave($save); // 省钱		
+		$List->wherePrice($prices); // 优惠价		
+		$List->whereSave($saves); // 省钱		
 		$List->whereStart($start_time); // 开始		
 		$List->whereEnd($end_time); // 结束
-		$where = $List->whereSale($sold); // 月销
+		$where = $List->whereSale($sales); // 月销
+		# print_r($where); 
 		
 		// 计算
 		$count = $List->count($List->table_name, $where);
