@@ -35,11 +35,15 @@ class Php
 		
 		// 请求
 		$this->httpMethod = $_SERVER['REQUEST_METHOD'];
-		$uri = $_SERVER['REQUEST_URI'];
+		$requestPath = $uri = $_SERVER['REQUEST_URI'];
 		if (false !== $pos = strpos($uri, '?')) {
-			$uri = substr($uri, 0, $pos);
+			$requestPath = substr($uri, 0, $pos);
 		}
-		$this->uri = $uri = rawurldecode($uri);
+		$php_self = $_SERVER['PHP_SELF'];
+		$path_self = dirname($php_self);
+		$pattern = addcslashes($path_self, '/\\');
+		$requestUri = preg_replace("/^$pattern/", '', $requestPath);
+		$this->uri = $uri = rawurldecode($requestUri);
 	}
 	
 	

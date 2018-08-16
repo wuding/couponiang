@@ -352,7 +352,7 @@ HEREDOC;
 	 * select - 站点
 	 * 
 	 */
-	public static function selectSite($site_id)
+	public static function selectSite($site_id, $arr = [])
 	{
 		$sites = [
 			'' => '网站',
@@ -360,6 +360,7 @@ HEREDOC;
 			2 => '天猫',
 			3 => '聚划算',
 		];
+		$sites = $arr + $sites;
 		return Form::select($sites, $site_id, ['name' => 'site']);
 	}
 
@@ -551,7 +552,7 @@ HEREDOC;
 	 */
 	public static function array_index($data = [])
 	{
-		$index = ['q', 'category', 'sort', 'order', 'page'];
+		$index = ['q', 'category', 'site', 'price', 'save', 'start', 'end', 'sale', 'sort', 'order', 'page', 'debug'];
 		$filp = array_flip($index);
 		$arr = [];
 		foreach ($data as $key => $value) {
@@ -563,8 +564,11 @@ HEREDOC;
 		
 		$form = [];
 		foreach ($arr as $row) {
-			$k = $row[0];
-			$form[$k] = $row[1];
+			
+			if ($row[1]) {
+				$k = $row[0];
+				$form[$k] = $row[1];
+			}
 		}
 		return $form;
 	}

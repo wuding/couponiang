@@ -119,6 +119,10 @@ class Dispatcher
 				break;
 		}
 		
+		// 忽略的后缀
+		$handler = preg_replace('/\.(php|html)$/i', '', $handler);
+		
+		// 分割信息
 		$pathInfo = explode('/', $handler);
 		$module = Php::getArrayVar($pathInfo, 0);
 		$controller = Php::getArrayVar($pathInfo, 1);
