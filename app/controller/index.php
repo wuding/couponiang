@@ -21,8 +21,10 @@ class Index extends _Abstract
 		$request_path = $URL['path'];
 		parse_str($_SERVER['QUERY_STRING'], $QUERY);
 		unset($QUERY['nsukey']);
-		$query_string = http_build_query($QUERY);		
-		$source_url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $request_path;
+		$query_string = http_build_query($QUERY);
+		$request_scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 
+		(isset($_SERVER['HTTPS']) && 'on' == $_SERVER['HTTPS'] ? 'https' : 'http');
+		$source_url = $request_scheme . '://' . $_SERVER['HTTP_HOST'] . $request_path;
 		if ($query_string) {
 			$source_url .= '?' . $query_string;
 		}
