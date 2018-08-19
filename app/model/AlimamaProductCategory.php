@@ -10,6 +10,18 @@ class AlimamaProductCategory extends \Astro\Database
 	public static $root_ids = null;
 	public static $tree = null;
 	public static $keys = null;
+
+	public function subClasses($cid = -1)
+	{
+		$where = [
+			'upper_id' => $cid,
+			'total[>]' => 0,
+		];
+		$column = ['category_id','title'];
+		$option = ['upper_id', 200];
+		$all = $this->select($where, $column, $option);
+		return $all;
+	}
 	
 	/**
 	 * 获取主类目
