@@ -205,12 +205,18 @@ server = {
 // 全局变量
 global = {
 	page: server.page + 1,
-	overflow: server.overflow	
+	overflow: server.overflow,
+	el_flt_select: panel_filter.getElementsByTagName('select')
 }
 
 XHR = []
 AJAX = []
 RESP = []
+DATA = {
+	category: {
+		'': {'': '子类'}
+	}
+}
 
 // 配置
 config = {
@@ -407,6 +413,31 @@ function api_item_list(arg) {
 }
 
 /**
+ * API - 生成子分类列表
+ */
+function api_category_subclass(arg) {
+	json = RESP['category_subclass']
+	// console.log(json)
+	data = json.data
+	list = data.list
+	len = list.length
+	i = 0
+	obj = {}
+	for (; i < len; i++) {
+		row = list[i]
+		obj[row.category_id] = row.title
+		
+	}
+	DATA.category[data.cid] = obj
+	// console.log(DATA)
+	
+	selectSubclass(data.cid)
+}
+
+
+
+
+/**
  * AJAX - 加载数据
  *
  */
@@ -490,6 +521,29 @@ function goTop(step) {
 }
 
 /**
+ * DOM - 生成子分类列表
+ */
+function selectSubclass(cid) {
+	global.el_flt_select[1].innerHTML = ''
+	if (cid) {
+		global.el_flt_select[1].innerHTML = '<option value="">子类</option>'
+		global.el_flt_select[1].removeAttribute('disabled')
+	} else {
+		global.el_flt_select[1].setAttribute('disabled', 'disabled')
+	}
+	
+	obj = DATA.category[cid]
+	// console.log(obj)
+	for (prop in obj) {
+		// console.log(prop)
+		option = document.createElement('option')
+		option.value = prop
+		option.innerHTML = obj[prop]
+		global.el_flt_select[1].appendChild(option)
+	}
+}
+
+/**
  * 窗口事件 - 滚动条
  */
 function scroll() {
@@ -567,6 +621,24 @@ function filterSubmit( id ) {
 }
 
 /**
+ * onchange - 主分类
+ */
+function selectCategory(e) {
+	el = e.target || e.srcElement
+	key = el.value
+	row = DATA.category[key]
+	if ('undefined' == typeof row) {
+		formData = {
+			'cid': key
+		}
+		_.api( 'category/subclass', formData )
+	} else {
+		// console.log([row, ])
+		selectSubclass(key)
+	}
+}
+
+/**
  * APP - 检测设备
  */
 function appDevice() {
@@ -584,6 +656,8 @@ function appDevice() {
 			window.setTimeout( "tip_open.style.display = 'block'", 700 )
 		}
 	}
+
+	global.el_flt_select[0].addEventListener('change', selectCategory)
 }
 appDevice()
 //-->
