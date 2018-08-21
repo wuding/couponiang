@@ -29,7 +29,7 @@ class Item extends \Astro\Core
 			$Category = new AlimamaProductCategory;
 		}
 		$items = [];
-		$filters = [$price, $save, $start_time, $end_time, $sold];
+		$filters = [$price, $save, $start_time, $end_time, $sold, $site_id, $category_id];
 		$filter = 0;
 		foreach ($filters as $f) {
 			if (!empty($f)) {
@@ -42,15 +42,17 @@ class Item extends \Astro\Core
 		$prices = $List->queryScope($price);
 		$saves = $List->queryScope($save, 'save');
 		$sales = $List->queryScope($sold, 'sale');
+		$starts = $List->queryScope($start_time, 'start');
+		$ends = $List->queryScope($end_time, 'end');
 		$cats = $List->whereCategory($category_id, $Category); // 分类		
 		$List->whereQuery($query); // 关键词		
 		$List->whereSite($site_id); // 网站		
 		$List->wherePrice($prices); // 优惠价		
 		$List->whereSave($saves); // 省钱		
-		$List->whereStart($start_time); // 开始		
-		$List->whereEnd($end_time); // 结束
+		$List->whereStart($starts); // 开始		
+		$List->whereEnd($ends); // 结束
 		$where = $List->whereSale($sales); // 月销
-		# print_r($where); 
+		# print_r($where); exit;
 		
 		// 计算
 		$count = $List->count($List->table_name, $where);

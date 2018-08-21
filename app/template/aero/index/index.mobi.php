@@ -62,17 +62,17 @@ $itemLists = \app\view\Item::dl($items, '', $query);
 					<dl class="datetime">
 						<dt>开始时间</dt>
 						<dd>
-							<input value="">
+							<input name="start[]" value="<?=$starts[1]?>">
 							至 
-							<input value="">
+							<input name="start[]" value="<?=$starts[2]?>">
 						</dd>
 					</dl>
 					<dl class="datetime">
 						<dt>结束时间</dt>
 						<dd>
-							<input value="">
+							<input name="end[]" value="<?=$ends[1]?>">
 							至 
-							<input value="">
+							<input name="end[]" value="<?=$ends[2]?>">
 						</dd>
 					</dl>
 					<dl>
@@ -133,14 +133,14 @@ endif;
 <header>
 	<form class="search" id="search_form" action="" onsubmit="return search()">
 		<h1>
-			<a href="/">红券网</a>
+			<a href="/红券网"><?=$UA[0]?></a>
 		</h1>
 		<div>			
 			<blockquote>
 				<button type="submit" title="搜索">&nbsp;</button>
 			</blockquote>
 			<span>
-				<input name="q" value="<?=htmlspecialchars($query)?>" placeholder="请输入关键词">
+				<input type="search" name="q" value="<?=htmlspecialchars($query)?>" placeholder="请输入关键词">
 			</span>
 		</div>
 		<span style="display:none">
@@ -161,7 +161,7 @@ endif;
 	</nav>
 	<div class="tool">
 		<blockquote>
-			<a href="javascript:filter()">筛选</a>
+			<a <?=$filter ? ' class="cur" ': ''?> href="javascript:filter()">筛选</a>
 		</blockquote>
 		<span>
 			<?=\app\view\Item::orderTab($orderList[0], $sort, $category_id)?>
@@ -601,21 +601,25 @@ function filterSubmit( id ) {
 	}
 	
 	// 范围
-	key = ['price', 'save', 'sale']
+	key = ['price', 'save', 'sale', 'start', 'end']
+	le = key.length
 	j = 0
-	for (; j < 3; j++) {
+	for (; j < le; j++) {
 		nm = key[j]
 		price = document.getElementsByName(nm + '[]')
+
 		min = price[0].value
 		max = price[1].value
+
 		val = (min || max) ? min + '_' + max : ''
+		console.log([min, max, val])
 		document.getElementsByName(nm)[0].value = val
 	}
 
 	search()
 	// return true
 	//if (id) {
-		search_form.submit()
+		search_form.submit()// 
 	//}
 	return false
 }
