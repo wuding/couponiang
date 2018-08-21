@@ -365,8 +365,9 @@ class AlimamaChoiceList extends \Astro\Database
 	public function whereStart($start_time, $where = null)
 	{
 		$where = $this->getWhere($where);
-		if ($start_time) {
-			$start_tm = $start_time;
+		list($pr, $min, $max, $count) = $start_time;
+		if ($pr) {
+			$start_tm = $pr;
 			switch ($start_tm) {
 				case 'today':
 					$start_tm = self::$attr['date'];
@@ -401,8 +402,9 @@ class AlimamaChoiceList extends \Astro\Database
 	public function whereEnd($end_time, $where = null)
 	{
 		$where = $this->getWhere($where);
-		if ($end_time) {
-			$end_tm = $end_time;
+		list($pr, $min, $max, $count) = $end_time;
+		if ($pr) {
+			$end_tm = $pr;
 			switch ($end_tm) {
 				case 'today':
 					$end_tm = self::$attr['date'] . ' 23:59:59';
