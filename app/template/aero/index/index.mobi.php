@@ -11,6 +11,7 @@ $orderList = \app\view\Item::orderList($category_id);
 $itemLists = \app\view\Item::dl($items, '', $query);
 ?>
 <body id="body">
+<?php print_r($_SERVER['HTTP_USER_AGENT']); ?>
 <noscript>
 	<div>
 		<p>您正在使用的设备不支持 JavaScript</p>
