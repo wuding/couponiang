@@ -133,7 +133,7 @@ endif;
 <header>
 	<form class="search" id="search_form" action="" onsubmit="return search()">
 		<h1>
-			<a href="/红券网"><?=$UA[0]?></a>
+			<a href="/">红券网</a>
 		</h1>
 		<div>			
 			<blockquote>
@@ -654,8 +654,8 @@ function appDevice() {
 		
 		} else if ( 'undefined' != typeof tip_open) {
 			// 微信
-			if ( server.client.match( /^(MicroMessenger)$/i ) ) {
-				tip_wx.style.display = 'none'
+			if ( server.client.match( /^(MicroMessenger)$/i ) ) {				
+				window.setTimeout( "tip_wx.style.display = 'none'", 700 )
 			}
 			window.setTimeout( "tip_open.style.display = 'block'", 700 )
 		}
