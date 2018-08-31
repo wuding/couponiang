@@ -56,6 +56,16 @@
 			<td></td>
 			<td>设置对象自身变量</td>
 		</tr>
+		<tr>
+			<td><a href="#_isMobile()">_isMobile()</a></td>
+			<td>boolean</td>
+			<td>检测是否手机</td>
+		</tr>
+		<tr>
+			<td><a href="#_userAgent()">_userAgent()</a></td>
+			<td>array</td>
+			<td>特定APP检测</td>
+		</tr>
 	</table>
 	
 	<h2>Method Details</h2>
@@ -89,6 +99,29 @@
 			<td>$arg</td>
 			<td>array</td>
 			<td>变量数组</td>
+		</tr>
+	</table>
+	
+	<h3 id="_isMobile()">_isMobile($pattern = '/iPhone|Android/i', $ua = null)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$pattern</td>
+			<td>string</td>
+			<td>要搜索的模式</td>
+		</tr>
+		<tr>
+			<td>$ua</td>
+			<td>string</td>
+			<td>UA字符串</td>
+		</tr>
+	</table>
+	
+	<h3 id="_userAgent()">_userAgent($ua = null)</h3>
+	<table border="1" cellspacing="0" cellpadding="10">
+		<tr>
+			<td>$ua</td>
+			<td>string</td>
+			<td>UA字符串</td>
 		</tr>
 	</table>
 </body>
