@@ -63,8 +63,7 @@ if ($_DEBUG['enable']) {
 		
 		// 中间调试问题
 		if (isset($_DEBUG['array'][2])) {
-			$_DEBUG['middle'] = $_DEBUG['array'][2];
-			if ($_DEBUG['middle']) {
+			if ($_DEBUG['middle'] = $_DEBUG['array'][2]) {
 				eval($_DEBUG['middle']);
 			} else {
 				exit;

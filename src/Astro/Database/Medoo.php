@@ -1,9 +1,8 @@
 <?php
 namespace Astro\Database;
 
-class Medoo
+class Medoo extends \Astro\Core
 {
-	public static $instance;
 	public $inst;
 	public $driver = 'mysql';
 	public $host = 'localhost';
@@ -17,23 +16,15 @@ class Medoo
 	public function __construct($arg = [])
 	{
 		if ($arg) {
-			$this->init($arg);
+			$this->initialization($arg);
 		}
 	}
 	
-	public function init($arg = [])
+	public function initialization($arg = [])
 	{
-		$this->setVar($arg);
+		$this->_set($arg);
 		# print_r([$arg, __METHOD__, __LINE__, __FILE__]); exit;
 		$this->getInstance();
-	}
-	
-	public function setVar($arg = [])
-	{
-		# print_r($arg);
-		foreach ($arg as $key => $value) {
-			$this->$key = $value;
-		}
 	}
 	
 	public function getInstance()
@@ -99,7 +90,7 @@ class Medoo
 			$all = $this->inst->select($table, $join, $columns, $where);
 		}
 		# print_r([$this->inst->sql]); 
-		# print_r([$all, self::$instance, $table, $columns, $where, $join]);exit; 
+		# print_r([$all, self::$_instance, $table, $columns, $where, $join]);exit; 
 		return $all;
 	}
 	
