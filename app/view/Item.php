@@ -108,6 +108,7 @@ HEREDOC;
 			$sold = "月销{$obj->sold}笔";
 
 			$title = $obj->title;
+			// 关键词高亮
 			if ($query) {
 				$queries = preg_split('/\s+/', $query);
 				$arr = [];
