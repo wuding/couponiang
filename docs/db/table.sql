@@ -113,17 +113,17 @@ CREATE TABLE `alimama_choice_list` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='精选清单精简';
 
 
-DROP TABLE IF EXISTS `alimama_product_category`;
-CREATE TABLE `alimama_product_category` (
+CREATE TABLE IF NOT EXISTS `alimama_product_category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '分类ID',
   `upper_id` int(10) DEFAULT '0' COMMENT '上级ID',
   `class_id` bigint(20) DEFAULT '-1' COMMENT '原分类ID',
-  `title` text COLLATE utf8mb4_unicode_ci COMMENT '分类标题',
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '分类标题',
   `total` int(10) DEFAULT '-1' COMMENT '商品数量',
   `updated` int(10) DEFAULT '0' COMMENT '更新时间戳',
   `created` int(10) DEFAULT '0' COMMENT '创建时间戳',
-  PRIMARY KEY (`category_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='淘宝联盟商品分类';
+  PRIMARY KEY (`category_id`),
+  UNIQUE KEY `title` (`title`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='淘宝联盟商品分类' AUTO_INCREMENT=149 ;
 
 
 -- 2018-08-30 09:35:12
