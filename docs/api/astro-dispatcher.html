@@ -45,7 +45,7 @@
 			<td>控制器变量</td>
 		</tr>
 		<tr>
-			<td><a href="#">$controllerUniqueId</a> $controllerId</td>
+			<td><a href="#">$controllerId</a></td>
 			<td>string</td>
 			<td>null</td>
 			<td>控制器唯一标识</td>
@@ -87,13 +87,31 @@
 			<td>动作名</td>
 		</tr>
 		<tr>
+			<td><a href="#">$moduleDefault</a></td>
+			<td>string</td>
+			<td>index</td>
+			<td>缺省模块名</td>
+		</tr>
+		<tr>
+			<td><a href="#">$controllerDefault</a></td>
+			<td>string</td>
+			<td>index</td>
+			<td>缺省控制器名</td>
+		</tr>
+		<tr>
+			<td><a href="#">$actionDefault</a></td>
+			<td>string</td>
+			<td>index</td>
+			<td>缺省动作名</td>
+		</tr>
+		<tr>
 			<td><a href="#">$controllerClass</a></td>
 			<td>string</td>
 			<td>null</td>
 			<td>控制器类名</td>
 		</tr>
 		<tr>
-			<td><a href="#">$controllerNamespace</a></td>
+			<td><a href="#">$controllerNS</a></td>
 			<td>string</td>
 			<td>null</td>
 			<td>控制器命名空间</td>
@@ -118,7 +136,7 @@
 			<td></td>
 		</tr>
 		<tr>
-			<td><a href="#getConfig()">init()</a></td>
+			<td><a href="#getConfig()">initialization()</a></td>
 			<td>string</td>
 			<td>初始化参数，路由、请求和控制器</td>
 		</tr>
@@ -164,7 +182,7 @@
 		</tr>
 	</table>
 	
-	<h3 id="init()">init($routeInfo = [], $requestInfo = [], $controllerVars = [])</h3>
+	<h3 id="initialization()">initialization($routeInfo = [], $requestInfo = [], $controllerVars = [])</h3>
 	<table border="1" cellspacing="0" cellpadding="10">
 		<tr>
 			<td>$routeInfo</td>

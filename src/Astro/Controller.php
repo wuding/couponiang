@@ -7,16 +7,16 @@ class Controller extends Core
 	public $methods = null;	 //所有的方法名称
 	
 	/* 变量 */
-	public $httpMethod = null; //请求的HTTP方式	
-	public $actionName = null; //请求的方法名称
-	public $actionMethod = null; //请求的HTTP方法名称
-	public $actionRun = null; //最终执行的方法名称	
+	public $requestMethod = null; //请求的HTTP方式	
+	public $requestAction = null; //请求的动作名称
+	public $restfulAction = null; //请求的HTTP动作名称
+	public $actionRun = null; //最终执行的动作名称	
 	public $exec = 0;
 	public $disableView = false;
 	
 	/* 配置 */
-	public $action = 'index'; //缺省的方法名称	
-	public $actionMethods = [
+	public $action = 'index'; //缺省的动作名称
+	public $restfulMethods = [
 		'_action' => [
 			'get' => '_get_',
 			'post' => '_post_',
@@ -43,17 +43,17 @@ class Controller extends Core
 		}
 		
 		// 请求
-		$this->httpMethod = strtolower($method ? : $_SERVER['REQUEST_METHOD']);
+		$this->requestMethod = strtolower($method ? : $_SERVER['REQUEST_METHOD']);
 		
 		// 动作
-		$this->actionName = $action = $action ? : $GLOBALS['PHP']->dispatcher->actionName;		
+		$this->requestAction = $action = $action ? : $GLOBALS['PHP']->dispatcher->actionName;		
 		$this->methods = $methods = get_class_methods($this);
 		$action = $action ? : $this->action;
 		if ($action) {
 			// 检测方法是否存在			
-			$this->actionMethod = $actionMethod = '_' . $this->httpMethod . '_' . $action;
-			if (in_array($actionMethod, $methods)) {
-				$action = $actionMethod;
+			$this->restfulAction = $restfulAction = '_' . $this->requestMethod . '_' . $action;
+			if (in_array($restfulAction, $methods)) {
+				$action = $restfulAction;
 			}
 		}
 		$this->action = $action;
@@ -62,13 +62,7 @@ class Controller extends Core
 		$this->_init();
 	}
 	
-	/**
-	 * 自定义初始化
-	 */
-	public function _init()
-	{
-		//
-	}
+	
 	
 	/**
 	 * 默认404动作
@@ -83,7 +77,7 @@ class Controller extends Core
 	 *
 	 * 主动作执行后才可用
 	 */
-	public function _forward($routeInfo = [], $requestInfo = [], $options = [], $destruct = 2)
+	public function _forward($routeInfo = [], $requestInfo = [], $options = [], $exec = 2)
 	{
 		global $PHP;		
 		$opt = ['vars' => null, 'return' => null, 'exit' => null];
@@ -91,8 +85,8 @@ class Controller extends Core
 		
 		$var = null;
 		$controller = $PHP->controller($routeInfo, $requestInfo, $options['vars'], 0);
-		if (2 == $destruct) {					
-			$var = $controller->_destruct($options['return'], $options['exit']);
+		if (2 == $exec) {					
+			$var = $controller->_run($options['return'], $options['exit']);
 		}
 					
 		if ($options['return']) {
@@ -106,12 +100,12 @@ class Controller extends Core
 	 *
 	 * 然后返回数据或输出结果
 	 */
-	public function _destruct($return = null, $exit = null, $destruct = null)
+	public function _run($return = null, $exit = null, $exec = null)
 	{
 		$php = $GLOBALS['PHP'];
-		$method = $this->httpMethod;
+		$method = $this->requestMethod;
 		$action = $this->action;
-		$maps = $this->actionMethods;
+		$maps = $this->restfulMethods;
 		
 		
 		/* 方法映射 */
@@ -137,7 +131,7 @@ class Controller extends Core
 		/* 执行方法 */
 		$this->exec++;
 		$var = null;
-		if ($destructs && ($destruct || $this->destruct)) {
+		if ($destructs && ($exec || $this->destruct)) {
 			$var = $this->$action();
 		}
 		
@@ -181,8 +175,8 @@ class Controller extends Core
 	 */
 	public function __destruct()
 	{
-		if ($GLOBALS['_CONTROLLER']['destruct'] && 1 == $this->destruct) {
-			$this->_destruct(null, null, 0);
+		if ($GLOBALS['_SETTING']['destruct'] && 1 == $this->destruct) {
+			$this->_run(null, null, 0);
 		}
 	}
 }

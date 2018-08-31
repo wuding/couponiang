@@ -14,7 +14,7 @@ $_DEBUG = [
 	'secret' => '87ed6cbbc7b89f06e5e228184c5a716d',
 ];
 
-$_CONTROLLER = [
+$_SETTING = [
 	'destruct' => 1, //只影响自动运行
 ];
 

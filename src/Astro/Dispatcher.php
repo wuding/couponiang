@@ -15,7 +15,7 @@ class Dispatcher
 	// 变量
 	public $moduleInfo = [];
 	public $controllerName = null;
-	public $controllerNamespace = null;
+	public $controllerNS = null;
 	public $moduleDefault = 'index';
 	public $controllerDefault = 'index';
 	public $actionDefault = 'index';
@@ -27,13 +27,13 @@ class Dispatcher
 	 */
 	public function __construct($routeInfo = [], $requestInfo = [], $controllerVars = [])
 	{
-		$this->init($routeInfo, $requestInfo, $controllerVars);
+		$this->initialization($routeInfo, $requestInfo, $controllerVars);
 	}
 	
 	/**
 	 * 初始化参数
 	 */
-	public function init($routeInfo = [], $requestInfo = [], $controllerVars = [])
+	public function initialization($routeInfo = [], $requestInfo = [], $controllerVars = [])
 	{
 		$this->routeInfo = $routeInfo;
 		$this->requestInfo = $requestInfo;
@@ -51,9 +51,9 @@ class Dispatcher
 		$requestInfo = $requestInfo ? : $this->requestInfo;
 		$controllerVars = $controllerVars ? : $this->controllerVars;
 		
-		$this->controllerUniqueId = Php::getUniqueId($routeInfo, $requestInfo, $controllerVars);
-		if (isset($this->controllers[$this->controllerUniqueId])) {
-			return $this->controllers[$this->controllerUniqueId];
+		$this->controllerId = Php::getUniqueId($routeInfo, $requestInfo, $controllerVars);
+		if (isset($this->controllers[$this->controllerId])) {
+			return $this->controllers[$this->controllerId];
 		}
 		return $this->dispatchController($routeInfo, $requestInfo);
 	}
@@ -68,7 +68,7 @@ class Dispatcher
 		$requestInfo = $requestInfo ? : $this->requestInfo;
 		$controllerVars = $controllerVars ? : $this->controllerVars;
 		
-		$this->controllerUniqueId = Php::getUniqueId($routeInfo, $requestInfo, $controllerVars);
+		$this->controllerId = Php::getUniqueId($routeInfo, $requestInfo, $controllerVars);
 		
 		// 匹配的
 		$class = $this->getControllerClassName($routeInfo, $requestInfo);
@@ -92,7 +92,7 @@ class Dispatcher
 				$class = $this->getControllerClassName($routeInfo, $requestInfo, 1);
 			}
 		}
-		return $this->controller = $this->controllers[$this->controllerUniqueId] = new $class($this->actionName, $requestInfo['method'], $controllerVars);
+		return $this->controller = $this->controllers[$this->controllerId] = new $class($this->actionName, $requestInfo['method'], $controllerVars);
 	}
 	
 	/**
@@ -124,9 +124,9 @@ class Dispatcher
 		
 		// 分割信息
 		$pathInfo = explode('/', $handler);
-		$module = Php::getArrayVar($pathInfo, 0);
-		$controller = Php::getArrayVar($pathInfo, 1);
-		$action = Php::getArrayVar($pathInfo, 2);
+		$module = Core::_var($pathInfo, 0);
+		$controller = Core::_var($pathInfo, 1);
+		$action = Core::_var($pathInfo, 2);
 		
 		// 校验		
 		if (preg_match('/^[a-z_]/i', $module) && preg_match('/^([a-z_0-9]+)$/i', $module)) {
@@ -164,7 +164,7 @@ class Dispatcher
 		if ('index' != $moduleInfo[0]) {
 			$moduleFolder = '\\module\\' . $moduleInfo[0];
 		}
-		return $this->controllerNamespace = "\\app$moduleFolder\\controller\\";
+		return $this->controllerNS = "\\app$moduleFolder\\controller\\";
 	}
 }
 	

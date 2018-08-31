@@ -34,16 +34,16 @@ class Php
 		}
 		
 		// 请求
-		$this->httpMethod = $_SERVER['REQUEST_METHOD'];
-		$requestPath = $uri = $_SERVER['REQUEST_URI'];
-		if (false !== $pos = strpos($uri, '?')) {
-			$requestPath = substr($uri, 0, $pos);
+		$this->requestMethod = $_SERVER['REQUEST_METHOD'];
+		$requestPath = $_SERVER['REQUEST_URI'];
+		if (false !== $pos = strpos($requestPath, '?')) {
+			$requestPath = substr($requestPath, 0, $pos);
 		}
 		$php_self = $_SERVER['PHP_SELF'];
 		$path_self = dirname($php_self);
 		$pattern = addcslashes($path_self, '/\\');
 		$requestUri = preg_replace("/^$pattern/", '', $requestPath);
-		$this->uri = $uri = rawurldecode($requestUri);
+		$this->requestUri = rawurldecode($requestUri);
 	}
 	
 	
@@ -92,7 +92,7 @@ class Php
 	 */
 	public function routeInfo()
 	{
-		return $this->routeInfo = $this->router()->dispatch($this->httpMethod, strtolower($this->uri));
+		return $this->routeInfo = $this->router()->dispatch($this->requestMethod, strtolower($this->requestUri));
 	}
 	
 	/**
@@ -101,14 +101,14 @@ class Php
 	public function router()
 	{
 		return $this->router = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
-			$GLOBALS['PHP']->routeRule($r);
+			$GLOBALS['PHP']->addRoute($r);
 		});
 	}
 	
 	/**
 	 * 添加路由规则
 	 */
-	public function routeRule($r = null)
+	public function addRoute($r = null)
 	{
 		if ($r) {
 			if (null == $this->routeCollector) {
@@ -154,13 +154,13 @@ class Php
 	public function controller($routeInfo = [], $requestInfo = [], $controllerVars = [], $last = true)
 	{
 		$routeInfo = $routeInfo ? : $this->routeInfo;
-		$requestInfo = $requestInfo ? : ['method' => $this->httpMethod, 'uri' => $this->uri];
+		$requestInfo = $requestInfo ? : ['method' => $this->requestMethod, 'uri' => $this->requestUri];
 		
 		if ($last && null !== $this->controller) {
 			return $this->controller;
 		}
 		$dispatcher = $this->dispatcher();
-		$uniqueId = $dispatcher->init($routeInfo, $requestInfo, $controllerVars);
+		$uniqueId = $dispatcher->initialization($routeInfo, $requestInfo, $controllerVars);
 		return $this->controller = $dispatcher->getController();
 	}
 	
@@ -183,16 +183,7 @@ class Php
 	-------------------------------------------
 	*/
 	
-	/**
-	 * 获取数组键值
-	 */
-	public static function getArrayVar($arr = [], $key = 0, $default = null)
-	{
-		if ($arr && isset($arr[$key]) && $value = $arr[$key]) {
-			return $value;
-		}
-		return $default;
-	}
+	
 	
 	/**
 	 * 获取唯一标识
@@ -201,7 +192,7 @@ class Php
 	{
 		$req = md5(json_encode($requestInfo));
 		$var = md5(json_encode($controllerVars));
-		return $unique = Php::getArrayVar($routeInfo, 0, '') . '_' . Php::getArrayVar($routeInfo, 1, '') . '_' . $req . '_' . $var;
+		return $unique = Core::_var($routeInfo, 0, '') . '_' . Core::_var($routeInfo, 1, '') . '_' . $req . '_' . $var;
 	}
 	
 	
@@ -235,7 +226,7 @@ class Php
 		
 		$controller = $this->controller();
 		if (!$controller->exec && 2 == $controller->destruct) {
-			$controller->_destruct(null, null, 0);
+			$controller->_run(null, null, 0);
 		}
 	}
 }
