@@ -27,19 +27,19 @@
 			<th>Description</th>
 		</tr>
 		<tr>
-			<td><a href="#">$httpMethod</a> $requestMethod</td>
+			<td><a href="#">$requestMethod</a> </td>
 			<td>string</td>
 			<td>null</td>
 			<td>HTTP 请求方法</td>
 		</tr>
 		<tr>
-			<td><a href="#">$actionName</a> $requestAction</td>
+			<td><a href="#">$requestAction</a> </td>
 			<td>string</td>
 			<td>null</td>
 			<td>请求的动作名称</td>
 		</tr>
 		<tr>
-			<td><a href="#">$actionMethod</a></td>
+			<td><a href="#">$restfulAction</a></td>
 			<td>string</td>
 			<td>null</td>
 			<td>HTTP 请求方法的动作名称</td>
@@ -57,7 +57,7 @@
 			<td>缺省的方法名称</td>
 		</tr>
 		<tr>
-			<td><a href="#">$actionMethods</a></td>
+			<td><a href="#">$restfulMethods</a></td>
 			<td>array</td>
 			<td>[]</td>
 			<td>配置的动作方法</td>
@@ -104,7 +104,7 @@
 			<td>转接到另一个模块控制器动作</td>
 		</tr>
 		<tr>
-			<td><a href="">_destruct()</a> _run</td>
+			<td><a href="#_run()">_run()</a> </td>
 			<td>array|string</td>
 			<td>运行动作方法，然后返回数据或输出结果</td>
 		</tr>
@@ -130,14 +130,9 @@
 		</tr>
 	</table>
 	
+	<h3 id="init()">__destruct()</h3>
+	
 	<h3 id="init()">_notfound()</h3>
-	<table border="1" cellspacing="0" cellpadding="10">
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-	</table>
 	
 	<h3 id="getController()">_forward($routeInfo = [], $requestInfo = [], $options = [], $destruct = 2)</h3>
 	<table border="1" cellspacing="0" cellpadding="10">
@@ -157,13 +152,13 @@
 			<td>选项</td>
 		</tr>
 		<tr>
-			<td>$destruct -> $exec</td>
+			<td>$exec</td>
 			<td>number</td>
 			<td>是否执行动作</td>
 		</tr>
 	</table>
 	
-	<h3 id="dispatchController()">_destruct($return = null, $exit = null, $destruct = null)</h3>
+	<h3 id="_run()">_run($return = null, $exit = null, $destruct = null)</h3>
 	<table border="1" cellspacing="0" cellpadding="10">
 		<tr>
 			<td>$return</td>
@@ -176,7 +171,7 @@
 			<td>是否退出</td>
 		</tr>
 		<tr>
-			<td>$destruct -> $exec</td>
+			<td>$exec</td>
 			<td>number</td>
 			<td>是否执行动作</td>
 		</tr>

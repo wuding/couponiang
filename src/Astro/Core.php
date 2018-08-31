@@ -3,6 +3,8 @@ namespace Astro;
 
 class Core
 {
+	public static $_instance;
+	
 	/**
 	 * 获取查询
 	 *
@@ -45,5 +47,32 @@ class Core
 			$device = $matches[1];
 		}
 		return [$client, $device, $version];
+	}
+	
+	/**
+	 * 自定义初始化
+	 */
+	public function _init()
+	{
+		//
+	}
+	
+	public function _set($arg = [])
+	{
+		
+		foreach ($arg as $key => $value) {
+			$this->$key = $value;
+		}
+	}
+	
+	/**
+	 * 获取数组键值
+	 */
+	public static function _var($arr = [], $key = 0, $default = null)
+	{
+		if ($arr && isset($arr[$key]) && $value = $arr[$key]) {
+			return $value;
+		}
+		return $default;
 	}
 }

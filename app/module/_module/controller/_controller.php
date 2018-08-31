@@ -24,7 +24,7 @@ class _Controller extends \Astro\Controller
 	public function _get__action()
 	{
 		global $PHP;
-		if ('/play' == $PHP->uri) {
+		if ('/play' == $PHP->requestUri) {
 			$url = 'http://cpn.red' . $_SERVER['REQUEST_URI'];
 			header('Location: ' . $url);exit;
 		}

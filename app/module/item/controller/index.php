@@ -40,7 +40,7 @@ class Index extends \Astro\Controller
 		global $PHP;
 		$Excel = new AlimamaChoiceExcel;
 		
-		$uri = $PHP->uri;
+		$uri = $PHP->requestUri;
 		$arr = explode('/', $uri);
 		$id = $arr[2];
 		

@@ -1,9 +1,9 @@
 <?php
 namespace Astro;
 
-class Database
+class Database extends Core
 {
-	public static $instance;
+	
 	public $inst;
 	public $adapter = 'Medoo';
 	public $driver = 'mysql';
@@ -21,29 +21,18 @@ class Database
 		if (!$arg) {
 			$arg = $PHP->config['database'];
 		}
-		$this->init($arg);
+		$this->initialization($arg);
 		$this->_init();
 	}
 	
-	public function setVar($arg = [])
-	{
-		
-		foreach ($arg as $key => $value) {
-			$this->$key = $value;
-		}
-	}
 	
-	public function init($arg = [])
+	
+	public function initialization($arg = [])
 	{
-		$this->setVar($arg);
+		$this->_set($arg);
 		$arg = get_object_vars($this);
 		unset($arg['inst'], $arg['adapter']);
 		$this->getAdapter($this->adapter, $arg);
-	}
-	
-	public function _init()
-	{
-		
 	}
 	
 	public function getAdapter($name = null, $arg = null)
