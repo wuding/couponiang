@@ -13,4 +13,7 @@ return [
 		'user' => 'root',
 		'password' => 'wtf23206',
 	),
+	'view' => [
+		'cdn_host' => 'https://urlnk.host', // http://work.lan.urlnk.com/work/cdn
+	]
 ];
