@@ -130,9 +130,9 @@ class Controller extends Core
 		
 		/* 执行方法 */
 		$this->exec++;
-		$var = $GLOBALS['PHP']->config['view'];
+		$var = null;
 		if ($destructs && ($exec || $this->destruct)) {
-			$var += $this->$action();
+			$var = $this->$action();
 		}
 		
 		/* 后续动作 */
@@ -154,6 +154,7 @@ class Controller extends Core
 		
 		if (!$this->disableView) { //渲染页面
 			$var = is_array($var) ? $var : [];
+			$var += $GLOBALS['PHP']->config['view'];
 			echo $html = $php->template()->render($script, $var);
 		} elseif ('info' === $this->disableView) {
 			print_r([$exit, $var, __METHOD__, __LINE__, __FILE__]);
