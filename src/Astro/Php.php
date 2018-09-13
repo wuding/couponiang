@@ -227,7 +227,7 @@ class Php
 		$controller = $this->controller();
 		if (!$controller->exec && 2 == $controller->destruct) {
 			$var = $controller->_run(null, null, 0);
-			print_r($var);
+			# print_r($var);
 		}
 	}
 }

@@ -135,8 +135,6 @@ class Controller extends Core
 			$var += $this->$action();
 		}
 		
-		# $var += ;
-		
 		/* 后续动作 */
 		
 		// 返回

@@ -126,7 +126,7 @@ HEREDOC;
 			}
 			$pic = preg_replace('/^http:/i', '', $obj->pic);
 			
-			// 优惠券面额
+			// 优惠券额
 			$class = '';
 			$save = '券';
 			if (3 == $obj->site) {
