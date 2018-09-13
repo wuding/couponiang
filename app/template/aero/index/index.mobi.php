@@ -1,10 +1,20 @@
 <!doctype html>
 <html>
-<head>
+<head>	
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<title>红券网</title>
-	<link href="https://urlnk.host/ui/mobi/style.css?v=23" rel="stylesheet" type="text/css">
+	<!--meta name="format-detection" content="telephone=no"-->
+	<meta name="apple-mobile-web-app-title" content="AppTitle">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">	
+	<meta http-equiv="x-dns-prefetch-control" content="off">
+	<link rel="dns-prefetch" href="http://api.urlnk.com">
+	<title>红券网</title>	
+	<link rel="stylesheet" href="<?= $cdn_host ?>/ui/mobi/style.css?v=23" type="text/css">
+	<link rel="shortcut icon" href="/img/favicon-32x32.ico?v=" type="image/x-icon">
+	<link rel="apple-touch-icon" href="<?= $cdn_host ?>/ui/mobi/apple-touch-icon-180x180.png?v=">
+	<link rel="apple-touch-icon" sizes="167x167" href="<?= $cdn_host ?>/ui/mobi/touch-icon-ipad-retina.png?v=">
+	<link rel="apple-touch-startup-image" href="/launch.png">	
 </head>
 <?php
 $orderList = \app\view\Item::orderList($category_id);
@@ -133,7 +143,8 @@ endif;
 <header>
 	<form class="search" id="search_form" action="" onsubmit="return search()">
 		<h1>
-			<a href="/">红券网</a>
+			<a href="tel:18655523920">红券网</a>
+			<!-- sms:18888886666,18888885555 -->
 		</h1>
 		<div>			
 			<blockquote>
@@ -202,6 +213,8 @@ server = {
 	
 }
 
+alert(window.navigator.standalone)
+
 // 全局变量
 global = {
 	page: server.page + 1,
@@ -221,7 +234,7 @@ DATA = {
 // 配置
 config = {
 	api_host: '',
-	cdn_host: 'https://urlnk.host/'
+	cdn_host: '<?= $cdn_host ?>/'
 }
 
 window.onscroll = scroll

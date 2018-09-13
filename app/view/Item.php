@@ -125,10 +125,19 @@ HEREDOC;
 				}
 			}
 			$pic = preg_replace('/^http:/i', '', $obj->pic);
+			
+			// 优惠券面额
+			$class = '';
+			$save = '券';
+			if (3 == $obj->site) {
+				$save = '省';
+				$class = ' class="tuan"';
+			}
 
 			$li = <<<HEREDOC
-			<dl>
+			<dl $class>
 				<a href="/item/$obj->excel_id" target="_blank">
+					<menu>{$save}￥$obj->save</menu>
 					<img src="{$pic}_200x200.jpg">
 					<span>
 						$em

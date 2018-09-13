@@ -1,10 +1,15 @@
 <!doctype html>
 <html>
 <head>
+	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"-->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<title>红券网￥优惠券折扣返利全网比价购物搜索</title>
-	<link href="https://urlnk.host/css/new-ui.css?v=34" rel="stylesheet" type="text/css">
+	<meta http-equiv="default-style" content="default">
+	<link rel="stylesheet" href="https://urlnk.host/css/new-ui.css?v=34" type="text/css" title="default">
+	<link rel="shortcut icon" href="/img/favicon-32x32.ico?v=" type="image/x-icon">
+	<link rel="icon" href="/img/favicon.gif?v=" type="image/gif">
+	<link rel="bookmark" href="/img/bookmark.ico?v=" type="image/x-icon">
 </head>
 
 <body>

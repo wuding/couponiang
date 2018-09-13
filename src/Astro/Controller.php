@@ -130,10 +130,12 @@ class Controller extends Core
 		
 		/* 执行方法 */
 		$this->exec++;
-		$var = null;
+		$var = $GLOBALS['PHP']->config['view'];
 		if ($destructs && ($exec || $this->destruct)) {
-			$var = $this->$action();
+			$var += $this->$action();
 		}
+		
+		# $var += ;
 		
 		/* 后续动作 */
 		
