@@ -393,8 +393,18 @@ function api_item_list(arg) {
 	for (; i < len; i++) {
 		odd = i % 2
 		row = data[i]
-		html = '<dl>'
+		
+		// 优惠券面额
+		save = '券'
+		cls = ''
+		if ('3' == row.site) {
+			save = '省'
+		    cls = ' class="tuan"'
+		}
+		
+		html = '<dl ' + cls + '>'
 				+ '<a href="/item/' + row.excel_id + '" target="_blank">'
+				    + '<menu>' + save + '￥' + row.save + '</menu>'
 					+ '<img src="' + row.pic + '_200x200.jpg">'
 					+ '<span>'						
 						+ '<h4>' + row.title + '</h4>'
