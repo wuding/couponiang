@@ -1,0 +1,24 @@
+{
+    "name": "wuding/couponiang",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/wuding/couponiang"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "nikic/fast-route": "^1.3.0",
+        "league/plates": "^3.3",
+        "catfan/Medoo": "^1.5",
+        "pagerfanta/pagerfanta": "^2.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Astro\\": "src/Astro/",
+            "Plugin\\": "src/Plugin/",
+            "app\\": "app/"
+        },
+        "files": ["src/Astro/functions.php"]
+    }
+}
