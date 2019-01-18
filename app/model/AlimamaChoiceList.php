@@ -14,7 +14,7 @@ class AlimamaChoiceList extends \Astro\Database
 	public static $DBY = null;
 	
 	public $columns = [
-		'all' => ['excel_id', 'title', 'pic', 'price', 'save', 'sold', 'end', 'site'],
+		'all' => ['excel_id', 'title', 'pic', 'price', 'save', 'sold', 'end', 'site', 'tao_token'],
 		'row' => ['category_id', 'title', 'pic', 'price'],
 	];
 	

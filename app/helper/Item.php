@@ -37,6 +37,16 @@ class Item extends \Astro\Core
 			}
 		}
 		$overflow = 0;
+		$where = $item_id = null;
+
+		/* 搜链接 */
+		if (preg_match('/^http(|s):\/+(item\.taobao|detail\.tmall)\.com\/item\.htm(.*)/i', $query, $matches)) {
+			$query_str = trim($matches[3], '?');
+			parse_str($query_str, $query_arr);
+			$item_id = isset($query_arr['id']) ? $query_arr['id'] : '';
+			# print_r($item_id);exit;
+			$where = ['item_id' => $item_id];
+		}
 		
 		/* 商品 */
 		$prices = $List->queryScope($price);
@@ -44,22 +54,34 @@ class Item extends \Astro\Core
 		$sales = $List->queryScope($sold, 'sale');
 		$starts = $List->queryScope($start_time, 'start');
 		$ends = $List->queryScope($end_time, 'end');
-		$cats = $List->whereCategory($category_id, $Category); // 分类		
-		$List->whereQuery($query); // 关键词		
-		$List->whereSite($site_id); // 网站		
-		$List->wherePrice($prices); // 优惠价		
-		$List->whereSave($saves); // 省钱		
-		$List->whereStart($starts); // 开始		
-		$List->whereEnd($ends); // 结束
-		$where = $List->whereSale($sales); // 月销
+		$cats = $List->whereCategory($category_id, $Category); // 分类	
+		if (!$where) {				
+			$List->whereQuery($query); // 关键词		
+			$List->whereSite($site_id); // 网站		
+			$List->wherePrice($prices); // 优惠价		
+			$List->whereSave($saves); // 省钱		
+			$List->whereStart($starts); // 开始		
+			$List->whereEnd($ends); // 结束
+			$where = $List->whereSale($sales); // 月销
+		}
 		# print_r($where); exit;
 		
 		// 计算
 		$count = $List->count($List->table_name, $where);
+		if (!$count && $item_id) {
+			$str = file_get_contents($GLOBALS['PHP']->config['var']['robot_host'] . "/robot/alimama/search/promo?q=$item_id&debug&api=1");
+			$json = json_decode($str);
+			list($tao_token, $item_list) = $json;
+			# print_r($json);exit;
+			if ($tao_token && $item_list) {
+				$count = $List->count($List->table_name, $where);
+			}
+			
+		}
 		$pages = ceil($count / $limit);
 				
 		// 结果集
-		if ($count) {			
+		if ($count) {
 			$order_by = $List->orderBy($sort, $order); // 排序
 			$overflow = ($page >= $pages);
 			$page = $overflow ? $pages : $page;
