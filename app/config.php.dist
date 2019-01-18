@@ -15,5 +15,9 @@ return [
 	),
 	'view' => [
 		'cdn_host' => 'https://urlnk.host', // http://work.lan.urlnk.com/work/cdn
-	]
+	],
+	'var' => [
+		'robot_host' => 'http://robot.lan.urlnk.com',
+		'url_shortening' => 'http://cpn.red',
+	],
 ];

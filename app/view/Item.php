@@ -53,7 +53,7 @@ class Item
 			}
 			
 			// 关键词高亮
-			if ($query) {
+			if ($query && !preg_match('/^http(|s):\/+/i', $query)) {
 				$queries = preg_split('/\s+/', $query);
 				$arr = [];
 				foreach ($queries as $q) {
@@ -70,11 +70,16 @@ class Item
 			}
 			
 			$pic = preg_replace('/^http:/i', '', $obj->pic);
+
+			$url = "/item/$obj->excel_id";
+			if ($obj->tao_token) {
+				$url = $GLOBALS['PHP']->config['var']['url_shortening'] . '/$' . $obj->tao_token . '$';
+			}
 			
 			$li = <<<HEREDOC
 			<li $style $class>
 				<div title="$tip">
-					<a href="/item/$obj->excel_id" target="_blank" data-end="$obj->end" data-no="$i">
+					<a href="$url" target="_blank" data-end="$obj->end" data-no="$i">
 						<menu>{$save}￥$obj->save</menu>
 						<p><img src="{$pic}_200x200.jpg"></p>
 						<time>$obj->end</time>
@@ -109,7 +114,7 @@ HEREDOC;
 
 			$title = $obj->title;
 			// 关键词高亮
-			if ($query) {
+			if ($query && !preg_match('/^http(|s):\/+/i', $query)) {
 				$queries = preg_split('/\s+/', $query);
 				$arr = [];
 				foreach ($queries as $q) {
@@ -134,9 +139,14 @@ HEREDOC;
 				$class = ' class="tuan"';
 			}
 
+			$url = "/item/$obj->excel_id";
+			if ($obj->tao_token) {
+				$url = $GLOBALS['PHP']->config['var']['url_shortening'] . '/$' . $obj->tao_token . '$';
+			}
+
 			$li = <<<HEREDOC
 			<dl $class>
-				<a href="/item/$obj->excel_id" target="_blank">
+				<a href="$url" target="_blank">
 					<menu>{$save}￥$obj->save</menu>
 					<img src="{$pic}_200x200.jpg">
 					<span>
