@@ -46,11 +46,13 @@ class Item
 			if (1 == $no) {
 				$style = ' style="clear: left;"';
 			}			
-			if (3 == $obj->site) {
+			if (in_array($obj->site, [3, -1])) {
 				$save = '省';
 				$sold = "$obj->sold 件已售";
 				$class = ' class="tuan"';
 			}
+
+			$menu = $obj->save ? "<menu>{$save}￥$obj->save</menu>" : '';
 			
 			// 关键词高亮
 			if ($query && !preg_match('/^http(|s):\/+/i', $query)) {
@@ -69,6 +71,7 @@ class Item
 				}
 			}
 			
+			// 图片和地址
 			$pic = preg_replace('/^http:/i', '', $obj->pic);
 
 			$url = "/item/$obj->excel_id";
@@ -80,7 +83,7 @@ class Item
 			<li $style $class>
 				<div title="$tip">
 					<a href="$url" target="_blank" data-end="$obj->end" data-no="$i">
-						<menu>{$save}￥$obj->save</menu>
+						$menu
 						<p><img src="{$pic}_200x200.jpg"></p>
 						<time>$obj->end</time>
 						<span>

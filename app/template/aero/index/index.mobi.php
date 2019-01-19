@@ -186,7 +186,7 @@ endif;
 </main>
 
 <footer id="load_info">
-<?=$count ? "共 $count 条" : '无'?>结果
+<?=$count ? "共 $count 条" : '无'?>结果 <?=$api_result?>
 </footer>
 
 <script>

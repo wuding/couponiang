@@ -142,7 +142,7 @@
 					ksort($tip);
 					$tip = implode('', $tip);
 					echo '<div style="text-align:center">
-						<h3>无结果</h3>
+						<h3>无结果' . $api_result . '</h3>
 						<blockquote>请' . $tip . '</blockquote>
 					</div>';
 				}
@@ -176,7 +176,7 @@ var end = '<?=isset($items[0]) ? $items[0]['end'] : 'null'?>';
 </script>
 <!--script src="https://urlnk.host/js/jquery-3.3.1.js"></script-->
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://urlnk.host/js/search.js?v=15"></script>
+<script src="<?=$cdn_host?>/js/search.js?v=16"></script>
 <?php if (!$stat) { $this->insert('stat'); } ?>
 </body>
 </html>
