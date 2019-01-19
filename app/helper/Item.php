@@ -37,15 +37,25 @@ class Item extends \Astro\Core
 			}
 		}
 		$overflow = 0;
-		$where = $item_id = null;
+		$where = $item_id = $api_result = null;
 
 		/* 搜链接 */
-		if (preg_match('/^http(|s):\/+(item\.taobao|detail\.tmall)\.com\/item\.htm(.*)/i', $query, $matches)) {
-			$query_str = trim($matches[3], '?');
+		/* 清除已经定义的变量
+		foreach (get_defined_vars() as $key => $value) {
+			if (!in_array($key, ['query'])) {
+				eval("unset(\$$key);");
+			}
+		}
+		unset($key, $value);
+		*/
+
+		$pattern = '/^http(|s):\/+(item|detail|h5)(|\.m)\.(taobao|tmall)\.com(\/|[a-z\/]+)(item|detail)\.htm(?<query_string>.*)/i';
+		if (preg_match($pattern, $query, $matches)) {
+			$query_str = trim(array_pop($matches), '?');
 			parse_str($query_str, $query_arr);
-			$item_id = isset($query_arr['id']) ? $query_arr['id'] : '';
-			# print_r($item_id);exit;
+			$item_id = isset($query_arr['id']) ? $query_arr['id'] : '';			
 			$where = ['item_id' => $item_id];
+			# print_r(get_defined_vars());exit;
 		}
 		
 		/* 商品 */
@@ -69,14 +79,18 @@ class Item extends \Astro\Core
 		// 计算
 		$count = $List->count($List->table_name, $where);
 		if (!$count && $item_id) {
-			$str = file_get_contents($GLOBALS['PHP']->config['var']['robot_host'] . "/robot/alimama/search/promo?q=$item_id&debug&api=1");
+			$filename = $GLOBALS['PHP']->config['var']['robot_host'] . "/robot/alimama/search/promo?q=$item_id&debug&api=1";
+			$str = file_get_contents($filename);
 			$json = json_decode($str);
-			list($tao_token, $item_list) = $json;
-			# print_r($json);exit;
-			if ($tao_token && $item_list) {
-				$count = $List->count($List->table_name, $where);
+			if ('NULL' != gettype($json)) {
+				list($tao_token, $item_list) = $json;
+				# print_r($json);exit;
+				if ($tao_token && $item_list) {
+					$count = $List->count($List->table_name, $where);
+				}
+			} else {
+				$api_result = '';
 			}
-			
 		}
 		$pages = ceil($count / $limit);
 				
