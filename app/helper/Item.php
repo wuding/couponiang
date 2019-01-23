@@ -101,7 +101,7 @@ class Item extends \Astro\Core
 			$page = $overflow ? $pages : $page;
 			$offset = $page * $limit - $limit;
 			$items = $List->items($where, $order_by, $limit, $offset);
-			print_r($List->getProp('logs'));exit;
+			# print_r($List->getProp('logs'));exit;
 		}		
 		return get_defined_vars();
 	}
