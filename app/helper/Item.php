@@ -64,7 +64,7 @@ class Item extends \Astro\Core
 		$sales = $List->queryScope($sold, 'sale');
 		$starts = $List->queryScope($start_time, 'start');
 		$ends = $List->queryScope($end_time, 'end');
-		$cats = $List->whereCategory($category_id, $Category); // 分类	
+		$cats = $List->whereCategory($category_id, $Category); // 分类
 		if (!$where) {				
 			$List->whereQuery($query); // 关键词		
 			$List->whereSite($site_id); // 网站		
@@ -101,6 +101,7 @@ class Item extends \Astro\Core
 			$page = $overflow ? $pages : $page;
 			$offset = $page * $limit - $limit;
 			$items = $List->items($where, $order_by, $limit, $offset);
+			print_r($List->getProp('logs'));exit;
 		}		
 		return get_defined_vars();
 	}

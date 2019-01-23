@@ -12,6 +12,8 @@ class Medoo extends \Astro\Core
 	public $db_name = 'mysql';
 	public $table_name = 'user2';
 	public $primary_key = null;
+	public $return = null;
+	public $logs = [];
 	
 	public function __construct($arg = [])
 	{
@@ -89,9 +91,26 @@ class Medoo extends \Astro\Core
 			# print_r([$join, __METHOD__, __LINE__, __FILE__]);
 			$all = $this->inst->select($table, $join, $columns, $where);
 		}
-		# print_r([$this->inst->sql]); 
+		
 		# print_r([$all, self::$_instance, $table, $columns, $where, $join]);exit; 
-		return $all;
+		return $this->logs($this->inst->sql, 'select') ? : $all;
+	}
+
+	public function logs($sql, $type = null)
+	{
+		if (is_array($this->return)) {
+			if (in_array($type, $this->return)) {
+				$this->logs[] = $sql;
+			}
+		} elseif (is_string($this->return) && $type === $this->return) {
+			return $sql;
+		}
+		return false;
+	}
+
+	public function getProp($name)
+	{
+		return $this->$name;
 	}
 	
 	public function sel($where = [], $columns = null, $option = [], $group = [], $join = [])
