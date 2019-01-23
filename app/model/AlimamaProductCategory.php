@@ -6,6 +6,7 @@ class AlimamaProductCategory extends \Astro\Database
 	public $db_name = 'shopping';
 	public $table_name = 'alimama_product_category';
 	public $primary_key = 'category_id';
+	public $return = [];
 	
 	public static $root_ids = null;
 	public static $tree = null;
@@ -80,16 +81,17 @@ class AlimamaProductCategory extends \Astro\Database
 		/* 分开 */
 		$root = [];
 		$leaf = [];
+		$primaryKey = $this->primary_key;
 		foreach ($data as $key => $value) {
 			$datum = (object) $value;
 			if (-1 < $datum->upper_id) {
 				if (!isset($leaf[$datum->upper_id])) {
 					$leaf[$datum->upper_id] = [];
 				}
-				$leaf[$datum->upper_id] [$datum->category_id]= $datum;
+				$leaf[$datum->upper_id] [$datum->$primaryKey]= $datum;
 			} else {
 				$datum->leaves = [];
-				$root[$datum->category_id] = $datum;
+				$root[$datum->$primaryKey] = $datum;
 			}
 		}
 		

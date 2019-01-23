@@ -14,6 +14,7 @@ class Database extends Core
 	public $db_name = 'mysql';
 	public $table_name = 'user';
 	public $primary_key = 'id';
+	public $return = null;
 	
 	public function __construct($arg = [])
 	{
@@ -46,6 +47,11 @@ class Database extends Core
 		$name = str_replace(' ', '', $name);
 		$class = '\Astro\Database\\' . $name;
 		return $this->inst = new $class($arg);
+	}
+
+	public function getProp($name)
+	{
+		return $this->inst->getProp($name);
 	}
 	
 	public function __call($name, $arguments)

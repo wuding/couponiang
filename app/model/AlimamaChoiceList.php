@@ -6,6 +6,7 @@ class AlimamaChoiceList extends \Astro\Database
 	public $db_name = 'shopping';
 	public $table_name = 'alimama_choice_list';
 	public $primary_key = 'list_id';
+	public $return = ['select'];
 	
 	public static $where = [];
 	public static $attr = [];
