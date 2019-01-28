@@ -46,7 +46,7 @@ class Item
 			if (1 == $no) {
 				$style = ' style="clear: left;"';
 			}			
-			if (in_array($obj->site, [3, -1])) {
+			if (in_array($obj->site, [3])) {
 				$save = '省';
 				$sold = "$obj->sold 件已售";
 				$class = ' class="tuan"';
