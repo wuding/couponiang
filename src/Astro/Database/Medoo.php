@@ -135,6 +135,31 @@ class Medoo extends \Astro\Core
 		$row = $this->sel($where, $columns, $option, $group, $join);
 		return $row;
 	}
+
+	public function update($data, $where = null, $call = null)
+	{
+		$where = $this->sqlWhere($where);
+		$table = $this->table_name;
+		$exec = $this->inst->update($table, $data, $where);
+		$exec = $this->logs($this->inst->sql, $call ? : 'update') ? : $exec;
+		return $exec;
+	}
+
+	public function insert($data)
+	{
+		$table = $this->table_name;
+		$exec = $this->inst->insert($table, $data);
+		return $this->logs($this->inst->sql, 'insert') ? : $exec;
+	}
+
+	public function sqlWhere($where, $type = 'AND')
+	{
+		if (!is_array($where)) {
+			$where = is_numeric($where) ? [$this->primary_key => $where] : $where;
+			return $where;
+		}
+		return $where;
+	}
 	
 	public function __call($name, $arguments)
 	{
@@ -150,5 +175,10 @@ class Medoo extends \Astro\Core
 		$code = "\$result = \$func->\$name($str);";
 		eval($code);
 		return $result;
+	}
+
+	public function __get($name)
+	{
+		$this->inst->$name;
 	}
 }
