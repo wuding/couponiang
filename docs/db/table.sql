@@ -127,3 +127,39 @@ CREATE TABLE IF NOT EXISTS `alimama_product_category` (
 
 
 -- 2018-08-30 09:35:12
+
+-- Adminer 4.7.1 MySQL dump
+
+DROP TABLE IF EXISTS `search_suggestions`;
+CREATE TABLE `search_suggestions` (
+  `suggestion_id` int(11) NOT NULL AUTO_INCREMENT,
+  `term_id` int(10) DEFAULT '0',
+  `complection` varchar(1024) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(1024) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url` varchar(1024) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seq` int(10) DEFAULT '0',
+  `total` int(10) DEFAULT '-1',
+  PRIMARY KEY (`suggestion_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='搜索建议';
+
+INSERT INTO `search_suggestions` (`suggestion_id`, `term_id`, `complection`, `description`, `url`, `seq`, `total`) VALUES
+(1, 4,  '双人床',  NULL, NULL, 0,  23),
+(2, 4,  '床垫', NULL, NULL, 1,  3);
+
+DROP TABLE IF EXISTS `search_terms`;
+CREATE TABLE `search_terms` (
+  `term_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '查询ID',
+  `upper_id` int(10) DEFAULT '0' COMMENT '上级ID',
+  `equal_id` int(10) DEFAULT '0' COMMENT '等同ID',
+  `query` varchar(1024) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '查询关键字',
+  `results` int(10) DEFAULT '-1' COMMENT '结果数量',
+  `suggestions` int(10) DEFAULT '-1' COMMENT '建议数量',
+  `created` int(10) DEFAULT '0' COMMENT '创建时间戳',
+  `modified` int(10) DEFAULT '0' COMMENT '建议修改时间戳',
+  `updated` int(10) DEFAULT '0' COMMENT '更新时间戳',
+  `updates` int(10) DEFAULT '0' COMMENT '更新次数',
+  PRIMARY KEY (`term_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='搜索关键字';
+
+
+-- 2019-02-19 15:32:55
