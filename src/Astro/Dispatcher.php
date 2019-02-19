@@ -75,17 +75,36 @@ class Dispatcher
 		if (!class_exists($class)) {
 			$this->moduleInfo[$class]['exist'] = -1;
 			$class_exists = 0;
+			$moduleName = $this->moduleName;
 			// 调用这个模块的缺省控制器
-			if ('_module' != $this->moduleName && !is_numeric($this->moduleName)) {
-				$handler = $this->moduleName . '/_controller/' . $this->actionName;
+			if ('_module' != $moduleName && !is_numeric($moduleName)) {
+				$handler = $moduleName . '/_controller/' . $this->actionName;
 				$routeInfo = [1, $handler, []];
 				$class = $this->getControllerClassName($routeInfo, $requestInfo);
 				$class_exists = class_exists($class);
 				if (!$class_exists) {
 					$this->moduleInfo[$class]['exist'] = -1;
+
+					// 模块作为控制器
+					$handler = '_module/' . $moduleName . '/' . $this->controllerName;
+					$routeInfo = [1, $handler, []];
+					$class = $this->getControllerClassName($routeInfo, $requestInfo);
+					$class_exists = class_exists($class);
+					if (!$class_exists) {
+						$this->moduleInfo[$class]['exist'] = -1;
+
+						// 模块作为动作
+						$handler = '_module/_controller/' . $moduleName;
+						$routeInfo = [1, $handler, []];
+						$class = $this->getControllerClassName($routeInfo, $requestInfo);
+						$class_exists = class_exists($class);
+						if (!$class_exists) {
+							$this->moduleInfo[$class]['exist'] = -1;
+						}
+					}
 				}
 			}
-			
+
 			// 缺省模块
 			if (!$class_exists) {
 				$routeInfo = [0];
