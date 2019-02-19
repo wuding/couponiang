@@ -13,6 +13,8 @@ class Controller extends Core
 	public $actionRun = null; //最终执行的动作名称	
 	public $exec = 0;
 	public $disableView = false;
+	public $mobileSuffix = '.mobi';
+	public $responseHeaders = [];
 	
 	/* 配置 */
 	public $action = 'index'; //缺省的动作名称
@@ -148,16 +150,26 @@ class Controller extends Core
 		$controller = $php->dispatcher->controllerName ? : 'index';
 		$path = '/index';
 		if (Core::_isMobile()) {
-			$path .= '.mobi'; # 
+			$path .= $this->mobileSuffix; # 
 		}
 		$script = $theme . '/' . $folder . $controller . $path;
-		
+
+		// 头信息
+		foreach ($this->responseHeaders as $key => $value) {
+			$string = is_numeric($key) ? $value : "$key: $value";
+			header($string);
+		}
+
 		if (!$this->disableView) { //渲染页面
 			$var = is_array($var) ? $var : [];
 			$var += $GLOBALS['PHP']->config['view'];
 			echo $html = $php->template()->render($script, $var);
+			
 		} elseif ('info' === $this->disableView) {
 			print_r([$exit, $var, __METHOD__, __LINE__, __FILE__]);
+
+		} elseif ('echo' === $this->disableView) {
+			echo $var;
 		}
 		
 		// 退出
