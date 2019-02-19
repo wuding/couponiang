@@ -62,7 +62,7 @@ class AlimamaChoiceList extends \Astro\Database
 		$where = [];
 		$where += $condition;
 		
-		$option = [$sort, $limit, $offset];		
+		$option = [$sort, $limit, $offset];
 		return $row = $this->sel($where, $this->columns['row'], $option);
 	}
 	

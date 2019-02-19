@@ -1,6 +1,10 @@
 <?php
 namespace app\module\_module\controller;
 
+use app\model\SearchTerms;
+use OpenSearch\Description;
+use OpenSearch\Suggestions;
+
 class _Controller extends \Astro\Controller
 {
 	
@@ -59,5 +63,26 @@ class _Controller extends \Astro\Controller
 	{
 		print_r([__METHOD__, __LINE__, __FILE__]);exit;
 	}
-	
+
+
+	public function suggestions()
+	{
+		$this->disableView = 'echo';
+    	$this->mobileSuffix = '';
+    	$this->responseHeaders = ['Content-Type: application/json'];
+
+    	# $config = include APP_PATH . '/config/opensearch.php';
+    	# print_r(get_defined_vars());exit;
+
+		/* 定义 */
+		$query = trim($this->_get('q'));
+
+		$Terms = new SearchTerms;
+		$arr = $Terms->view($query);
+		$suggestions = new Suggestions($arr, $query); #, Description::template($search_url)
+		$suggestions->configFile(APP_PATH . '/config/opensearch.php');
+		return $json = $suggestions->json();
+		print_r($suggestions);
+		print_r([$arr, $json, __METHOD__, __LINE__, __FILE__]);exit;
+	}
 }

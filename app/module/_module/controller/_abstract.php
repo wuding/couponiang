@@ -1,5 +1,5 @@
 <?php
-namespace app\controller;
+namespace app\module\_module\controller;
 
 class _Abstract extends \Astro\Controller
 {

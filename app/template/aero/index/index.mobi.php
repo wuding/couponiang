@@ -153,7 +153,7 @@ endif;
 			<input name="sale" value="<?=$sold?>">
 			<input name="sort" value="<?=$sort?>">
 			<input name="order" value="<?=$order?>">
-			<?=isset($_GET['debug']) ? '<input name="debug" value="0">' : ''?>
+			<?=\app\view\Form::debug()?>
 		</span>
 	</form>
 	<nav>

@@ -39,4 +39,21 @@ class Form
 		# exit;
 		return $sel;
 	}
+
+	public static function debug()
+	{
+		$debug = isset($_GET['debug']) ? $_GET['debug'] : null;
+		if (null === $debug) {
+			return false;
+		} elseif (is_array($debug)) {
+			$pieces = [];
+			foreach ($debug as $key => $value) {
+				$value = htmlspecialchars($value);
+				$pieces[] = "<input name=\"debug[$key]\" value=\"$value\">";
+			}
+			return $html = implode(PHP_EOL, $pieces);
+		}
+		$debug = $debug ? htmlspecialchars($debug) : 0;
+		return $html = "<input name=\"debug\" value=\"$debug\">";
+	}
 }

@@ -11,7 +11,7 @@ $_DEBUG = [
 	'middle' => null,
 	'phpinfo' => null,
 	'enable' => null,
-	'secret' => '87ed6cbbc7b89f06e5e228184c5a716d',
+	'secret' => '20ee80e63596799a1543bc9fd88d8878',
 ];
 
 $_SETTING = [

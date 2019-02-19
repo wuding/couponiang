@@ -3,6 +3,7 @@ namespace app\helper;
 
 use app\model\AlimamaProductCategory;
 use app\model\AlimamaChoiceList;
+use app\model\SearchTerms;
 
 class Item extends \Astro\Core
 {
@@ -25,6 +26,7 @@ class Item extends \Astro\Core
 		$order = $this->_get('order');
 		$page = $this->_get('page', 1);
 		$List = new AlimamaChoiceList;
+		$Terms = new SearchTerms;
 		if (null === $Category) {
 			$Category = new AlimamaProductCategory;
 		}
@@ -38,6 +40,8 @@ class Item extends \Astro\Core
 		}
 		$overflow = 0;
 		$where = $item_id = $api_result = null;
+
+		$Terms->exist($query);
 
 		/* 搜链接 */
 		/* 清除已经定义的变量
