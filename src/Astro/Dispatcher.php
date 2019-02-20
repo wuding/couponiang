@@ -14,6 +14,7 @@ class Dispatcher
 	
 	// 变量
 	public $moduleInfo = [];
+	# public $moduleOrigin = null;
 	public $controllerName = null;
 	public $controllerNS = null;
 	public $moduleDefault = 'index';
@@ -86,7 +87,7 @@ class Dispatcher
 					$this->moduleInfo[$class]['exist'] = -1;
 
 					// 模块作为控制器
-					$handler = '_module/' . $moduleName . '/' . $this->controllerName;
+					$handler = '_module/' . $moduleName . '/' . $this->actionName;
 					$routeInfo = [1, $handler, []];
 					$class = $this->getControllerClassName($routeInfo, $requestInfo);
 					$class_exists = class_exists($class);
@@ -111,7 +112,9 @@ class Dispatcher
 				$class = $this->getControllerClassName($routeInfo, $requestInfo, 1);
 			}
 		}
-		return $this->controller = $this->controllers[$this->controllerId] = new $class($this->actionName, $requestInfo['method'], $controllerVars);
+
+		# print_r($this);exit;
+		return $this->controller = $this->controllers[$this->controllerId] = new $class($this->moduleInfo, $requestInfo['method'], $controllerVars);
 	}
 	
 	/**
@@ -165,11 +168,18 @@ class Dispatcher
 		$this->controllerName = $controller;
 		$this->actionName = $action;
 		
-		$moduleInfo = [$module, $controller, $action, $handler, $routeInfo, 'exist' => 0];
+		$moduleInfo = [
+			'module' => $module, 
+			'controller' => $controller, 
+			'action' => $action, 
+			'handler' => $handler, 
+			'routeInfo' => $routeInfo, 
+			'exist' => 0
+		];
 		$namespace = $this->getControllerNamespace($moduleInfo, $requestInfo);
 		$class = $namespace . $controller;
 		
-		$this->moduleInfo[$class] = $moduleInfo;
+		$this->moduleInfo[] = $this->moduleInfo[$class] = $this->moduleInfo['last'] = $moduleInfo;
 		return $this->controllerClass = $class;
 	}
 	
@@ -180,8 +190,8 @@ class Dispatcher
 	public function getControllerNamespace($moduleInfo = [], $requestInfo = [], $options = [])
 	{
 		$moduleFolder = '';
-		if ('index' != $moduleInfo[0]) {
-			$moduleFolder = '\\module\\' . $moduleInfo[0];
+		if ('index' != $moduleInfo['module']) {
+			$moduleFolder = '\\module\\' . $moduleInfo['module'];
 		}
 		return $this->controllerNS = "\\app$moduleFolder\\controller\\";
 	}
