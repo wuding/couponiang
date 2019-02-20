@@ -16,6 +16,8 @@ class _Controller extends \Astro\Controller
 		# $vars['custom'] = 'value';
 		parent::__construct($action, $method, $vars);
 		# print_r([__METHOD__, __LINE__, __FILE__]);
+
+		\OpenSearch\func('\OpenSearch\_isset', '__isset', [], '', null);
 	}
 	
 	/* 缺省动作 */
@@ -76,12 +78,13 @@ class _Controller extends \Astro\Controller
 
 		/* 定义 */
 		$query = trim($this->_get('q'));
+		$query = __isset($_GET, 'q', 'asdf');
 
 		$Terms = new SearchTerms;
 		$arr = $Terms->view($query);
 		$suggestions = new Suggestions($arr, $query); #, Description::template($search_url)
 		$suggestions->configFile(APP_PATH . '/config/opensearch.php');
-		return $json = $suggestions->json();
+		return $json = $suggestions->json(); # 
 		print_r($suggestions);
 		print_r([$arr, $json, __METHOD__, __LINE__, __FILE__]);exit;
 	}
