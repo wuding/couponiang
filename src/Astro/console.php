@@ -74,11 +74,11 @@ if ($_DEBUG['enable']) {
 
 class Wu
 {
-	public static function php()
+	public static function php($exec = true)
 	{
 		global $_DEBUG;
 		# $loader->addPsr4('Acme\\Test\\', __DIR__);$Astro = 
-		new \Astro\Php(APP_PATH . '/config.php');
+		new \Astro\Php(APP_PATH . '/config.php', $exec);
 		# $test = $Astro->getInstance(APP_PATH . '/config.php');
 		# $test = Astro\Php::getInst(APP_PATH . '/config.php');
 		if ($_DEBUG['enable'] && null !== $_DEBUG['last']) {
