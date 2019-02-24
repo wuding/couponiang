@@ -60,7 +60,10 @@ class Item extends \Astro\Core
 			$item_id = isset($query_arr['id']) ? $query_arr['id'] : '';			
 			$where = ['item_id' => $item_id];
 			# print_r(get_defined_vars());exit;
-		}
+		} elseif (preg_match('/^http(|s):\/\/m\.tb\.cn\/(.*)/i', $query)) {
+            $item_id = $query;
+			$where = ['item_id' => $query];
+        }
 		
 		/* 商品 */
 		$prices = $List->queryScope($price);
@@ -87,8 +90,8 @@ class Item extends \Astro\Core
 			$str = file_get_contents($filename);
 			$json = json_decode($str);
 			if ('NULL' != gettype($json)) {
-				list($tao_token, $item_list) = $json;
-				# print_r($json);exit;
+				list($tao_token, $item_list, $item_id) = $json;
+				$where = ['item_id' => $item_id];
 				if ($tao_token && $item_list) {
 					$count = $List->count($List->table_name, $where);
 				}
