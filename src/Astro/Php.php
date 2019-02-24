@@ -224,6 +224,9 @@ class Php
 		if ($this->config['route']) {
 			$routeInfo = $this->routeInfo(); # 
 		}
+		if (!isset($_GET['debug']) && $this->config['session']['enable']) {
+			session_start();
+		}
 		
 		$controller = $this->controller();
 		if (!$controller->exec && 2 == $controller->destruct && true === $this->exec) {
