@@ -5,10 +5,6 @@ use OpenSearch\Generate;
 
 class Opensearch extends _Abstract
 {
-    public $disableView = 'echo';
-    public $mobileSuffix = '';
-    public $responseHeaders = ['Content-Type: text/xml; charset=UTF-8'];
-
     public $restfulMethods = [
         '_controller' => [
             'get' => 'index',
@@ -18,11 +14,25 @@ class Opensearch extends _Abstract
         ],
     ]; //方法映射配置
 
+    public function __construct($moduleInfo, $method = null, array $vars = [])
+    {
+        $moduleInfo['last']['action'] = $moduleInfo[0]['controller'];
+        # $this->moduleInfo = $moduleInfo['last'];
+        parent::__construct($moduleInfo, $method, $vars);
+    }
+
     public function index()
     {
+        $this->disableView = 'echo';
+        $this->mobileSuffix = '';
+        $this->responseHeaders = ['Content-Type: text/xml; charset=UTF-8'];
         $config = include APP_PATH . '/config/opensearch.php';
         $generate = new Generate($config);
         return $xml = $generate->xml();
-        return [$config, __METHOD__, __LINE__, __FILE__];
+    }
+
+    public function add()
+    {
+        return [];
     }
 }

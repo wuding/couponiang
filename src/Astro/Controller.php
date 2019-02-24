@@ -5,6 +5,7 @@ class Controller extends Core
 {
 	/* 参数 */
 	public $methods = null;	 //所有的方法名称
+	public $moduleInfo;
 	
 	/* 变量 */
 	public $requestMethod = null; //请求的HTTP方式	
@@ -34,8 +35,13 @@ class Controller extends Core
 	 *
 	 * 传入动作名、HTTP方法和控制器变量
 	 */
-	public function __construct($action = '', $method = '', $vars = [])
+	public function __construct($moduleInfo, $method = null, array $vars = [])
 	{
+		if (null === $this->moduleInfo) {
+			$this->moduleInfo = $moduleInfo['last'];
+		}
+		
+
 		// 变量
 		# print_r($vars);
 		if ($vars) {
@@ -48,6 +54,7 @@ class Controller extends Core
 		$this->requestMethod = strtolower($method ? : $_SERVER['REQUEST_METHOD']);
 		
 		// 动作
+		$action = $this->moduleInfo['action'];
 		$this->requestAction = $action = $action ? : $GLOBALS['PHP']->dispatcher->actionName;		
 		$this->methods = $methods = get_class_methods($this);
 		$action = $action ? : $this->action;
@@ -148,7 +155,7 @@ class Controller extends Core
 		$theme = 'aero';
 		$folder = '';
 		$controller = $php->dispatcher->controllerName ? : 'index';
-		$path = '/index';
+		$path = '/' . $this->moduleInfo['action'];
 		if (Core::_isMobile()) {
 			$path .= $this->mobileSuffix; # 
 		}
@@ -161,7 +168,7 @@ class Controller extends Core
 		}
 
 		if (!$this->disableView) { //渲染页面
-			$var = is_array($var) ? $var : [];
+			$var = is_array($var) ? $var : ['_' => $var];
 			$var += $GLOBALS['PHP']->config['view'];
 			echo $html = $php->template()->render($script, $var);
 			
@@ -169,7 +176,12 @@ class Controller extends Core
 			print_r([$exit, $var, __METHOD__, __LINE__, __FILE__]);
 
 		} elseif ('echo' === $this->disableView) {
-			echo $var;
+			if (is_string($var)) {
+				echo $var;
+			} else {
+				print_r($var);
+			}
+			
 		}
 		
 		// 退出

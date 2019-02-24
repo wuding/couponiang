@@ -20,7 +20,7 @@ class Php
 	 *
 	 * 导入配置和请求
 	 */
-	public function __construct($config = null)
+	public function __construct($config = null, $exec = true)
 	{
 		// 配置
 		if ($config) {
@@ -44,6 +44,7 @@ class Php
 		$pattern = addcslashes($path_self, '/\\');
 		$requestUri = preg_replace("/^$pattern/", '', $requestPath);
 		$this->requestUri = rawurldecode($requestUri);
+		$this->exec = $exec;
 	}
 	
 	
@@ -223,9 +224,12 @@ class Php
 		if ($this->config['route']) {
 			$routeInfo = $this->routeInfo(); # 
 		}
+		if (!isset($_GET['debug']) && $this->config['session']['enable']) {
+			session_start();
+		}
 		
 		$controller = $this->controller();
-		if (!$controller->exec && 2 == $controller->destruct) {
+		if (!$controller->exec && 2 == $controller->destruct && true === $this->exec) {
 			$var = $controller->_run(null, null, 0);
 			# print_r($var);
 		}
