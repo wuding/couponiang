@@ -20,4 +20,18 @@ return [
 		'robot_host' => 'http://robot.lan.urlnk.com',
 		'url_shortening' => 'http://cpn.red',
 	],
+	'session' => [
+		'enable' => true,
+	],
+	'date' => [
+		'timezone' => 'Asia/Shanghai',
+	],
+	'func' => [
+		'config' => [
+			'_isset' => ['', [], '', null],
+		    '\Func\array_diff_kv' => ['', [], [], [], false],
+		    'str_match' => ['', '//', '', null, false],
+		],
+		'load' => ['Variable', 'Arr', 'PCRE'],
+	],
 ];
