@@ -1,24 +1,36 @@
 {
     "name": "wuding/couponiang",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/wuding/couponiang"
-        }
-    ],
     "require": {
         "php": ">=5.4.0",
         "nikic/fast-route": "^1.3.0",
         "league/plates": "^3.3",
-        "catfan/Medoo": "^1.5",
-        "pagerfanta/pagerfanta": "^2.0.1"
+        "catfan/medoo": "^1.5",
+        "pagerfanta/pagerfanta": "^2.0.1",
+        "wuding/opensearch": "^1.0.4",
+        "wuding/php-func": "^1.0.2"
     },
     "autoload": {
         "psr-4": {
             "Astro\\": "src/Astro/",
             "Plugin\\": "src/Plugin/",
-            "app\\": "app/"
+            "app\\": "app/",
+            "Func\\X\\": "vendor/wuding/php-func/src/X",
+            "Func\\": "vendor/wuding/php-func/src",
+            "OpenSearch\\": "vendor/wuding/opensearch/src/"
         },
-        "files": ["src/Astro/functions.php"]
+        "files": [
+            "src/Cancer.php",
+            "vendor/wuding/php-func/src/Func.php"
+        ]
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/wuding/couponiang"
+        }
     }
 }

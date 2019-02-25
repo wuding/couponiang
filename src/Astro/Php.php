@@ -14,6 +14,7 @@ class Php
 		'route' => [],
 	];
 	public $routeInfo = [0];
+	public $init = null;
 	
 	/**
 	 * 构造函数
@@ -22,6 +23,18 @@ class Php
 	 */
 	public function __construct($config = null, $exec = true)
 	{
+		if ($config) {
+			$this->init($config, $exec);
+		}
+	}
+
+	public function init($config = null, $exec = true)
+	{
+		if (!$config) {
+			return false;
+		}
+		$this->init = time();
+
 		// 配置
 		if ($config) {
 			if (is_string($config)) {
@@ -32,6 +45,12 @@ class Php
 				print_r([$config, __METHOD__, __LINE__, __FILE__]);
 			}
 		}
+
+		// php.ini 重设
+		date_default_timezone_set($this->config['date']['timezone'] ? : date_default_timezone_get());
+
+		// 依赖函数
+		func($this->config['func']['config'], $this->config['func']['load']);
 		
 		// 请求
 		$this->requestMethod = $_SERVER['REQUEST_METHOD'];
@@ -46,26 +65,32 @@ class Php
 		$this->requestUri = rawurldecode($requestUri);
 		$this->exec = $exec;
 	}
+
+	public function restart($config = null, $exec = true)
+	{
+		$this->init($config, $exec);
+        $this->__destruct();
+	}
 	
 	
 	/**
 	 * 获取实例
 	 */
-	public static function getInst($config = null)
+	public static function getInst($config = null, $exec = true)
 	{
 		if (null != self::$inst) {
 			return self::$inst;
 		}
-		return self::$inst = new Php($config);
+		return self::$inst = new Php($config, $exec);
 	}
 	
-	public function getInstance($config = null)
+	public function getInstance($config = null, $exec = true)
 	{
-		$inst =& self::$inst;
-		if (null != $inst) {
-			return $inst;
+		if (null !== self::$inst) {
+			return self::$inst;
 		}
-		return $this->instance = $inst = new Php($config);
+		new Php($config, $exec);
+		return self::$inst = $GLOBALS['PHP'];
 	}
 	
 	/**
@@ -221,6 +246,11 @@ class Php
 	public function __destruct()
 	{
 		$GLOBALS['PHP'] = $this;
+		if (!$this->init) {
+			return false;
+		}
+
+		
 		if ($this->config['route']) {
 			$routeInfo = $this->routeInfo(); # 
 		}
