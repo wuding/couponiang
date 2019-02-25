@@ -1,7 +1,17 @@
 <?php
+
+/**
+ * develop 	错误报告、调试信息
+ * test		时间、内存
+ * product 	日志
+ *
+ */
+ 
 /* 常量 */
 define('START_TIME', microtime(true));
 define('START_MEM', memory_get_usage());
+
+global $_DEBUG, $_SETTING, $PHP;
 
 /* 全局变量 */
 $_DEBUG = [
@@ -72,19 +82,4 @@ if ($_DEBUG['enable']) {
 	}
 }
 
-class Wu
-{
-	public static function php($exec = true)
-	{
-		global $_DEBUG;
-		# $loader->addPsr4('Acme\\Test\\', __DIR__);$Astro = 
-		new \Astro\Php(APP_PATH . '/config.php', $exec);
-		# $test = $Astro->getInstance(APP_PATH . '/config.php');
-		# $test = Astro\Php::getInst(APP_PATH . '/config.php');
-		if ($_DEBUG['enable'] && null !== $_DEBUG['last']) {
-			include 'timeline.php';
-		}
-	}
-}
 
-$Composer = require APP_PATH . '/../vendor/autoload.php';
