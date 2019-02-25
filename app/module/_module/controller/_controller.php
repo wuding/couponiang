@@ -14,10 +14,7 @@ class _Controller extends \Astro\Controller
 	public function __construct($action = '', $method = '', $vars = [])
 	{
 		# $vars['custom'] = 'value';
-		parent::__construct($action, $method, $vars);
-		# print_r([__METHOD__, __LINE__, __FILE__]);
-
-		\OpenSearch\func('\OpenSearch\_isset', '__isset', [], '', null);
+		parent::__construct($action, $method, $vars);		
 	}
 	
 	/* 缺省动作 */
@@ -78,7 +75,6 @@ class _Controller extends \Astro\Controller
 
 		/* 定义 */
 		$query = trim($this->_get('q'));
-		$query = __isset($_GET, 'q', 'asdf');
 
 		$Terms = new SearchTerms;
 		$arr = $Terms->view($query);
