@@ -5,7 +5,7 @@ namespace OpenSearch;
 function get_config_var($name = null)
 {
     $name = $name ? : 'config';
-    $url_scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : ('on' == $_SERVER['HTTPS'] ? 'https' : 'http');
+    $url_scheme = request_scheme();
     $url_host = $_SERVER['HTTP_HOST'];
     
     $search_host = "$url_scheme://$url_host";
