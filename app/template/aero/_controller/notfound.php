@@ -6,6 +6,6 @@
 </head>
 
 <body>
-<?=__FILE__?>
+页面没有找到
 </body>
 </html>

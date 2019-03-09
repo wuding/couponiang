@@ -6,7 +6,7 @@ require 'console.php';
 
 class Cancer
 {
-    public static function php($config = null, $exec = true, $mode = 2)
+    public static function php($config = null, $exec = true, $mode = null)
     {
         global $_DEBUG, $Cancer;
         $config = $config ? : APP_PATH . '/config.php';
