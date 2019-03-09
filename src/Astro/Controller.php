@@ -78,6 +78,8 @@ class Controller extends Core
 	 */
 	public function _notfound()
 	{
+		# $this->disableView = true;
+		$this->moduleInfo['action'] = 'notfound';
 		return [__METHOD__, __LINE__, __FILE__];
 	}
 	
