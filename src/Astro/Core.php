@@ -23,7 +23,7 @@ class Core
 	/**
 	 * User Agent - 检测是否手机
 	 */
-	public static function _isMobile($pattern = '/iPhone|Android/i', $ua = null)
+	public static function _isMobile($pattern = '/iPhone|Android|Mobile/i', $ua = null)
 	{
 		$ua = $ua ? : (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '');
 		return preg_match($pattern, $ua);
