@@ -20,3 +20,21 @@ http://www.couponiang.com/
 
 控制器支持转接动作，模板还是以前概念，但视图类用来把数据变为字符串
 
+
+
+## 安装
+
+类加载
+
+```
+composer install
+```
+
+配置文件 app/config.php
+
+修改版 src/Medoo.php
+
+分页适配器 src/Pagerfanta/Adapter
+
+数据库 docs/db
+

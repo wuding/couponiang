@@ -1,4 +1,11 @@
 <?php
+/**
+ * 项目固定绝对唯一目录
+ */
+defined('BASE_DIR') OR define('BASE_DIR', __DIR__ . '/..');
+defined('VENDOR_DIR') OR define('VENDOR_DIR', __DIR__ . '/../vendor');
+# define('VENDOR_DIR', realpath(__DIR__ . '/..'));
+
 return [
 	'_route' => [
 		[['GET', 'POST', 'PUT'], '/[index]', '/index/index'],
