@@ -5,6 +5,7 @@ use app\view\Form;
 use Pagerfanta\Adapter\SimpleAdapter;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\DefaultView;
+use Ext\Math;
 
 class Item
 {
@@ -52,7 +53,8 @@ class Item
 				$class = ' class="tuan"';
 			}
 
-			$menu = $obj->save ? "<menu>{$save}￥$obj->save</menu>" : '';
+			$floor = Math::floor($obj->save, 2);
+			$menu = $floor ? "<menu title='$floor'>{$save}￥$floor</menu>" : '';
 			
 			// 关键词高亮
 			if ($query && !preg_match('/^http(|s):\/+/i', $query)) {
@@ -147,10 +149,12 @@ HEREDOC;
 				$url = $GLOBALS['PHP']->config['var']['url_shortening'] . '/$' . $obj->tao_token . '$';
 			}
 
+			$floor = Math::floor($obj->save, 2);
+
 			$li = <<<HEREDOC
 			<dl $class>
 				<a href="$url" target="_blank">
-					<menu>{$save}￥$obj->save</menu>
+					<menu>{$save}￥$floor</menu>
 					<img src="{$pic}_200x200.jpg">
 					<span>
 						$em
