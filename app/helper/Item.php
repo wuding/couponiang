@@ -18,7 +18,7 @@ class Item extends \Astro\Core
 		$category_id = $this->_get('category');
 		$site_id = $this->_get('site');
 		$price = $this->_get('price');
-		$save = $this->_get('save');
+		$save = $this->_get('save', 1);
 		$start_time = trim($this->_get('start'));
 		$end_time = trim($this->_get('end'));
 		$sold = $this->_get('sale');
