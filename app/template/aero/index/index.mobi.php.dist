@@ -10,7 +10,7 @@
 	<meta http-equiv="x-dns-prefetch-control" content="off">
 	<link rel="dns-prefetch" href="http://api.urlnk.com">
 	<title>红券网</title>	
-	<link rel="stylesheet" href="<?= $cdn_host ?>/ui/mobi/style.css?v=24" type="text/css">
+	<link href="<?= $cdn_host ?>/ui/mobi/style.css?v=24" rel="stylesheet" type="text/css">
 	<link rel="shortcut icon" href="/img/favicon-32x32.ico?v=" type="image/x-icon">
 	<link rel="apple-touch-icon" href="<?= $cdn_host ?>/ui/mobi/apple-touch-icon-180x180.png?v=">
 	<link rel="apple-touch-icon" sizes="167x167" href="<?= $cdn_host ?>/ui/mobi/touch-icon-ipad-retina.png?v=">
@@ -164,7 +164,7 @@ endif;
 			<input name="sale" value="<?=$sold?>">
 			<input name="sort" value="<?=$sort?>">
 			<input name="order" value="<?=$order?>">
-			<?=isset($_GET['debug']) ? '<input name="debug" value="0">' : ''?>
+			<?=\app\view\Form::debug()?>
 		</span>
 	</form>
 	<nav>
@@ -197,7 +197,7 @@ endif;
 </main>
 
 <footer id="load_info">
-<?=$count ? "共 $count 条" : '无'?>结果
+<?=$count ? "共 $count 条" : '无'?>结果 <?=$api_result?>
 </footer>
 
 <script>
@@ -406,8 +406,18 @@ function api_item_list(arg) {
 	for (; i < len; i++) {
 		odd = i % 2
 		row = data[i]
-		html = '<dl>'
+		
+		// 优惠券面额
+		save = '券'
+		cls = ''
+		if ('3' == row.site) {
+			save = '省'
+		    cls = ' class="tuan"'
+		}
+		
+		html = '<dl ' + cls + '>'
 				+ '<a href="/item/' + row.excel_id + '" target="_blank">'
+				    + '<menu>' + save + '￥' + row.save + '</menu>'						
 					+ '<img src="' + row.pic + '_200x200.jpg">'
 					+ '<span>'						
 						+ '<h4>' + row.title + '</h4>'

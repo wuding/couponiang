@@ -21,7 +21,7 @@ return [
 		'password' => 'wtf23206',
 	),
 	'view' => [
-		'cdn_host' => 'https://urlnk.host', // http://work.lan.urlnk.com/work/cdn
+		'cdn_host' => 'https://urlnk.cc',
 	],
 	'var' => [
 		'robot_host' => 'http://robot.lan.urlnk.com',
