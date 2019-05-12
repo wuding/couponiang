@@ -6,8 +6,8 @@
         "league/plates": "^3.3",
         "catfan/medoo": "^1.5",
         "pagerfanta/pagerfanta": "^2.0.1",
-        "wuding/opensearch": "^1.0.4",
-        "wuding/php-func": "^1.0.2"
+        "wuding/opensearch": "^1.0.5",
+        "wuding/php-func": "^1.0.3"
     },
     "autoload": {
         "psr-4": {
@@ -16,11 +16,13 @@
             "app\\": "app/",
             "Func\\X\\": "vendor/wuding/php-func/src/X",
             "Func\\": "vendor/wuding/php-func/src",
-            "OpenSearch\\": "vendor/wuding/opensearch/src/"
+            "OpenSearch\\": "vendor/wuding/opensearch/src/",
+            "Ext\\": "K:/wow/work/wuding/php-ext/src/"
         },
         "files": [
             "src/Cancer.php",
-            "vendor/wuding/php-func/src/Func.php"
+            "vendor/wuding/php-func/src/Func.php",
+            "K:/wow/work/wuding/php-ext/src/Ext.php"
         ]
     },
     "repositories": {
