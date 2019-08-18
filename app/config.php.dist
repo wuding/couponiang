@@ -41,4 +41,5 @@ return [
 		],
 		'load' => ['Variable', 'Arr', 'PCRE'],
 	],
+	'autoload' => null,
 ];
