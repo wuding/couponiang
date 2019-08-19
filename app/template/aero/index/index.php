@@ -4,8 +4,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<title>红券网￥优惠券折扣返利全网比价购物搜索</title>
-	<link href="https://urlnk.host/css/new-ui.css?v=34" rel="stylesheet" type="text/css">
-	<?=\OpenSearch\Generate::link('https://urlnk.host/coupon/v1/xml/opensearch.xml?v=1', '红券网')?>
+	<link href="<?=$cdn_host?>/v1/coupon/css/new-ui.css?v=34" rel="stylesheet" type="text/css" title="default">
+	<?=\OpenSearch\Generate::link($cdn_host . '/v1/coupon/xml/opensearch.xml?v=1', '红券网')?>
 </head>
 
 <body>
@@ -177,7 +177,7 @@ var end = '<?=isset($items[0]) ? $items[0]['end'] : 'null'?>';
 </script>
 <!--script src="https://urlnk.host/js/jquery-3.3.1.js"></script-->
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script src="<?=$cdn_host?>/js/search.js?v=16"></script>
+<script src="<?=$cdn_host?>/v1/coupon/js/search.js?v=16"></script>
 <?php if (!$stat) { $this->insert('stat'); } ?>
 </body>
 </html>
