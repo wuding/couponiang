@@ -197,7 +197,7 @@ server = {
 	category_id : <?=$category_id ? : '""'?>,
 	page: <?=$page ? : 1?>,
 	client: '<?=$UA[0]?>',
-	count: <?=$count?>,
+	count: <?=$count ?: 0?>,
 	overflow: <?=(int) $overflow?>
 	
 }
